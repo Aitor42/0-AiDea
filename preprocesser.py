@@ -137,7 +137,7 @@ class NLITextPreprocesser():
         """Carga una lista de stopwords."""
         if method is None:
             method = self.stopword_method
-        if self.custom_words is None:
+        if custom_words is None:
             custom_words = self.custom_stopwords
         if method == "none":
             return set()
@@ -353,3 +353,8 @@ class NLITextPreprocesser():
             "ngram_orders": list(self.ngram_orders),
             "top_n": self.top_n,
         }
+
+    def export_preprocessed_dataset_csv(self, dataframe: pd.DataFrame, filepath) -> None:
+        """Preprocesa el dataset y exporta todas sus columnas a un archivo CSV."""
+        processed = self.preprocess_dataset(dataframe)
+        processed.to_csv(filepath, index=False, encoding="utf-8")
