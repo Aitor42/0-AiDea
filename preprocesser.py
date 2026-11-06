@@ -44,6 +44,7 @@ class NLITextPreprocesser():
     ):
         self.columns = columns
         self.language = language
+        self.language_column = language_column
         self.lowercase = lowercase
         self.strip_accents = strip_accents
         self.tokenizer = tokenizer
@@ -56,6 +57,21 @@ class NLITextPreprocesser():
 
         self.spacy_tokenizer = spacy.blank("en").tokenizer
         self.nlp = spacy.load("en_core_web_sm", disable=["parser", "ner"])
+
+    def _validate_dataframe(self, dataframe) -> None:
+        if not isinstance(dataframe, pd.DataFrame):
+            raise TypeError("La entrada debe ser un pandas.DataFrame")
+        if not self.columns:
+            raise ValueError("columns debe incluir al menos una columna de texto")
+        if isinstance(self.columns, str):
+            raise TypeError("columns debe ser una secuencia de nombres, no una cadena")
+
+        required = list(self.columns)
+        if self.language is not None:
+            required.append(self.language_column)
+        missing = [column for column in required if column not in dataframe.columns]
+        if missing:
+            raise ValueError(f"Faltan columnas requeridas: {missing}")
 
     def standardize_text(self, text) -> str:
         """Pasa a minúsculas y, opcionalmente, elimina marcas de acento Unicode."""
@@ -94,6 +110,29 @@ class NLITextPreprocesser():
             for token in self.spacy_tokenizer(text)
             if not token.is_space and not token.is_punct]
 
+    def compare_tokenizers(self, texts, methods=None) -> pd.DataFrame:
+        """Compara el número de tokens y un ejemplo de cada tokenizador."""
+        summary = []
+
+        for method in methods or self.TOKENIZERS:
+            tokenized = [self.tokenize_text(text, method) for text in texts]
+            all_tokens = [token for tokens in tokenized for token in tokens]
+
+            if tokenized:
+                summary.append(
+                    {"method": method,
+                     "mean_tokens_per_text": sum(map(len, tokenized)) / len(tokenized),
+                     "vocabulary_size": len(set(all_tokens)),  # all unique tokens
+                     "sample_tokens": tokenized[0]})
+            else:
+                summary.append(
+                    {"method": method,
+                     "mean_tokens_per_text": 0,
+                     "vocabulary_size": len(set(all_tokens)),
+                     "sample_tokens": []})
+
+        return pd.DataFrame(summary)
+
     def get_stopwords(self, method=None, custom_words=None) -> set[str]:
         """Carga una lista de stopwords."""
         if method is None:
@@ -113,6 +152,27 @@ class NLITextPreprocesser():
         if custom_words:
             words.update(str(word).lower() for word in custom_words)
         return words
+
+    def compare_stopword_configs(self, texts, methods=None, top_n=None,
+                                 ) -> tuple[pd.DataFrame, dict[str, pd.DataFrame]]:
+        """Compara listas de stopwords y devuelve resúmenes y frecuencias."""
+        if methods is None:
+            methods = self.STOPWORD_METHODS
+        texts = [list(text) for text in texts]
+        summary = []
+        tables = {}
+        for method in methods:
+            stopword_set = self.get_stopwords(method)
+            filtered = [self.remove_stopwords(text, stopword_set) for text in texts]
+            counts = Counter(token for doc in filtered for token in doc)
+
+            summary.append({
+                "method": method,
+                "token_count": sum(counts.values()),
+                "vocabulary_size": len(counts)
+            })
+            tables[method] = self.top_tokens(filtered, top_n)
+        return pd.DataFrame(summary), tables
 
     def is_negation(self, token: str) -> bool:
         token = token.lower()
@@ -212,3 +272,84 @@ class NLITextPreprocesser():
         doc = nlp(doc)
 
         return [(token.lemma_ or token.text).lower() for token in doc]
+
+    def compare_reductions(self, texts, methods, top_n) -> tuple[pd.DataFrame,
+                                                                 dict[str, pd.DataFrame]]:
+        """Compara el tamaño del vocabulario y los tokens principales por método."""
+        if methods is None:
+            methods = self.REDUCTION_METHODS
+        texts = [list(text) for text in texts]
+        summary = []
+        tables = {}
+
+        for method in methods:
+            reduced = [self.reduce_tokens(text, method) for text in texts]
+            counts = Counter(token for text in reduced for token in text)
+
+            summary.append({
+                "method": method,
+                "vocabulary_size": len(counts),
+                "token_count": sum(counts.values()),
+            })
+            tables[method] = self.top_tokens(reduced, top_n)
+        return pd.DataFrame(summary), tables
+
+    def _filter_language(self, dataframe) -> pd.DataFrame:
+        ""
+        if self.language is None:
+            return dataframe.copy()
+        return dataframe.loc[dataframe[self.language_column].eq(self.language)].copy().reset_index(
+            drop=True)
+
+    def preprocess_dataset(self, dataframe: pd.DataFrame) -> pd.DataFrame:
+        """Devuelve las filas inglesas y todas las características configuradas."""
+        self._validate_dataframe(dataframe)
+        result = self._filter_language(dataframe)
+        if result.empty:
+            raise ValueError(f"No hay filas para language {self.language}.")
+
+        stopword_set = self.get_stopwords()
+
+        # save configuration
+        config_json = json.dumps(self.get_config(), ensure_ascii=False)
+
+        for column in self.columns:
+            clean_column = f"{column}_clean"
+            tokens_column = f"{column}_tokens"
+            filtered_column = f"{column}_tokens_no_stopwords"
+            processed_column = f"{column}_processed"
+
+            # create preprocessed columns
+            result[clean_column] = result[column].map(self.standardize_text)
+            result[tokens_column] = result[clean_column].map(
+                lambda text: self.tokenize_text(text))
+            result[filtered_column] = result[tokens_column].map(
+                lambda tokens: self.remove_stopwords(tokens, stopword_set))
+            result[processed_column] = result[filtered_column].map(
+                lambda tokens: self.reduce_tokens(tokens))
+
+            for n in self.ngram_orders:
+                result[f"{column}_{n}grams"] = result[filtered_column].map(
+                    lambda tokens, order=n: self.make_ngrams(tokens, order))
+                result[f"{column}_processed_{n}grams"] = result[processed_column].map(
+                    lambda tokens, order=n: self.make_ngrams(tokens, order))
+
+        result["preprocessing_config"] = config_json
+        return result
+
+    def get_config(self) -> dict:
+        """Devuelve la configuración en un diccionario serializable como JSON."""
+        return {
+            "columns": list(self.columns),
+            "language": self.language,
+            "language_column": self.language_column,
+            "lowercase": self.lowercase,
+            "strip_accents": self.strip_accents,
+            "tokenizer": self.tokenizer,
+            "stopword_method": self.stopword_method,
+            "keep_negations": self.keep_negations,
+            "custom_stopwords": sorted(self.custom_stopwords or ()),
+            "reduction": self.reduction,
+            "ngram_orders": list(self.ngram_orders),
+            "top_n": self.top_n,
+        }
