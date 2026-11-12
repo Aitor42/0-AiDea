@@ -111,7 +111,17 @@ class NLITextPreprocesser():
             if not token.is_space and not token.is_punct]
 
     def compare_tokenizers(self, texts, methods=None) -> pd.DataFrame:
-        """Compara el número de tokens y un ejemplo de cada tokenizador."""
+        """Compara el número de tokens y un ejemplo de cada tokenizador.
+            Returns:
+            pd.DataFrame: Tabla comparativa con una fila por tokenizador y las columnas:
+                - method (str): Nombre del tokenizador evaluado.
+                - mean_tokens_per_text (float): Promedio de tokens generados por texto
+                    (0 si `texts` está vacío).
+                - vocabulary_size (int): Número total de tokens únicos generados en
+                todo el corpus.
+                - sample_tokens (list[str]): Lista de tokens resultante de procesar el
+                primer elemento de `texts`.
+        """
         summary = []
 
         for method in methods or self.TOKENIZERS:
@@ -155,7 +165,18 @@ class NLITextPreprocesser():
 
     def compare_stopword_configs(self, texts, methods=None, top_n=None,
                                  ) -> tuple[pd.DataFrame, dict[str, pd.DataFrame]]:
-        """Compara listas de stopwords y devuelve resúmenes y frecuencias."""
+        """Compara listas de stopwords y devuelve resúmenes y frecuencias.
+
+            Returns:
+            tuple[pd.DataFrame, dict[str, pd.DataFrame]]: Una tupla con dos elementos:
+            - summary_df (pd.DataFrame): Tabla comparativa con una fila por método y columnas:
+                - method (str): Nombre de la configuración de stopwords aplicada.
+                - token_count (int): Número total de tokens restantes tras el filtrado.
+                - vocabulary_size (int): Número de tokens únicos restantes.
+            - tables (dict[str, pd.DataFrame]):  Diccionario donde cada clave es el nombre del método
+                    y su valor es el DataFrame devuelto por self.top_tokens con sus
+              `top_n` tokens más frecuentes tras eliminar stopwords."""
+
         if methods is None:
             methods = self.STOPWORD_METHODS
         texts = [list(text) for text in texts]
@@ -195,7 +216,19 @@ class NLITextPreprocesser():
         return [" ".join(ngram) for ngram in ngrams(tokens, n)]
 
     def top_tokens(self, tokenized_texts, top_n=None) -> pd.DataFrame:
-        """Devuelve los tokens más frecuentes."""
+        """Devuelve los tokens más frecuentes
+
+            Returns:
+                pd.DataFrame: DataFrame ordenado de mayor a menor frecuencia con las columnas:
+                    - token (str): El token  evaluado.
+                    - count (int): Frecuencia absoluta (número total de apariciones en todo el corpus).
+                    - token_percentage (float): Proporción de apariciones respecto al total de tokens
+                    del corpus (`count / total_tokens`).
+                    - text_frequency (int): Número de textos distintos en los que aparece el token
+                    al menos una vez.
+                    - text_presence_freq (float): Proporción de textos que contienen el token
+                    (`text_frequency / total_texts`).
+        """
         top_n = top_n or self.top_n
         if top_n < 1:
             raise ValueError("top_n debe ser mayor que cero.")
@@ -219,7 +252,19 @@ class NLITextPreprocesser():
         return pd.DataFrame(rows)
 
     def top_ngrams(self, texts, n=10, top_n=None) -> pd.DataFrame:
-        """Devuelve los n-gramas más frecuentes, calculados por texto."""
+        """Devuelve los n-gramas más frecuentes, calculados por texto.
+
+            Returns:
+            pd.DataFrame: DataFrame ordenado de mayor a menor frecuencia con las columnas:
+                - ngram (str): El n-grama o secuencia de `n` tokens evaluada.
+                - count (int): Frecuencia absoluta (número total de apariciones en el corpus).
+                - token_percentage (float): Proporción de apariciones respecto al total de
+                n-gramas generados en el corpus (`count / total_ngrams`).
+                - text_frequency (int): Número de textos distintos en los que aparece el
+                n-grama al menos una vez.
+                - text_presence_freq (float): Proporción de textos que contienen el n-grama
+                (`text_frequency / total_texts`).
+        """
         ngram_texts = []
         for text in texts:
             ngram_texts.append(self.make_ngrams(text, n))
@@ -275,7 +320,17 @@ class NLITextPreprocesser():
 
     def compare_reductions(self, texts, methods, top_n) -> tuple[pd.DataFrame,
                                                                  dict[str, pd.DataFrame]]:
-        """Compara el tamaño del vocabulario y los tokens principales por método."""
+        """Compara el tamaño del vocabulario y los tokens principales por método.
+
+            Returns:
+                tuple[pd.DataFrame, dict[str, pd.DataFrame]]: Una tupla con dos elementos:
+                    - summary_df (pd.DataFrame): Tabla comparativa con una fila por método y columnas:
+                        - method (str): Nombre del método de reducción aplicado.
+                        - vocabulary_size (int): Número de tokens únicos.
+                        - token_count (int): Número total de tokens en el corpus tras la reducción.
+                    - tables (dict[str, pd.DataFrame]): Diccionario donde cada clave es el nombre del método
+                    y su valor es el DataFrame devuelto por self.top_tokens() tras aplicar las reducciones
+            """
         if methods is None:
             methods = self.REDUCTION_METHODS
         texts = [list(text) for text in texts]
