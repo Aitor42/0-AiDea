@@ -1,11 +1,8 @@
-"""Preprocesamiento de texto en inglés para conjuntos de Inferencia en Lenguaje Natural."""
-
 import json
 import unicodedata
 from collections import Counter
-
-import nltk
 import pandas as pd
+import nltk
 import spacy
 from nltk.corpus import stopwords, wordnet
 from nltk.stem import LancasterStemmer, PorterStemmer, SnowballStemmer, WordNetLemmatizer
@@ -13,7 +10,6 @@ from nltk.tokenize import word_tokenize
 from nltk.util import ngrams
 from sklearn.feature_extraction.text import ENGLISH_STOP_WORDS
 from spacy.tokens import Doc
-
 
 class NLITextPreprocesser():
     """Preprocesa columnas de texto NLI en inglés y devuelve un DataFrame. """
@@ -41,6 +37,7 @@ class NLITextPreprocesser():
         reduction="none",
         ngram_orders=(2, 3),
         top_n=20,
+        use_pos=False,
     ):
         self.columns = columns
         self.language = language
@@ -54,6 +51,7 @@ class NLITextPreprocesser():
         self.reduction = reduction
         self.ngram_orders = ngram_orders
         self.top_n = top_n
+        self.use_pos = use_pos
 
         self.spacy_tokenizer = spacy.blank("en").tokenizer
         self.nlp = spacy.load("en_core_web_sm", disable=["parser", "ner"])
@@ -356,6 +354,27 @@ class NLITextPreprocesser():
         return dataframe.loc[dataframe[self.language_column].eq(self.language)].copy().reset_index(
             drop=True)
 
+    def _tag_tokens(self, tokens) -> list[tuple[str, str]]:
+        """Asigna una etiqueta POS Universal (NOUN, VERB, ADJ...) a cada token.
+
+        Recibe tokens ya filtrados, para que las etiquetas queden alineadas con
+        la secuencia que posteriormente se reduce. Devuelve tuplas compatibles
+        con NLITextVectorizer(use_pos=True).
+        """
+        tokens = list(tokens)
+        if not tokens:
+            return []
+
+        # Construir el Doc con las palabras existentes evita que spaCy vuelva
+        # a tokenizar y cambie la correspondencia entre tokens y etiquetas.
+        doc = Doc(self.nlp.vocab, words=tokens)
+        doc = self.nlp(doc)
+
+        return [
+            (token, spacy_token.pos_ or "X")
+            for token, spacy_token in zip(tokens, doc)
+        ]
+
     def preprocess_dataset(self, dataframe: pd.DataFrame) -> pd.DataFrame:
         """Devuelve las filas inglesas y todas las características configuradas."""
         self._validate_dataframe(dataframe)
@@ -383,11 +402,28 @@ class NLITextPreprocesser():
             result[processed_column] = result[filtered_column].map(
                 lambda tokens: self.reduce_tokens(tokens))
 
+            # El POS se añade al final del pipeline de palabras. Así, el
+            # filtrado de stopwords y la reducción siguen operando sobre strings.
+            # La columna *_processed pasa a contener (token, POS) si use_pos=True.
+            if self.use_pos:
+                result[processed_column] = result.apply(
+                    lambda row: [
+                        (reduced_token, pos)
+                        for reduced_token, (_, pos) in zip(
+                            row[processed_column],
+                            self._tag_tokens(row[filtered_column])
+                        )
+                    ],
+                    axis=1,
+                )
+
             for n in self.ngram_orders:
                 result[f"{column}_{n}grams"] = result[filtered_column].map(
                     lambda tokens, order=n: self.make_ngrams(tokens, order))
                 result[f"{column}_processed_{n}grams"] = result[processed_column].map(
-                    lambda tokens, order=n: self.make_ngrams(tokens, order))
+                    lambda tokens, order=n: self.make_ngrams(
+                        [token[0] if isinstance(token, tuple) else token
+                         for token in tokens], order))
 
         result["preprocessing_config"] = config_json
         return result
@@ -407,6 +443,7 @@ class NLITextPreprocesser():
             "reduction": self.reduction,
             "ngram_orders": list(self.ngram_orders),
             "top_n": self.top_n,
+            "use_pos": self.use_pos,
         }
 
     def export_preprocessed_dataset_csv(self, dataframe: pd.DataFrame, filepath) -> None:
