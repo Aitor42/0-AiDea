@@ -31,3 +31,31 @@ def test_write_submission_rejects_length_mismatch(tmp_path):
 def test_write_submission_rejects_invalid_labels(tmp_path):
     with pytest.raises(ValueError):
         write_submission(["a", "b"], np.array([0, 7]), tmp_path / "submission.csv")
+
+
+
+@pytest.mark.parametrize(
+    "mutate",
+    [
+        lambda rows: rows[:-1],
+        lambda rows: rows + [rows[-1]],
+        lambda rows: rows[:2] + [rows[1]] + rows[3:],
+        lambda rows: [rows[0], rows[2], rows[1], *rows[3:]],
+        lambda rows: [rows[0], "id-0,", *rows[2:]],
+        lambda rows: [rows[0], "id-0,3", *rows[2:]],
+        lambda rows: ["id,label", *rows[1:]],
+    ],
+    ids=["missing-row", "extra-row", "duplicate-id", "swapped-ids", "empty-label", "bad-label", "bad-header"],
+)
+def test_validate_submission_rejects_invalid_csv(tmp_path, mutate):
+    from minilm_submission import TEST_ROWS, validate_submission
+
+    sample = tmp_path / "sample_submission.csv"
+    submission = tmp_path / "submission.csv"
+    write_submission([f"id-{i}" for i in range(TEST_ROWS)], [0] * TEST_ROWS, sample)
+    validate_submission(sample, sample)
+
+    rows = sample.read_text(encoding="utf-8").splitlines()
+    submission.write_text("\n".join(mutate(rows)) + "\n", encoding="utf-8")
+    with pytest.raises(ValueError):
+        validate_submission(submission, sample)

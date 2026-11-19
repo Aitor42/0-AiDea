@@ -14,3 +14,16 @@ __pycache__/
 
 # Logs y salidas del barrido de experimentos
 logs/
+# Artefactos regenerables y salidas locales
+.local/
+/minilm-source.zip
+/artifacts/embeddings/
+/artifacts/preprocessed/
+/artifacts/parameter_variants/
+/artifacts/kaggle_delivery/
+/artifacts/workflow_javi_aitor/preprocessed/
+/artifacts/workflow_javi_aitor/variants/
+/artifacts/workflow_javi_aitor/smoke/
+/artifacts/translations/*.checkpoint.json
+/results*/**/*.log
+/results*/**/pid.txt
