@@ -1,0 +1,42 @@
+{
+  "preprocessing_params": {
+    "columns": [
+      "premise",
+      "hypothesis"
+    ],
+    "language": null,
+    "language_column": "lang_abv",
+    "lowercase": true,
+    "strip_accents": false,
+    "tokenizer": "spacy",
+    "stopword_method": "none",
+    "keep_negations": true,
+    "reduction": "spacy_lemma",
+    "use_pos": true,
+    "ngram_orders": [],
+    "top_n": 20
+  },
+  "vectorizer_params": {
+    "method": "pair_diff",
+    "columns": [
+      "premise_processed",
+      "hypothesis_processed"
+    ],
+    "min_df": 5,
+    "word_ngram_range": [
+      1,
+      1
+    ],
+    "use_pos": false
+  },
+  "classifier_params": {
+    "n_estimators": 1000,
+    "max_depth": 50,
+    "min_samples_leaf": 5,
+    "min_samples_split": 5,
+    "max_features": "sqrt",
+    "criterion": "gini"
+  },
+  "seed": 42,
+  "n_splits": 5
+}

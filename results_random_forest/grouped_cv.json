@@ -1,0 +1,18 @@
+{
+  "table": [
+    {
+      "protocol": "standard",
+      "accuracy_mean": 0.5133032225134648,
+      "accuracy_std": 0.009483339279528996,
+      "macro_f1_mean": 0.5122946813909571,
+      "macro_f1_std": 0.009961686542610475
+    },
+    {
+      "protocol": "grouped",
+      "accuracy_mean": 0.5150569256315373,
+      "accuracy_std": 0.010194227599194104,
+      "macro_f1_mean": 0.5140060417503404,
+      "macro_f1_std": 0.010814109240139962
+    }
+  ]
+}

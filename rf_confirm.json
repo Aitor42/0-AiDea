@@ -1,0 +1,566 @@
+{
+  "repeated_cv": [
+    {
+      "name": "base",
+      "repeat_means": [
+        0.45245354444580316,
+        0.4535889474327822,
+        0.4521472435041976
+      ],
+      "accuracy_mean": 0.452729911794261,
+      "std_across_seeds": 0.0006201675783712491,
+      "macro_f1_mean": 0.4508426603589293
+    },
+    {
+      "name": "sel300_uni_spacy_rel",
+      "repeat_means": [
+        0.5027837178267041,
+        0.5084552564559264,
+        0.5073221396936459
+      ],
+      "accuracy_mean": 0.5061870379920922,
+      "std_across_seeds": 0.0024505685748880124,
+      "macro_f1_mean": 0.5044149631816152
+    },
+    {
+      "name": "sel300_uni_spacy_rel_mindf5",
+      "repeat_means": [
+        0.5068055592477789,
+        0.5071152629424244,
+        0.5073229372138897
+      ],
+      "accuracy_mean": 0.5070812531346977,
+      "std_across_seeds": 0.00021258330166537215,
+      "macro_f1_mean": 0.5061106165888482
+    },
+    {
+      "name": "sel300_uni_spacy_rel_mindf5_noposvec",
+      "repeat_means": [
+        0.5133032225134648,
+        0.5169141815049739,
+        0.5137177203681353
+      ],
+      "accuracy_mean": 0.5146450414621914,
+      "std_across_seeds": 0.0016134227629899193,
+      "macro_f1_mean": 0.5134818493428064
+    }
+  ],
+  "holdout": [
+    {
+      "name": "base",
+      "accuracy": 0.4814356435643564,
+      "macro_f1": 0.4806221628838451,
+      "confusion_matrix": [
+        [
+          438,
+          181,
+          216
+        ],
+        [
+          228,
+          353,
+          195
+        ],
+        [
+          249,
+          188,
+          376
+        ]
+      ],
+      "per_language": [
+        {
+          "language": "Arabic",
+          "n": 79,
+          "accuracy": 0.3670886075949367,
+          "macro_f1": 0.3559431524547804,
+          "n_classes": 3
+        },
+        {
+          "language": "Bulgarian",
+          "n": 71,
+          "accuracy": 0.4647887323943662,
+          "macro_f1": 0.44979203802733214,
+          "n_classes": 3
+        },
+        {
+          "language": "Chinese",
+          "n": 103,
+          "accuracy": 0.36893203883495146,
+          "macro_f1": 0.3677436835331573,
+          "n_classes": 3
+        },
+        {
+          "language": "English",
+          "n": 1354,
+          "accuracy": 0.5125553914327917,
+          "macro_f1": 0.5104181852828412,
+          "n_classes": 3
+        },
+        {
+          "language": "French",
+          "n": 59,
+          "accuracy": 0.4067796610169492,
+          "macro_f1": 0.40733542462265865,
+          "n_classes": 3
+        },
+        {
+          "language": "German",
+          "n": 67,
+          "accuracy": 0.373134328358209,
+          "macro_f1": 0.37222385174823075,
+          "n_classes": 3
+        },
+        {
+          "language": "Greek",
+          "n": 77,
+          "accuracy": 0.4675324675324675,
+          "macro_f1": 0.46336996336996333,
+          "n_classes": 3
+        },
+        {
+          "language": "Hindi",
+          "n": 86,
+          "accuracy": 0.6162790697674418,
+          "macro_f1": 0.5954397550004785,
+          "n_classes": 3
+        },
+        {
+          "language": "Russian",
+          "n": 94,
+          "accuracy": 0.39361702127659576,
+          "macro_f1": 0.3944327731092437,
+          "n_classes": 3
+        },
+        {
+          "language": "Spanish",
+          "n": 83,
+          "accuracy": 0.5301204819277109,
+          "macro_f1": 0.5258529465426017,
+          "n_classes": 3
+        },
+        {
+          "language": "Swahili",
+          "n": 72,
+          "accuracy": 0.4583333333333333,
+          "macro_f1": 0.4488590757940603,
+          "n_classes": 3
+        },
+        {
+          "language": "Thai",
+          "n": 77,
+          "accuracy": 0.2857142857142857,
+          "macro_f1": 0.2728824092752206,
+          "n_classes": 3
+        },
+        {
+          "language": "Turkish",
+          "n": 65,
+          "accuracy": 0.38461538461538464,
+          "macro_f1": 0.38496345569516305,
+          "n_classes": 3
+        },
+        {
+          "language": "Urdu",
+          "n": 70,
+          "accuracy": 0.4857142857142857,
+          "macro_f1": 0.4768052205986664,
+          "n_classes": 3
+        },
+        {
+          "language": "Vietnamese",
+          "n": 67,
+          "accuracy": 0.5970149253731343,
+          "macro_f1": 0.5844433244534044,
+          "n_classes": 3
+        }
+      ]
+    },
+    {
+      "name": "sel300_uni_spacy_rel",
+      "accuracy": 0.5173267326732673,
+      "macro_f1": 0.5161710971809312,
+      "confusion_matrix": [
+        [
+          476,
+          166,
+          193
+        ],
+        [
+          204,
+          395,
+          177
+        ],
+        [
+          220,
+          210,
+          383
+        ]
+      ],
+      "per_language": [
+        {
+          "language": "Arabic",
+          "n": 79,
+          "accuracy": 0.3924050632911392,
+          "macro_f1": 0.3946572720463813,
+          "n_classes": 3
+        },
+        {
+          "language": "Bulgarian",
+          "n": 71,
+          "accuracy": 0.5633802816901409,
+          "macro_f1": 0.5646135265700483,
+          "n_classes": 3
+        },
+        {
+          "language": "Chinese",
+          "n": 103,
+          "accuracy": 0.36893203883495146,
+          "macro_f1": 0.34059069172223344,
+          "n_classes": 3
+        },
+        {
+          "language": "English",
+          "n": 1354,
+          "accuracy": 0.5723781388478582,
+          "macro_f1": 0.569766692643333,
+          "n_classes": 3
+        },
+        {
+          "language": "French",
+          "n": 59,
+          "accuracy": 0.5084745762711864,
+          "macro_f1": 0.5032206119162641,
+          "n_classes": 3
+        },
+        {
+          "language": "German",
+          "n": 67,
+          "accuracy": 0.373134328358209,
+          "macro_f1": 0.35973164654015716,
+          "n_classes": 3
+        },
+        {
+          "language": "Greek",
+          "n": 77,
+          "accuracy": 0.44155844155844154,
+          "macro_f1": 0.4327272727272727,
+          "n_classes": 3
+        },
+        {
+          "language": "Hindi",
+          "n": 86,
+          "accuracy": 0.5465116279069767,
+          "macro_f1": 0.5529914529914529,
+          "n_classes": 3
+        },
+        {
+          "language": "Russian",
+          "n": 94,
+          "accuracy": 0.425531914893617,
+          "macro_f1": 0.42745098039215684,
+          "n_classes": 3
+        },
+        {
+          "language": "Spanish",
+          "n": 83,
+          "accuracy": 0.4819277108433735,
+          "macro_f1": 0.4754641004641004,
+          "n_classes": 3
+        },
+        {
+          "language": "Swahili",
+          "n": 72,
+          "accuracy": 0.4305555555555556,
+          "macro_f1": 0.4322785961083833,
+          "n_classes": 3
+        },
+        {
+          "language": "Thai",
+          "n": 77,
+          "accuracy": 0.2857142857142857,
+          "macro_f1": 0.2669129720853859,
+          "n_classes": 3
+        },
+        {
+          "language": "Turkish",
+          "n": 65,
+          "accuracy": 0.4153846153846154,
+          "macro_f1": 0.4157857646229739,
+          "n_classes": 3
+        },
+        {
+          "language": "Urdu",
+          "n": 70,
+          "accuracy": 0.45714285714285713,
+          "macro_f1": 0.449074074074074,
+          "n_classes": 3
+        },
+        {
+          "language": "Vietnamese",
+          "n": 67,
+          "accuracy": 0.6268656716417911,
+          "macro_f1": 0.6089500202975381,
+          "n_classes": 3
+        }
+      ]
+    },
+    {
+      "name": "sel300_uni_spacy_rel_mindf5",
+      "accuracy": 0.5193894389438944,
+      "macro_f1": 0.5185591271411666,
+      "confusion_matrix": [
+        [
+          465,
+          182,
+          188
+        ],
+        [
+          190,
+          412,
+          174
+        ],
+        [
+          197,
+          234,
+          382
+        ]
+      ],
+      "per_language": [
+        {
+          "language": "Arabic",
+          "n": 79,
+          "accuracy": 0.43037974683544306,
+          "macro_f1": 0.4278286376647032,
+          "n_classes": 3
+        },
+        {
+          "language": "Bulgarian",
+          "n": 71,
+          "accuracy": 0.5492957746478874,
+          "macro_f1": 0.5427608779360801,
+          "n_classes": 3
+        },
+        {
+          "language": "Chinese",
+          "n": 103,
+          "accuracy": 0.3300970873786408,
+          "macro_f1": 0.2768878549536576,
+          "n_classes": 3
+        },
+        {
+          "language": "English",
+          "n": 1354,
+          "accuracy": 0.5775480059084195,
+          "macro_f1": 0.5741033605916582,
+          "n_classes": 3
+        },
+        {
+          "language": "French",
+          "n": 59,
+          "accuracy": 0.4915254237288136,
+          "macro_f1": 0.47322689258173134,
+          "n_classes": 3
+        },
+        {
+          "language": "German",
+          "n": 67,
+          "accuracy": 0.3283582089552239,
+          "macro_f1": 0.3085271317829457,
+          "n_classes": 3
+        },
+        {
+          "language": "Greek",
+          "n": 77,
+          "accuracy": 0.37662337662337664,
+          "macro_f1": 0.36326692437307956,
+          "n_classes": 3
+        },
+        {
+          "language": "Hindi",
+          "n": 86,
+          "accuracy": 0.5581395348837209,
+          "macro_f1": 0.5584007187780773,
+          "n_classes": 3
+        },
+        {
+          "language": "Russian",
+          "n": 94,
+          "accuracy": 0.4148936170212766,
+          "macro_f1": 0.40897646414887795,
+          "n_classes": 3
+        },
+        {
+          "language": "Spanish",
+          "n": 83,
+          "accuracy": 0.5180722891566265,
+          "macro_f1": 0.5137876451844999,
+          "n_classes": 3
+        },
+        {
+          "language": "Swahili",
+          "n": 72,
+          "accuracy": 0.5,
+          "macro_f1": 0.5018181818181818,
+          "n_classes": 3
+        },
+        {
+          "language": "Thai",
+          "n": 77,
+          "accuracy": 0.3246753246753247,
+          "macro_f1": 0.3141394074500943,
+          "n_classes": 3
+        },
+        {
+          "language": "Turkish",
+          "n": 65,
+          "accuracy": 0.4,
+          "macro_f1": 0.4029790660225443,
+          "n_classes": 3
+        },
+        {
+          "language": "Urdu",
+          "n": 70,
+          "accuracy": 0.5,
+          "macro_f1": 0.4748140748140748,
+          "n_classes": 3
+        },
+        {
+          "language": "Vietnamese",
+          "n": 67,
+          "accuracy": 0.5671641791044776,
+          "macro_f1": 0.5417684167684168,
+          "n_classes": 3
+        }
+      ]
+    },
+    {
+      "name": "sel300_uni_spacy_rel_mindf5_noposvec",
+      "accuracy": 0.5206270627062707,
+      "macro_f1": 0.5192917377451053,
+      "confusion_matrix": [
+        [
+          481,
+          181,
+          173
+        ],
+        [
+          204,
+          400,
+          172
+        ],
+        [
+          202,
+          230,
+          381
+        ]
+      ],
+      "per_language": [
+        {
+          "language": "Arabic",
+          "n": 79,
+          "accuracy": 0.4177215189873418,
+          "macro_f1": 0.4149049906629984,
+          "n_classes": 3
+        },
+        {
+          "language": "Bulgarian",
+          "n": 71,
+          "accuracy": 0.5492957746478874,
+          "macro_f1": 0.549472025216706,
+          "n_classes": 3
+        },
+        {
+          "language": "Chinese",
+          "n": 103,
+          "accuracy": 0.33980582524271846,
+          "macro_f1": 0.29228958267971233,
+          "n_classes": 3
+        },
+        {
+          "language": "English",
+          "n": 1354,
+          "accuracy": 0.5790251107828656,
+          "macro_f1": 0.5744477302725707,
+          "n_classes": 3
+        },
+        {
+          "language": "French",
+          "n": 59,
+          "accuracy": 0.4576271186440678,
+          "macro_f1": 0.43956760466712425,
+          "n_classes": 3
+        },
+        {
+          "language": "German",
+          "n": 67,
+          "accuracy": 0.34328358208955223,
+          "macro_f1": 0.32212422809092106,
+          "n_classes": 3
+        },
+        {
+          "language": "Greek",
+          "n": 77,
+          "accuracy": 0.45454545454545453,
+          "macro_f1": 0.4443203499464842,
+          "n_classes": 3
+        },
+        {
+          "language": "Hindi",
+          "n": 86,
+          "accuracy": 0.5,
+          "macro_f1": 0.4961286235934123,
+          "n_classes": 3
+        },
+        {
+          "language": "Russian",
+          "n": 94,
+          "accuracy": 0.46808510638297873,
+          "macro_f1": 0.4652353323595255,
+          "n_classes": 3
+        },
+        {
+          "language": "Spanish",
+          "n": 83,
+          "accuracy": 0.5301204819277109,
+          "macro_f1": 0.525381256980404,
+          "n_classes": 3
+        },
+        {
+          "language": "Swahili",
+          "n": 72,
+          "accuracy": 0.4444444444444444,
+          "macro_f1": 0.44590964590964594,
+          "n_classes": 3
+        },
+        {
+          "language": "Thai",
+          "n": 77,
+          "accuracy": 0.35064935064935066,
+          "macro_f1": 0.34000861326442716,
+          "n_classes": 3
+        },
+        {
+          "language": "Turkish",
+          "n": 65,
+          "accuracy": 0.35384615384615387,
+          "macro_f1": 0.3557183557183557,
+          "n_classes": 3
+        },
+        {
+          "language": "Urdu",
+          "n": 70,
+          "accuracy": 0.5,
+          "macro_f1": 0.4793668162089215,
+          "n_classes": 3
+        },
+        {
+          "language": "Vietnamese",
+          "n": 67,
+          "accuracy": 0.5671641791044776,
+          "macro_f1": 0.5521825396825397,
+          "n_classes": 3
+        }
+      ]
+    }
+  ]
+}

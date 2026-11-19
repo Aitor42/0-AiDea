@@ -1,0 +1,50 @@
+{
+  "input_sha256": {
+    "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\parameter_variants\\preprocess_e4b76e090a4d_1372112a4d3b\\dataset.pkl": "8bcb2baf12a8e33a277025993d15c6ea2235b86b93baee03caa01b2879597d11",
+    "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\parameter_variants\\preprocess_e328b9b92d60_d610198c8127\\dataset.pkl": "01ff95d437e7fcfc0804433607bb882c4b2187b9877e88f8f40bebcd6a7bf217",
+    "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\parameter_variants\\preprocess_e4b76e090a4d_ac2805bd70f0\\dataset.pkl": "70d3f88348af18439d03c37834c52990e8caccd4d349f9ac1d029d3662450295",
+    "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\parameter_variants\\preprocess_e328b9b92d60_f27a4acf51c8\\dataset.pkl": "307e407d988b849b0c40c4df060bd346e9154e38a3e56f4092a578b17c46eb9a"
+  },
+  "seed": 42,
+  "n_splits": 3,
+  "split": "StratifiedGroupKFold",
+  "group_by_premise": true,
+  "select_k": 300,
+  "datasets": {
+    "original": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\parameter_variants\\preprocess_e4b76e090a4d_1372112a4d3b\\dataset.pkl",
+    "translated": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\parameter_variants\\preprocess_e328b9b92d60_d610198c8127\\dataset.pkl"
+  },
+  "holdout_datasets": {
+    "original": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\parameter_variants\\preprocess_e4b76e090a4d_ac2805bd70f0\\dataset.pkl",
+    "translated": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\parameter_variants\\preprocess_e328b9b92d60_f27a4acf51c8\\dataset.pkl"
+  },
+  "representations": {
+    "pair_diff": {
+      "method": "pair_diff",
+      "min_df": 5,
+      "word_ngram_range": [
+        1,
+        1
+      ],
+      "use_pos": false
+    }
+  },
+  "classifiers": {
+    "naive_bayes": {
+      "alpha": 1.0,
+      "fit_prior": false
+    },
+    "catboost": {
+      "iterations": 300,
+      "learning_rate": 0.1,
+      "depth": 6,
+      "loss_function": "MultiClass",
+      "verbose": false,
+      "allow_writing_files": false,
+      "thread_count": -1
+    }
+  },
+  "holdout_classifiers": [
+    "naive_bayes"
+  ]
+}

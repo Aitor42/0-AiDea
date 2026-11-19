@@ -1,0 +1,10 @@
+seed,comparator,baseline,candidate_correct_only,baseline_correct_only,both_correct,both_wrong,net_correct
+42,voto_2_mlp_xgb,mlp_256_alpha0.0003,402,341,5544,3409,61
+42,voto_4,mlp_256_alpha0.0003,600,580,5305,3211,20
+42,mlp_original,mlp_256_alpha0.0003,401,403,5482,3410,-2
+7,voto_2_mlp_xgb,mlp_256_alpha0.0003,377,312,5620,3387,65
+7,voto_4,mlp_256_alpha0.0003,627,571,5361,3137,56
+7,mlp_original,mlp_256_alpha0.0003,517,536,5396,3247,-19
+2024,voto_2_mlp_xgb,mlp_256_alpha0.0003,400,322,5593,3381,78
+2024,voto_4,mlp_256_alpha0.0003,609,562,5353,3172,47
+2024,mlp_original,mlp_256_alpha0.0003,487,549,5366,3294,-62

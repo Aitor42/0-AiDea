@@ -1,0 +1,25 @@
+{
+  "experiment_id": "algorithm__catboost",
+  "classifier": "catboost",
+  "classifier_params": {
+    "allow_writing_files": false,
+    "depth": 6,
+    "iterations": 300,
+    "learning_rate": 0.1,
+    "loss_function": "MultiClass",
+    "verbose": false
+  },
+  "select_k": 300,
+  "use_pos_features": true,
+  "n_splits": 5,
+  "seed": 42,
+  "accuracy_mean": 0.5264011633161955,
+  "accuracy_std": 0.012850961515586096,
+  "macro_f1_mean": 0.5249751252070078,
+  "macro_f1_std": 0.012618158666966363,
+  "holdout": {
+    "accuracy": 0.5206270627062707,
+    "macro_f1": 0.5194523470636393,
+    "runtime_seconds": 6.6
+  }
+}
