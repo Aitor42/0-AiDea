@@ -1,0 +1,106 @@
+{
+  "model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "n_train": 9696,
+  "n_val": 2424,
+  "rows": [
+    {
+      "name": "baseline tfidf_pair_diff",
+      "n_features": 300,
+      "accuracy": 0.5206270627062707,
+      "f1_macro": 0.5192917377451053,
+      "accuracy_english": 0.5790251107828656,
+      "accuracy_non_english": 0.44672897196261685,
+      "n_english": 1354,
+      "n_non_english": 1070,
+      "fit_seconds": 2.2,
+      "feature_seconds": 3.3,
+      "selection": "chi2"
+    },
+    {
+      "name": "emb concat [p,h]",
+      "n_features": 768,
+      "accuracy": 0.4768976897689769,
+      "f1_macro": 0.4615334202428875,
+      "accuracy_english": 0.4608567208271787,
+      "accuracy_non_english": 0.497196261682243,
+      "n_english": 1354,
+      "n_non_english": 1070,
+      "fit_seconds": 20.7,
+      "feature_seconds": 3.1
+    },
+    {
+      "name": "emb full [p,h,|d|,p*h]",
+      "n_features": 1536,
+      "accuracy": 0.6051980198019802,
+      "f1_macro": 0.6061513956475683,
+      "accuracy_english": 0.6336779911373708,
+      "accuracy_non_english": 0.569158878504673,
+      "n_english": 1354,
+      "n_non_english": 1070,
+      "fit_seconds": 32.2,
+      "feature_seconds": 3.1
+    },
+    {
+      "name": "emb diff+product",
+      "n_features": 768,
+      "accuracy": 0.5837458745874587,
+      "f1_macro": 0.5803618819255346,
+      "accuracy_english": 0.6107828655834564,
+      "accuracy_non_english": 0.5495327102803739,
+      "n_english": 1354,
+      "n_non_english": 1070,
+      "fit_seconds": 22.1,
+      "feature_seconds": 3.1
+    },
+    {
+      "name": "emb concat + cosine",
+      "n_features": 769,
+      "accuracy": 0.5763201320132013,
+      "f1_macro": 0.5725491968250319,
+      "accuracy_english": 0.5834564254062038,
+      "accuracy_non_english": 0.5672897196261683,
+      "n_english": 1354,
+      "n_non_english": 1070,
+      "fit_seconds": 22.8,
+      "feature_seconds": 3.1
+    },
+    {
+      "name": "emb concat + PCA200",
+      "n_features": 200,
+      "accuracy": 0.5268151815181518,
+      "f1_macro": 0.5185753487293834,
+      "accuracy_english": 0.5140324963072378,
+      "accuracy_non_english": 0.5429906542056074,
+      "n_english": 1354,
+      "n_non_english": 1070,
+      "fit_seconds": 12.7,
+      "feature_seconds": 3.1
+    },
+    {
+      "name": "emb full + RF max_features=0.1",
+      "n_features": 1536,
+      "accuracy": 0.5985973597359736,
+      "f1_macro": 0.6001419677066228,
+      "accuracy_english": 0.6248153618906942,
+      "accuracy_non_english": 0.5654205607476636,
+      "n_english": 1354,
+      "n_non_english": 1070,
+      "fit_seconds": 131.6,
+      "feature_seconds": 3.1
+    },
+    {
+      "name": "hibrido tfidf+emb f_classif400",
+      "n_features": 400,
+      "accuracy": 0.5771452145214522,
+      "f1_macro": 0.5780294950451609,
+      "accuracy_english": 0.5974889217134417,
+      "accuracy_non_english": 0.5514018691588785,
+      "n_english": 1354,
+      "n_non_english": 1070,
+      "fit_seconds": 27.6,
+      "feature_seconds": 3.1
+    }
+  ],
+  "encode_seconds": 3.1,
+  "embedding_dim": 384
+}

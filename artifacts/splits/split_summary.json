@@ -1,0 +1,50 @@
+{
+  "n_train": 9696,
+  "n_val": 2424,
+  "class_distribution_train": {
+    "0": 3341,
+    "1": 3104,
+    "2": 3251
+  },
+  "class_distribution_val": {
+    "0": 835,
+    "1": 776,
+    "2": 813
+  },
+  "language_distribution_train": {
+    "English": 5516,
+    "French": 331,
+    "Arabic": 322,
+    "Swahili": 313,
+    "Vietnamese": 312,
+    "Urdu": 311,
+    "Chinese": 308,
+    "Greek": 295,
+    "Thai": 294,
+    "Hindi": 288,
+    "Turkish": 286,
+    "German": 284,
+    "Spanish": 283,
+    "Russian": 282,
+    "Bulgarian": 271
+  },
+  "language_distribution_val": {
+    "English": 1354,
+    "Chinese": 103,
+    "Russian": 94,
+    "Hindi": 86,
+    "Spanish": 83,
+    "Arabic": 79,
+    "Thai": 77,
+    "Greek": 77,
+    "Swahili": 72,
+    "Bulgarian": 71,
+    "Urdu": 70,
+    "German": 67,
+    "Vietnamese": 67,
+    "Turkish": 65,
+    "French": 59
+  },
+  "premise_overlap": 1092,
+  "premise_overlap_ratio": 0.48533333333333334
+}

@@ -1,0 +1,599 @@
+{
+  "spec": {
+    "version": 1,
+    "datasets": [
+      {
+        "name": "original",
+        "path": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\workflow_javi_aitor\\variants\\preprocess_724fad45123b_8e81ddb1359c\\dataset.pkl",
+        "sha256": "6225eed86991ad58789c56a01fac12aef0e9adc6e812c06fe6ac72178224c9d1"
+      },
+      {
+        "name": "traducido",
+        "path": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\workflow_javi_aitor\\variants\\preprocess_f44c51bcc8b8_bb5699c24a04\\dataset.pkl",
+        "sha256": "ae5fcbf4904ec37efc9fb2340e3115d486ace1f291ddc751085457785a520312"
+      }
+    ],
+    "holdout_datasets": [
+      {
+        "name": "original",
+        "path": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\workflow_javi_aitor\\variants\\preprocess_724fad45123b_3b8203517add\\dataset.pkl",
+        "sha256": "8f66d69aaad898fd36d5091f9de3c605658b406b93a82fc2e4f3daf714addd6a"
+      },
+      {
+        "name": "traducido",
+        "path": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\workflow_javi_aitor\\variants\\preprocess_f44c51bcc8b8_e71dbf47a744\\dataset.pkl",
+        "sha256": "eb8c39cf04d748c4b7640b75a81f32802d90bbd4694e4d9c96a1adab52a3b6d7"
+      }
+    ],
+    "representations": [
+      [
+        "pair_diff",
+        {
+          "method": "pair_diff",
+          "min_df": 2,
+          "word_ngram_range": [
+            1,
+            1
+          ],
+          "use_pos": false
+        }
+      ],
+      [
+        "char_tfidf",
+        {
+          "method": "char_tfidf",
+          "min_df": 2,
+          "max_features": 10000
+        }
+      ]
+    ],
+    "classifiers": [
+      [
+        "naive_bayes",
+        {
+          "alpha": 1.0,
+          "fit_prior": false
+        }
+      ]
+    ],
+    "holdout_classifiers": [
+      "naive_bayes"
+    ],
+    "seed": 42,
+    "n_splits": 2,
+    "group_by_premise": true,
+    "select_k": null,
+    "use_pos_features": false,
+    "use_relation_features": false
+  },
+  "experiments": [
+    {
+      "dataset": "original",
+      "representation": "pair_diff",
+      "vectorizer_params": {
+        "method": "pair_diff",
+        "min_df": 2,
+        "word_ngram_range": [
+          1,
+          1
+        ],
+        "use_pos": false
+      },
+      "classifier": "naive_bayes",
+      "classifier_params": {
+        "alpha": 1.0,
+        "fit_prior": false
+      },
+      "seed": 42,
+      "n_splits": 2,
+      "group_by_premise": true,
+      "select_k": null,
+      "use_pos_features": false,
+      "use_relation_features": false,
+      "experiment_id": "2e872c91ba604a62",
+      "dataset_path": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\workflow_javi_aitor\\variants\\preprocess_724fad45123b_8e81ddb1359c\\dataset.pkl",
+      "n_examples": 105,
+      "summary": {
+        "n_splits": 2,
+        "accuracy_mean": 0.3044267053701016,
+        "accuracy_std": 0.03519593613933236,
+        "macro_f1_mean": 0.2740672026386312,
+        "macro_f1_std": 0.04050711193568336,
+        "fit_seconds_mean": 0.0,
+        "predict_seconds_mean": 0.0,
+        "fit_seconds_total": 0.0
+      },
+      "confusion_matrix": [
+        [
+          17,
+          4,
+          14
+        ],
+        [
+          18,
+          3,
+          14
+        ],
+        [
+          21,
+          2,
+          12
+        ]
+      ],
+      "folds": [
+        {
+          "fold": 1,
+          "n_train": 52,
+          "n_test": 53,
+          "accuracy": 0.33962264150943394,
+          "macro_f1": 0.31457431457431456,
+          "fit_seconds": 0.0,
+          "predict_seconds": 0.0
+        },
+        {
+          "fold": 2,
+          "n_train": 53,
+          "n_test": 52,
+          "accuracy": 0.2692307692307692,
+          "macro_f1": 0.23356009070294784,
+          "fit_seconds": 0.0,
+          "predict_seconds": 0.0
+        }
+      ],
+      "holdout": {
+        "accuracy": 0.3888888888888889,
+        "macro_f1": 0.3501475859160868,
+        "runtime_seconds": 0.0,
+        "n_train": 105,
+        "n_val": 36,
+        "classification_report": {
+          "entailment": {
+            "precision": 0.4166666666666667,
+            "recall": 0.4166666666666667,
+            "f1-score": 0.4166666666666667,
+            "support": 12.0
+          },
+          "neutral": {
+            "precision": 0.2,
+            "recall": 0.08333333333333333,
+            "f1-score": 0.11764705882352941,
+            "support": 12.0
+          },
+          "contradiction": {
+            "precision": 0.42105263157894735,
+            "recall": 0.6666666666666666,
+            "f1-score": 0.5161290322580645,
+            "support": 12.0
+          },
+          "accuracy": 0.3888888888888889,
+          "macro avg": {
+            "precision": 0.345906432748538,
+            "recall": 0.38888888888888884,
+            "f1-score": 0.3501475859160868,
+            "support": 36.0
+          },
+          "weighted avg": {
+            "precision": 0.345906432748538,
+            "recall": 0.3888888888888889,
+            "f1-score": 0.35014758591608686,
+            "support": 36.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            5,
+            3,
+            4
+          ],
+          [
+            4,
+            1,
+            7
+          ],
+          [
+            3,
+            1,
+            8
+          ]
+        ],
+        "per_language": [],
+        "predictions_path": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\workflow_javi_aitor\\smoke\\f76df82256f88817\\holdout_predictions_2e872c91ba604a62.csv",
+        "holdout_dataset_path": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\workflow_javi_aitor\\variants\\preprocess_724fad45123b_3b8203517add\\dataset.pkl"
+      }
+    },
+    {
+      "dataset": "original",
+      "representation": "char_tfidf",
+      "vectorizer_params": {
+        "method": "char_tfidf",
+        "min_df": 2,
+        "max_features": 10000
+      },
+      "classifier": "naive_bayes",
+      "classifier_params": {
+        "alpha": 1.0,
+        "fit_prior": false
+      },
+      "seed": 42,
+      "n_splits": 2,
+      "group_by_premise": true,
+      "select_k": null,
+      "use_pos_features": false,
+      "use_relation_features": false,
+      "experiment_id": "324d4bdad19ac592",
+      "dataset_path": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\workflow_javi_aitor\\variants\\preprocess_724fad45123b_8e81ddb1359c\\dataset.pkl",
+      "n_examples": 105,
+      "summary": {
+        "n_splits": 2,
+        "accuracy_mean": 0.3993105950653121,
+        "accuracy_std": 0.07238751814223512,
+        "macro_f1_mean": 0.3938984582818178,
+        "macro_f1_std": 0.07753011314675357,
+        "fit_seconds_mean": 0.0,
+        "predict_seconds_mean": 0.0,
+        "fit_seconds_total": 0.0
+      },
+      "confusion_matrix": [
+        [
+          17,
+          10,
+          8
+        ],
+        [
+          13,
+          12,
+          10
+        ],
+        [
+          11,
+          11,
+          13
+        ]
+      ],
+      "folds": [
+        {
+          "fold": 1,
+          "n_train": 52,
+          "n_test": 53,
+          "accuracy": 0.4716981132075472,
+          "macro_f1": 0.47142857142857136,
+          "fit_seconds": 0.0,
+          "predict_seconds": 0.0
+        },
+        {
+          "fold": 2,
+          "n_train": 53,
+          "n_test": 52,
+          "accuracy": 0.3269230769230769,
+          "macro_f1": 0.31636834513506423,
+          "fit_seconds": 0.0,
+          "predict_seconds": 0.0
+        }
+      ],
+      "holdout": {
+        "accuracy": 0.3888888888888889,
+        "macro_f1": 0.3665167416291854,
+        "runtime_seconds": 0.1,
+        "n_train": 105,
+        "n_val": 36,
+        "classification_report": {
+          "entailment": {
+            "precision": 0.36363636363636365,
+            "recall": 0.3333333333333333,
+            "f1-score": 0.34782608695652173,
+            "support": 12.0
+          },
+          "neutral": {
+            "precision": 0.25,
+            "recall": 0.16666666666666666,
+            "f1-score": 0.2,
+            "support": 12.0
+          },
+          "contradiction": {
+            "precision": 0.47058823529411764,
+            "recall": 0.6666666666666666,
+            "f1-score": 0.5517241379310345,
+            "support": 12.0
+          },
+          "accuracy": 0.3888888888888889,
+          "macro avg": {
+            "precision": 0.36140819964349374,
+            "recall": 0.38888888888888884,
+            "f1-score": 0.3665167416291854,
+            "support": 36.0
+          },
+          "weighted avg": {
+            "precision": 0.36140819964349374,
+            "recall": 0.3888888888888889,
+            "f1-score": 0.3665167416291854,
+            "support": 36.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            4,
+            5,
+            3
+          ],
+          [
+            4,
+            2,
+            6
+          ],
+          [
+            3,
+            1,
+            8
+          ]
+        ],
+        "per_language": [],
+        "predictions_path": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\workflow_javi_aitor\\smoke\\f76df82256f88817\\holdout_predictions_324d4bdad19ac592.csv",
+        "holdout_dataset_path": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\workflow_javi_aitor\\variants\\preprocess_724fad45123b_3b8203517add\\dataset.pkl"
+      }
+    },
+    {
+      "dataset": "traducido",
+      "representation": "pair_diff",
+      "vectorizer_params": {
+        "method": "pair_diff",
+        "min_df": 2,
+        "word_ngram_range": [
+          1,
+          1
+        ],
+        "use_pos": false
+      },
+      "classifier": "naive_bayes",
+      "classifier_params": {
+        "alpha": 1.0,
+        "fit_prior": false
+      },
+      "seed": 42,
+      "n_splits": 2,
+      "group_by_premise": true,
+      "select_k": null,
+      "use_pos_features": false,
+      "use_relation_features": false,
+      "experiment_id": "52d5d51551db696f",
+      "dataset_path": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\workflow_javi_aitor\\variants\\preprocess_f44c51bcc8b8_bb5699c24a04\\dataset.pkl",
+      "n_examples": 105,
+      "summary": {
+        "n_splits": 2,
+        "accuracy_mean": 0.3619375907111756,
+        "accuracy_std": 0.003447024673439769,
+        "macro_f1_mean": 0.36142033874481694,
+        "macro_f1_std": 0.0013247592943987918,
+        "fit_seconds_mean": 0.0,
+        "predict_seconds_mean": 0.0,
+        "fit_seconds_total": 0.0
+      },
+      "confusion_matrix": [
+        [
+          11,
+          5,
+          19
+        ],
+        [
+          11,
+          17,
+          7
+        ],
+        [
+          18,
+          7,
+          10
+        ]
+      ],
+      "folds": [
+        {
+          "fold": 1,
+          "n_train": 52,
+          "n_test": 53,
+          "accuracy": 0.3584905660377358,
+          "macro_f1": 0.36009557945041815,
+          "fit_seconds": 0.0,
+          "predict_seconds": 0.0
+        },
+        {
+          "fold": 2,
+          "n_train": 53,
+          "n_test": 52,
+          "accuracy": 0.36538461538461536,
+          "macro_f1": 0.36274509803921573,
+          "fit_seconds": 0.0,
+          "predict_seconds": 0.0
+        }
+      ],
+      "holdout": {
+        "accuracy": 0.3888888888888889,
+        "macro_f1": 0.3852813852813853,
+        "runtime_seconds": 0.0,
+        "n_train": 105,
+        "n_val": 36,
+        "classification_report": {
+          "entailment": {
+            "precision": 0.5,
+            "recall": 0.4166666666666667,
+            "f1-score": 0.45454545454545453,
+            "support": 12.0
+          },
+          "neutral": {
+            "precision": 0.3,
+            "recall": 0.25,
+            "f1-score": 0.2727272727272727,
+            "support": 12.0
+          },
+          "contradiction": {
+            "precision": 0.375,
+            "recall": 0.5,
+            "f1-score": 0.42857142857142855,
+            "support": 12.0
+          },
+          "accuracy": 0.3888888888888889,
+          "macro avg": {
+            "precision": 0.39166666666666666,
+            "recall": 0.3888888888888889,
+            "f1-score": 0.3852813852813853,
+            "support": 36.0
+          },
+          "weighted avg": {
+            "precision": 0.39166666666666666,
+            "recall": 0.3888888888888889,
+            "f1-score": 0.3852813852813852,
+            "support": 36.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            5,
+            4,
+            3
+          ],
+          [
+            2,
+            3,
+            7
+          ],
+          [
+            3,
+            3,
+            6
+          ]
+        ],
+        "per_language": [],
+        "predictions_path": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\workflow_javi_aitor\\smoke\\f76df82256f88817\\holdout_predictions_52d5d51551db696f.csv",
+        "holdout_dataset_path": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\workflow_javi_aitor\\variants\\preprocess_f44c51bcc8b8_e71dbf47a744\\dataset.pkl"
+      }
+    },
+    {
+      "dataset": "traducido",
+      "representation": "char_tfidf",
+      "vectorizer_params": {
+        "method": "char_tfidf",
+        "min_df": 2,
+        "max_features": 10000
+      },
+      "classifier": "naive_bayes",
+      "classifier_params": {
+        "alpha": 1.0,
+        "fit_prior": false
+      },
+      "seed": 42,
+      "n_splits": 2,
+      "group_by_premise": true,
+      "select_k": null,
+      "use_pos_features": false,
+      "use_relation_features": false,
+      "experiment_id": "efdcd9ce1ba5d31a",
+      "dataset_path": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\workflow_javi_aitor\\variants\\preprocess_f44c51bcc8b8_bb5699c24a04\\dataset.pkl",
+      "n_examples": 105,
+      "summary": {
+        "n_splits": 2,
+        "accuracy_mean": 0.34288824383164007,
+        "accuracy_std": 0.0032656023222061015,
+        "macro_f1_mean": 0.3138152514651765,
+        "macro_f1_std": 0.014215051565126535,
+        "fit_seconds_mean": 0.0,
+        "predict_seconds_mean": 0.0,
+        "fit_seconds_total": 0.0
+      },
+      "confusion_matrix": [
+        [
+          12,
+          12,
+          11
+        ],
+        [
+          8,
+          19,
+          8
+        ],
+        [
+          12,
+          18,
+          5
+        ]
+      ],
+      "folds": [
+        {
+          "fold": 1,
+          "n_train": 52,
+          "n_test": 53,
+          "accuracy": 0.33962264150943394,
+          "macro_f1": 0.32803030303030306,
+          "fit_seconds": 0.0,
+          "predict_seconds": 0.0
+        },
+        {
+          "fold": 2,
+          "n_train": 53,
+          "n_test": 52,
+          "accuracy": 0.34615384615384615,
+          "macro_f1": 0.29960019990005,
+          "fit_seconds": 0.0,
+          "predict_seconds": 0.0
+        }
+      ],
+      "holdout": {
+        "accuracy": 0.3611111111111111,
+        "macro_f1": 0.36305361305361306,
+        "runtime_seconds": 0.1,
+        "n_train": 105,
+        "n_val": 36,
+        "classification_report": {
+          "entailment": {
+            "precision": 0.5,
+            "recall": 0.4166666666666667,
+            "f1-score": 0.45454545454545453,
+            "support": 12.0
+          },
+          "neutral": {
+            "precision": 0.25,
+            "recall": 0.25,
+            "f1-score": 0.25,
+            "support": 12.0
+          },
+          "contradiction": {
+            "precision": 0.35714285714285715,
+            "recall": 0.4166666666666667,
+            "f1-score": 0.38461538461538464,
+            "support": 12.0
+          },
+          "accuracy": 0.3611111111111111,
+          "macro avg": {
+            "precision": 0.36904761904761907,
+            "recall": 0.36111111111111116,
+            "f1-score": 0.36305361305361306,
+            "support": 36.0
+          },
+          "weighted avg": {
+            "precision": 0.369047619047619,
+            "recall": 0.3611111111111111,
+            "f1-score": 0.36305361305361306,
+            "support": 36.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            5,
+            4,
+            3
+          ],
+          [
+            3,
+            3,
+            6
+          ],
+          [
+            2,
+            5,
+            5
+          ]
+        ],
+        "per_language": [],
+        "predictions_path": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\workflow_javi_aitor\\smoke\\f76df82256f88817\\holdout_predictions_efdcd9ce1ba5d31a.csv",
+        "holdout_dataset_path": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\workflow_javi_aitor\\variants\\preprocess_f44c51bcc8b8_e71dbf47a744\\dataset.pkl"
+      }
+    }
+  ]
+}

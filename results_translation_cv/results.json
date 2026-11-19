@@ -1,0 +1,666 @@
+{
+  "experiments": [
+    {
+      "dataset": "original",
+      "representation": "pair_diff",
+      "vectorizer_params": {
+        "method": "pair_diff",
+        "min_df": 5,
+        "word_ngram_range": [
+          1,
+          1
+        ],
+        "use_pos": false
+      },
+      "classifier": "naive_bayes",
+      "classifier_params": {
+        "alpha": 1.0,
+        "fit_prior": false
+      },
+      "seed": 42,
+      "n_splits": 3,
+      "select_k": 300,
+      "experiment_id": "6d5218c9d4bc0d45",
+      "dataset_path": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\parameter_variants\\preprocess_e4b76e090a4d_1372112a4d3b\\dataset.pkl",
+      "n_examples": 9696,
+      "summary": {
+        "n_splits": 3,
+        "accuracy_mean": 0.48504537953795385,
+        "accuracy_std": 0.009500772238388222,
+        "macro_f1_mean": 0.48275389187273743,
+        "macro_f1_std": 0.009606346689790511,
+        "fit_seconds_mean": 0.6666666666666666,
+        "predict_seconds_mean": 0.2333333333333333,
+        "fit_seconds_total": 2.0
+      },
+      "confusion_matrix": [
+        [
+          1899,
+          828,
+          614
+        ],
+        [
+          1076,
+          1409,
+          619
+        ],
+        [
+          1030,
+          826,
+          1395
+        ]
+      ],
+      "folds": [
+        {
+          "fold": 1,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.4938118811881188,
+          "macro_f1": 0.49194057012411135,
+          "fit_seconds": 0.6,
+          "predict_seconds": 0.2
+        },
+        {
+          "fold": 2,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.4718440594059406,
+          "macro_f1": 0.46949299529895855,
+          "fit_seconds": 0.6,
+          "predict_seconds": 0.2
+        },
+        {
+          "fold": 3,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.48948019801980197,
+          "macro_f1": 0.4868281101951424,
+          "fit_seconds": 0.8,
+          "predict_seconds": 0.3
+        }
+      ],
+      "holdout": {
+        "accuracy": 0.48473597359735976,
+        "macro_f1": 0.4827691718342817,
+        "runtime_seconds": 1.1,
+        "n_train": 9696,
+        "n_val": 2424,
+        "classification_report": {
+          "entailment": {
+            "precision": 0.4804928131416838,
+            "recall": 0.5604790419161677,
+            "f1-score": 0.5174129353233831,
+            "support": 835.0
+          },
+          "neutral": {
+            "precision": 0.4579560155239327,
+            "recall": 0.45618556701030927,
+            "f1-score": 0.45706907682375725,
+            "support": 776.0
+          },
+          "contradiction": {
+            "precision": 0.5214180206794683,
+            "recall": 0.43419434194341944,
+            "f1-score": 0.4738255033557047,
+            "support": 813.0
+          },
+          "accuracy": 0.48473597359735976,
+          "macro avg": {
+            "precision": 0.48662228311502825,
+            "recall": 0.48361965028996545,
+            "f1-score": 0.4827691718342817,
+            "support": 2424.0
+          },
+          "weighted avg": {
+            "precision": 0.4870042152773455,
+            "recall": 0.48473597359735976,
+            "f1-score": 0.48347588235909594,
+            "support": 2424.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            468,
+            197,
+            170
+          ],
+          [
+            268,
+            354,
+            154
+          ],
+          [
+            238,
+            222,
+            353
+          ]
+        ],
+        "per_language": [
+          {
+            "language": "Arabic",
+            "n": 79,
+            "accuracy": 0.5063291139240507,
+            "macro_f1": 0.5086080586080586,
+            "n_classes": 3
+          },
+          {
+            "language": "Bulgarian",
+            "n": 71,
+            "accuracy": 0.5352112676056338,
+            "macro_f1": 0.5240063808844991,
+            "n_classes": 3
+          },
+          {
+            "language": "Chinese",
+            "n": 103,
+            "accuracy": 0.4077669902912621,
+            "macro_f1": 0.2730935081812275,
+            "n_classes": 3
+          },
+          {
+            "language": "English",
+            "n": 1354,
+            "accuracy": 0.5110782865583456,
+            "macro_f1": 0.5037466881605814,
+            "n_classes": 3
+          },
+          {
+            "language": "French",
+            "n": 59,
+            "accuracy": 0.3898305084745763,
+            "macro_f1": 0.37251388010401293,
+            "n_classes": 3
+          },
+          {
+            "language": "German",
+            "n": 67,
+            "accuracy": 0.373134328358209,
+            "macro_f1": 0.3657783304480693,
+            "n_classes": 3
+          },
+          {
+            "language": "Greek",
+            "n": 77,
+            "accuracy": 0.5324675324675324,
+            "macro_f1": 0.5313492063492063,
+            "n_classes": 3
+          },
+          {
+            "language": "Hindi",
+            "n": 86,
+            "accuracy": 0.5,
+            "macro_f1": 0.48932560016517446,
+            "n_classes": 3
+          },
+          {
+            "language": "Russian",
+            "n": 94,
+            "accuracy": 0.4787234042553192,
+            "macro_f1": 0.48129240982332305,
+            "n_classes": 3
+          },
+          {
+            "language": "Spanish",
+            "n": 83,
+            "accuracy": 0.4939759036144578,
+            "macro_f1": 0.4823808274075092,
+            "n_classes": 3
+          },
+          {
+            "language": "Swahili",
+            "n": 72,
+            "accuracy": 0.3472222222222222,
+            "macro_f1": 0.3287801615475639,
+            "n_classes": 3
+          },
+          {
+            "language": "Thai",
+            "n": 77,
+            "accuracy": 0.38961038961038963,
+            "macro_f1": 0.36758419777287693,
+            "n_classes": 3
+          },
+          {
+            "language": "Turkish",
+            "n": 65,
+            "accuracy": 0.5230769230769231,
+            "macro_f1": 0.5090497737556561,
+            "n_classes": 3
+          },
+          {
+            "language": "Urdu",
+            "n": 70,
+            "accuracy": 0.4142857142857143,
+            "macro_f1": 0.41213412901392443,
+            "n_classes": 3
+          },
+          {
+            "language": "Vietnamese",
+            "n": 67,
+            "accuracy": 0.40298507462686567,
+            "macro_f1": 0.3484340480831709,
+            "n_classes": 3
+          }
+        ],
+        "predictions_path": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\results_translation_cv\\holdout_predictions_6d5218c9d4bc0d45.csv",
+        "holdout_dataset_path": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\parameter_variants\\preprocess_e4b76e090a4d_ac2805bd70f0\\dataset.pkl"
+      }
+    },
+    {
+      "dataset": "original",
+      "representation": "pair_diff",
+      "vectorizer_params": {
+        "method": "pair_diff",
+        "min_df": 5,
+        "word_ngram_range": [
+          1,
+          1
+        ],
+        "use_pos": false
+      },
+      "classifier": "catboost",
+      "classifier_params": {
+        "iterations": 300,
+        "learning_rate": 0.1,
+        "depth": 6,
+        "loss_function": "MultiClass",
+        "verbose": false,
+        "allow_writing_files": false,
+        "thread_count": -1
+      },
+      "seed": 42,
+      "n_splits": 3,
+      "select_k": 300,
+      "experiment_id": "1b393874435fc96b",
+      "dataset_path": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\parameter_variants\\preprocess_e4b76e090a4d_1372112a4d3b\\dataset.pkl",
+      "n_examples": 9696,
+      "summary": {
+        "n_splits": 3,
+        "accuracy_mean": 0.5218646864686468,
+        "accuracy_std": 0.0033641721184612316,
+        "macro_f1_mean": 0.5208197726113991,
+        "macro_f1_std": 0.002635009072851557,
+        "fit_seconds_mean": 2.8333333333333335,
+        "predict_seconds_mean": 0.20000000000000004,
+        "fit_seconds_total": 8.5
+      },
+      "confusion_matrix": [
+        [
+          1855,
+          818,
+          668
+        ],
+        [
+          747,
+          1666,
+          691
+        ],
+        [
+          835,
+          877,
+          1539
+        ]
+      ],
+      "folds": [
+        {
+          "fold": 1,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.5198019801980198,
+          "macro_f1": 0.5197765784197458,
+          "fit_seconds": 2.9,
+          "predict_seconds": 0.2
+        },
+        {
+          "fold": 2,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.5191831683168316,
+          "macro_f1": 0.5182431898173726,
+          "fit_seconds": 2.8,
+          "predict_seconds": 0.2
+        },
+        {
+          "fold": 3,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.5266089108910891,
+          "macro_f1": 0.524439549597079,
+          "fit_seconds": 2.8,
+          "predict_seconds": 0.2
+        }
+      ]
+    },
+    {
+      "dataset": "translated",
+      "representation": "pair_diff",
+      "vectorizer_params": {
+        "method": "pair_diff",
+        "min_df": 5,
+        "word_ngram_range": [
+          1,
+          1
+        ],
+        "use_pos": false
+      },
+      "classifier": "naive_bayes",
+      "classifier_params": {
+        "alpha": 1.0,
+        "fit_prior": false
+      },
+      "seed": 42,
+      "n_splits": 3,
+      "select_k": 300,
+      "experiment_id": "c5ac061a5b6155e3",
+      "dataset_path": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\parameter_variants\\preprocess_e328b9b92d60_d610198c8127\\dataset.pkl",
+      "n_examples": 9696,
+      "summary": {
+        "n_splits": 3,
+        "accuracy_mean": 0.5025783828382838,
+        "accuracy_std": 0.006589369985545882,
+        "macro_f1_mean": 0.4988536055433368,
+        "macro_f1_std": 0.006335356525854539,
+        "fit_seconds_mean": 0.6,
+        "predict_seconds_mean": 0.20000000000000004,
+        "fit_seconds_total": 1.7999999999999998
+      },
+      "confusion_matrix": [
+        [
+          2001,
+          706,
+          634
+        ],
+        [
+          1143,
+          1270,
+          691
+        ],
+        [
+          976,
+          673,
+          1602
+        ]
+      ],
+      "folds": [
+        {
+          "fold": 1,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.4993811881188119,
+          "macro_f1": 0.49504639553631563,
+          "fit_seconds": 0.6,
+          "predict_seconds": 0.2
+        },
+        {
+          "fold": 2,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.49659653465346537,
+          "macro_f1": 0.4937333955267633,
+          "fit_seconds": 0.6,
+          "predict_seconds": 0.2
+        },
+        {
+          "fold": 3,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.5117574257425742,
+          "macro_f1": 0.5077810255669316,
+          "fit_seconds": 0.6,
+          "predict_seconds": 0.2
+        }
+      ],
+      "holdout": {
+        "accuracy": 0.492986798679868,
+        "macro_f1": 0.49002459823451455,
+        "runtime_seconds": 1.0,
+        "n_train": 9696,
+        "n_val": 2424,
+        "classification_report": {
+          "entailment": {
+            "precision": 0.4676470588235294,
+            "recall": 0.5712574850299401,
+            "f1-score": 0.5142857142857142,
+            "support": 835.0
+          },
+          "neutral": {
+            "precision": 0.463855421686747,
+            "recall": 0.39690721649484534,
+            "f1-score": 0.42777777777777776,
+            "support": 776.0
+          },
+          "contradiction": {
+            "precision": 0.5540540540540541,
+            "recall": 0.5043050430504306,
+            "f1-score": 0.5280103026400516,
+            "support": 813.0
+          },
+          "accuracy": 0.492986798679868,
+          "macro avg": {
+            "precision": 0.49518551152144347,
+            "recall": 0.49082324819173867,
+            "f1-score": 0.49002459823451455,
+            "support": 2424.0
+          },
+          "weighted avg": {
+            "precision": 0.49541379838799865,
+            "recall": 0.492986798679868,
+            "f1-score": 0.49119492699277584,
+            "support": 2424.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            477,
+            180,
+            178
+          ],
+          [
+            316,
+            308,
+            152
+          ],
+          [
+            227,
+            176,
+            410
+          ]
+        ],
+        "per_language": [
+          {
+            "language": "Arabic",
+            "n": 79,
+            "accuracy": 0.4810126582278481,
+            "macro_f1": 0.4825109530991884,
+            "n_classes": 3
+          },
+          {
+            "language": "Bulgarian",
+            "n": 71,
+            "accuracy": 0.647887323943662,
+            "macro_f1": 0.638647342995169,
+            "n_classes": 3
+          },
+          {
+            "language": "Chinese",
+            "n": 103,
+            "accuracy": 0.4368932038834951,
+            "macro_f1": 0.379328165374677,
+            "n_classes": 3
+          },
+          {
+            "language": "English",
+            "n": 1354,
+            "accuracy": 0.5081240768094535,
+            "macro_f1": 0.49682178969605956,
+            "n_classes": 3
+          },
+          {
+            "language": "French",
+            "n": 59,
+            "accuracy": 0.4576271186440678,
+            "macro_f1": 0.4407223600771988,
+            "n_classes": 3
+          },
+          {
+            "language": "German",
+            "n": 67,
+            "accuracy": 0.417910447761194,
+            "macro_f1": 0.41844644834678063,
+            "n_classes": 3
+          },
+          {
+            "language": "Greek",
+            "n": 77,
+            "accuracy": 0.4935064935064935,
+            "macro_f1": 0.4918518518518518,
+            "n_classes": 3
+          },
+          {
+            "language": "Hindi",
+            "n": 86,
+            "accuracy": 0.46511627906976744,
+            "macro_f1": 0.4573629982496978,
+            "n_classes": 3
+          },
+          {
+            "language": "Russian",
+            "n": 94,
+            "accuracy": 0.44680851063829785,
+            "macro_f1": 0.4350285463328942,
+            "n_classes": 3
+          },
+          {
+            "language": "Spanish",
+            "n": 83,
+            "accuracy": 0.5542168674698795,
+            "macro_f1": 0.55597522591126,
+            "n_classes": 3
+          },
+          {
+            "language": "Swahili",
+            "n": 72,
+            "accuracy": 0.5416666666666666,
+            "macro_f1": 0.5380053908355794,
+            "n_classes": 3
+          },
+          {
+            "language": "Thai",
+            "n": 77,
+            "accuracy": 0.5324675324675324,
+            "macro_f1": 0.5370210590227846,
+            "n_classes": 3
+          },
+          {
+            "language": "Turkish",
+            "n": 65,
+            "accuracy": 0.3230769230769231,
+            "macro_f1": 0.32249322493224936,
+            "n_classes": 3
+          },
+          {
+            "language": "Urdu",
+            "n": 70,
+            "accuracy": 0.37142857142857144,
+            "macro_f1": 0.3695781342840167,
+            "n_classes": 3
+          },
+          {
+            "language": "Vietnamese",
+            "n": 67,
+            "accuracy": 0.44776119402985076,
+            "macro_f1": 0.43707343707343704,
+            "n_classes": 3
+          }
+        ],
+        "predictions_path": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\results_translation_cv\\holdout_predictions_c5ac061a5b6155e3.csv",
+        "holdout_dataset_path": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\parameter_variants\\preprocess_e328b9b92d60_f27a4acf51c8\\dataset.pkl"
+      }
+    },
+    {
+      "dataset": "translated",
+      "representation": "pair_diff",
+      "vectorizer_params": {
+        "method": "pair_diff",
+        "min_df": 5,
+        "word_ngram_range": [
+          1,
+          1
+        ],
+        "use_pos": false
+      },
+      "classifier": "catboost",
+      "classifier_params": {
+        "iterations": 300,
+        "learning_rate": 0.1,
+        "depth": 6,
+        "loss_function": "MultiClass",
+        "verbose": false,
+        "allow_writing_files": false,
+        "thread_count": -1
+      },
+      "seed": 42,
+      "n_splits": 3,
+      "select_k": 300,
+      "experiment_id": "1a0a652eff8b0781",
+      "dataset_path": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\parameter_variants\\preprocess_e328b9b92d60_d610198c8127\\dataset.pkl",
+      "n_examples": 9696,
+      "summary": {
+        "n_splits": 3,
+        "accuracy_mean": 0.5481641914191419,
+        "accuracy_std": 0.00420711180989504,
+        "macro_f1_mean": 0.5481851814509912,
+        "macro_f1_std": 0.0042638116370807095,
+        "fit_seconds_mean": 3.3333333333333335,
+        "predict_seconds_mean": 0.20000000000000004,
+        "fit_seconds_total": 10.0
+      },
+      "confusion_matrix": [
+        [
+          1894,
+          920,
+          527
+        ],
+        [
+          735,
+          1747,
+          622
+        ],
+        [
+          732,
+          845,
+          1674
+        ]
+      ],
+      "folds": [
+        {
+          "fold": 1,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.5423886138613861,
+          "macro_f1": 0.5423690374076434,
+          "fit_seconds": 3.6,
+          "predict_seconds": 0.2
+        },
+        {
+          "fold": 2,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.5522896039603961,
+          "macro_f1": 0.5524714718389011,
+          "fit_seconds": 3.1,
+          "predict_seconds": 0.2
+        },
+        {
+          "fold": 3,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.5498143564356436,
+          "macro_f1": 0.5497150351064288,
+          "fit_seconds": 3.3,
+          "predict_seconds": 0.2
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "encoder": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "representation": [
+    "p",
+    "h",
+    "abs(p-h)",
+    "p*h"
+  ],
+  "preprocessing_cache": "preprocess_97f3840387dc753173574cc7747970d164d1103910fec6ef395e099ee8d65d73.pkl",
+  "preprocessing_config": {
+    "tokenizer": "spacy",
+    "reduction": "spacy_lemma",
+    "use_pos": true,
+    "stopword_method": "none"
+  },
+  "tagged_tokens": 268149,
+  "english_tagged_tokens": 165376,
+  "auxiliary_scaling": {
+    "method": "MinMaxScaler",
+    "fit": "training portion of each fold",
+    "clip": true,
+    "columns": "auxiliary relation and POS only"
+  },
+  "english_rows": 5516,
+  "unique_premises": 3047,
+  "folds": 5,
+  "seed": 42,
+  "split": "StratifiedGroupKFold grouped by premise, English only",
+  "model": "MLPClassifier",
+  "model_params": {
+    "hidden_layer_sizes": [
+      256
+    ],
+    "alpha": 0.0003,
+    "batch_size": 256,
+    "max_iter": 200,
+    "early_stopping": true,
+    "validation_fraction": 0.1,
+    "n_iter_no_change": 10
+  },
+  "feature_dimensions": {
+    "minilm": 1536,
+    "minilm_relation": 1550,
+    "minilm_relation_pos": 1574
+  }
+}

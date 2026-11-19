@@ -1,0 +1,93 @@
+EN CURSO | agrupado 0/75 | semilla 42 | mlp_256_alpha0.0003 | fold 1
+EN CURSO | agrupado 1/75 | semilla 42 | mlp_256_alpha0.0003 | fold 2
+EN CURSO | agrupado 2/75 | semilla 42 | mlp_256_alpha0.0003 | fold 3
+EN CURSO | agrupado 3/75 | semilla 42 | mlp_256_alpha0.0003 | fold 4
+EN CURSO | agrupado 4/75 | semilla 42 | mlp_256_alpha0.0003 | fold 5
+EN CURSO | agrupado 5/75 | semilla 42 | xgb_d3_500 | fold 1
+EN CURSO | agrupado 6/75 | semilla 42 | xgb_d3_500 | fold 2
+EN CURSO | agrupado 7/75 | semilla 42 | xgb_d3_500 | fold 3
+EN CURSO | agrupado 8/75 | semilla 42 | xgb_d3_500 | fold 4
+EN CURSO | agrupado 9/75 | semilla 42 | xgb_d3_500 | fold 5
+EN CURSO | agrupado 10/75 | semilla 42 | cat_d6_500 | fold 1
+EN CURSO | agrupado 11/75 | semilla 42 | cat_d6_500 | fold 2
+EN CURSO | agrupado 12/75 | semilla 42 | cat_d6_500 | fold 3
+EN CURSO | agrupado 13/75 | semilla 42 | cat_d6_500 | fold 4
+EN CURSO | agrupado 14/75 | semilla 42 | cat_d6_500 | fold 5
+EN CURSO | agrupado 15/75 | semilla 42 | lightgbm | fold 1
+EN CURSO | agrupado 16/75 | semilla 42 | lightgbm | fold 2
+EN CURSO | agrupado 17/75 | semilla 42 | lightgbm | fold 3
+EN CURSO | agrupado 18/75 | semilla 42 | lightgbm | fold 4
+EN CURSO | agrupado 19/75 | semilla 42 | lightgbm | fold 5
+EN CURSO | agrupado 20/75 | semilla 42 | mlp_original | fold 1
+EN CURSO | agrupado 21/75 | semilla 42 | mlp_original | fold 2
+EN CURSO | agrupado 22/75 | semilla 42 | mlp_original | fold 3
+EN CURSO | agrupado 23/75 | semilla 42 | mlp_original | fold 4
+EN CURSO | agrupado 24/75 | semilla 42 | mlp_original | fold 5
+EN CURSO | agrupado 25/75 | semilla 7 | mlp_256_alpha0.0003 | fold 1
+EN CURSO | agrupado 26/75 | semilla 7 | mlp_256_alpha0.0003 | fold 2
+EN CURSO | agrupado 27/75 | semilla 7 | mlp_256_alpha0.0003 | fold 3
+EN CURSO | agrupado 28/75 | semilla 7 | mlp_256_alpha0.0003 | fold 4
+EN CURSO | agrupado 29/75 | semilla 7 | mlp_256_alpha0.0003 | fold 5
+EN CURSO | agrupado 30/75 | semilla 7 | xgb_d3_500 | fold 1
+EN CURSO | agrupado 31/75 | semilla 7 | xgb_d3_500 | fold 2
+EN CURSO | agrupado 32/75 | semilla 7 | xgb_d3_500 | fold 3
+EN CURSO | agrupado 33/75 | semilla 7 | xgb_d3_500 | fold 4
+EN CURSO | agrupado 34/75 | semilla 7 | xgb_d3_500 | fold 5
+EN CURSO | agrupado 35/75 | semilla 7 | cat_d6_500 | fold 1
+EN CURSO | agrupado 36/75 | semilla 7 | cat_d6_500 | fold 2
+EN CURSO | agrupado 37/75 | semilla 7 | cat_d6_500 | fold 3
+EN CURSO | agrupado 38/75 | semilla 7 | cat_d6_500 | fold 4
+EN CURSO | agrupado 39/75 | semilla 7 | cat_d6_500 | fold 5
+EN CURSO | agrupado 40/75 | semilla 7 | lightgbm | fold 1
+EN CURSO | agrupado 41/75 | semilla 7 | lightgbm | fold 2
+EN CURSO | agrupado 42/75 | semilla 7 | lightgbm | fold 3
+EN CURSO | agrupado 43/75 | semilla 7 | lightgbm | fold 4
+EN CURSO | agrupado 44/75 | semilla 7 | lightgbm | fold 5
+EN CURSO | agrupado 45/75 | semilla 7 | mlp_original | fold 1
+EN CURSO | agrupado 46/75 | semilla 7 | mlp_original | fold 2
+EN CURSO | agrupado 47/75 | semilla 7 | mlp_original | fold 3
+EN CURSO | agrupado 48/75 | semilla 7 | mlp_original | fold 4
+EN CURSO | agrupado 49/75 | semilla 7 | mlp_original | fold 5
+EN CURSO | agrupado 50/75 | semilla 2024 | mlp_256_alpha0.0003 | fold 1
+EN CURSO | agrupado 51/75 | semilla 2024 | mlp_256_alpha0.0003 | fold 2
+EN CURSO | agrupado 52/75 | semilla 2024 | mlp_256_alpha0.0003 | fold 3
+EN CURSO | agrupado 53/75 | semilla 2024 | mlp_256_alpha0.0003 | fold 4
+EN CURSO | agrupado 54/75 | semilla 2024 | mlp_256_alpha0.0003 | fold 5
+EN CURSO | agrupado 55/75 | semilla 2024 | xgb_d3_500 | fold 1
+EN CURSO | agrupado 56/75 | semilla 2024 | xgb_d3_500 | fold 2
+EN CURSO | agrupado 57/75 | semilla 2024 | xgb_d3_500 | fold 3
+EN CURSO | agrupado 58/75 | semilla 2024 | xgb_d3_500 | fold 4
+EN CURSO | agrupado 59/75 | semilla 2024 | xgb_d3_500 | fold 5
+EN CURSO | agrupado 60/75 | semilla 2024 | cat_d6_500 | fold 1
+EN CURSO | agrupado 61/75 | semilla 2024 | cat_d6_500 | fold 2
+EN CURSO | agrupado 62/75 | semilla 2024 | cat_d6_500 | fold 3
+EN CURSO | agrupado 63/75 | semilla 2024 | cat_d6_500 | fold 4
+EN CURSO | agrupado 64/75 | semilla 2024 | cat_d6_500 | fold 5
+EN CURSO | agrupado 65/75 | semilla 2024 | lightgbm | fold 1
+EN CURSO | agrupado 66/75 | semilla 2024 | lightgbm | fold 2
+EN CURSO | agrupado 67/75 | semilla 2024 | lightgbm | fold 3
+EN CURSO | agrupado 68/75 | semilla 2024 | lightgbm | fold 4
+EN CURSO | agrupado 69/75 | semilla 2024 | lightgbm | fold 5
+EN CURSO | agrupado 70/75 | semilla 2024 | mlp_original | fold 1
+EN CURSO | agrupado 71/75 | semilla 2024 | mlp_original | fold 2
+EN CURSO | agrupado 72/75 | semilla 2024 | mlp_original | fold 3
+EN CURSO | agrupado 73/75 | semilla 2024 | mlp_original | fold 4
+EN CURSO | agrupado 74/75 | semilla 2024 | mlp_original | fold 5
+EN CURSO | ablacion inglesa con spaCy
+EN CURSO | minilm | fold 1/5 | accuracy=0.6223 | 3.47 s
+EN CURSO | minilm | fold 2/5 | accuracy=0.6056 | 3.78 s
+EN CURSO | minilm | fold 3/5 | accuracy=0.6422 | 3.78 s
+EN CURSO | minilm | fold 4/5 | accuracy=0.6134 | 2.67 s
+EN CURSO | minilm | fold 5/5 | accuracy=0.6210 | 3.44 s
+EN CURSO | minilm_relation | fold 1/5 | accuracy=0.6413 | 3.12 s
+EN CURSO | minilm_relation | fold 2/5 | accuracy=0.6192 | 3.03 s
+EN CURSO | minilm_relation | fold 3/5 | accuracy=0.6504 | 2.7 s
+EN CURSO | minilm_relation | fold 4/5 | accuracy=0.6370 | 3.62 s
+EN CURSO | minilm_relation | fold 5/5 | accuracy=0.6582 | 2.55 s
+EN CURSO | minilm_relation_pos | fold 1/5 | accuracy=0.6476 | 2.74 s
+EN CURSO | minilm_relation_pos | fold 2/5 | accuracy=0.6165 | 3.37 s
+EN CURSO | minilm_relation_pos | fold 3/5 | accuracy=0.6694 | 4.1 s
+EN CURSO | minilm_relation_pos | fold 4/5 | accuracy=0.6425 | 3.09 s
+EN CURSO | minilm_relation_pos | fold 5/5 | accuracy=0.6473 | 4.06 s
+TERMINADO | ablación spaCy en inglés
+TERMINADO | comparacion agrupada y ablacion inglesa

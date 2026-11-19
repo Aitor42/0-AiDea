@@ -1,0 +1,56 @@
+EN CURSO | semilla 7 | mlp_256_alpha0.0003 | fold 1/5
+EN CURSO | semilla 7 | mlp_256_alpha0.0003 | fold 2/5
+EN CURSO | semilla 7 | mlp_256_alpha0.0003 | fold 3/5
+EN CURSO | semilla 7 | mlp_256_alpha0.0003 | fold 4/5
+EN CURSO | semilla 7 | mlp_256_alpha0.0003 | fold 5/5
+EN CURSO | semilla 7 | xgb_d3_500 | fold 1/5
+EN CURSO | semilla 7 | xgb_d3_500 | fold 2/5
+EN CURSO | semilla 7 | xgb_d3_500 | fold 3/5
+EN CURSO | semilla 7 | xgb_d3_500 | fold 4/5
+EN CURSO | semilla 7 | xgb_d3_500 | fold 5/5
+EN CURSO | semilla 7 | cat_d6_500 | fold 1/5
+EN CURSO | semilla 7 | cat_d6_500 | fold 2/5
+EN CURSO | semilla 7 | cat_d6_500 | fold 3/5
+EN CURSO | semilla 7 | cat_d6_500 | fold 4/5
+EN CURSO | semilla 7 | cat_d6_500 | fold 5/5
+EN CURSO | semilla 7 | lightgbm | fold 1/5
+EN CURSO | semilla 7 | lightgbm | fold 2/5
+EN CURSO | semilla 7 | lightgbm | fold 3/5
+EN CURSO | semilla 7 | lightgbm | fold 4/5
+EN CURSO | semilla 7 | lightgbm | fold 5/5
+EN CURSO | semilla 7 | mlp_original | fold 1/5
+EN CURSO | semilla 7 | mlp_original | fold 2/5
+EN CURSO | semilla 7 | mlp_original | fold 3/5
+EN CURSO | semilla 7 | mlp_original | fold 4/5
+EN CURSO | semilla 7 | mlp_original | fold 5/5
+EN CURSO | semilla 2024 | mlp_256_alpha0.0003 | fold 1/5
+EN CURSO | semilla 2024 | mlp_256_alpha0.0003 | fold 2/5
+EN CURSO | semilla 2024 | mlp_256_alpha0.0003 | fold 3/5
+EN CURSO | semilla 2024 | mlp_256_alpha0.0003 | fold 4/5
+EN CURSO | semilla 2024 | mlp_256_alpha0.0003 | fold 5/5
+EN CURSO | semilla 2024 | xgb_d3_500 | fold 1/5
+EN CURSO | semilla 2024 | xgb_d3_500 | fold 2/5
+EN CURSO | semilla 2024 | xgb_d3_500 | fold 3/5
+EN CURSO | semilla 2024 | xgb_d3_500 | fold 4/5
+EN CURSO | semilla 2024 | xgb_d3_500 | fold 5/5
+EN CURSO | semilla 2024 | cat_d6_500 | fold 1/5
+EN CURSO | semilla 2024 | cat_d6_500 | fold 2/5
+EN CURSO | semilla 2024 | cat_d6_500 | fold 3/5
+EN CURSO | semilla 2024 | cat_d6_500 | fold 4/5
+EN CURSO | semilla 2024 | cat_d6_500 | fold 5/5
+EN CURSO | semilla 2024 | lightgbm | fold 1/5
+EN CURSO | semilla 2024 | lightgbm | fold 2/5
+EN CURSO | semilla 2024 | lightgbm | fold 3/5
+EN CURSO | semilla 2024 | lightgbm | fold 4/5
+EN CURSO | semilla 2024 | lightgbm | fold 5/5
+EN CURSO | semilla 2024 | mlp_original | fold 1/5
+EN CURSO | semilla 2024 | mlp_original | fold 2/5
+EN CURSO | semilla 2024 | mlp_original | fold 3/5
+EN CURSO | semilla 2024 | mlp_original | fold 4/5
+EN CURSO | semilla 2024 | mlp_original | fold 5/5
+EN CURSO | holdout historico | mlp_256_alpha0.0003
+EN CURSO | holdout historico | xgb_d3_500
+EN CURSO | holdout historico | cat_d6_500
+EN CURSO | holdout historico | lightgbm
+EN CURSO | holdout historico | mlp_original
+TERMINADO | CV de tres semillas y holdout historico

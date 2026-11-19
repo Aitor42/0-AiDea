@@ -1,3 +1,16 @@
-.venv
-.assets
-__pycache__
+# Entornos virtuales
+.venv/
+venv/
+env/
+
+# Cachés de Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Backup temporal del .git embebido de 0-AiDea
+.git-backup/
+
+# Logs y salidas del barrido de experimentos
+logs/
