@@ -1,0 +1,22 @@
+topic_hdb,nombre,n,entailment %,neutral %,contradiction %
+-1,Outliers (sin tópico),2994,33.9,32.3,33.8
+0,"Gobierno: servicios legales, programas y costes",2423,34.8,32.4,32.8
+1,"Viajes: ciudades, playas y monumentos",1267,36.7,31.1,32.2
+2,"Ficción histórica (Lord Julian, capitán Blood)",382,31.7,32.7,35.6
+3,"Conversación: asentimientos (that's good, yes)",371,37.7,28.8,33.4
+4,Conversación: clima y vida en Texas,334,36.5,28.1,35.3
+5,"Informe del 11-S (KSM, CIA, FDNY)",265,33.6,32.5,34.0
+6,Ficción: personajes y diálogo,268,32.8,32.1,35.1
+7,Hijos y crianza,239,31.4,34.7,33.9
+8,"Prensa y libros (Slate, NYT)",162,32.7,28.4,38.9
+9,Negación: no sé / no recuerdo,171,34.5,29.2,36.3
+10,Aviación y pilotos,118,35.6,34.7,29.7
+11,Lengua y palabras,107,30.8,35.5,33.6
+12,Texto sin traducir (suajili / hindi-urdu romanizado),95,22.1,33.7,44.2
+13,Comida,109,36.7,27.5,35.8
+14,Ordenadores y tecnología,91,31.9,29.7,38.5
+15,Clinton y la Casa Blanca,76,32.9,44.7,22.4
+16,Deportes,71,39.4,35.2,25.4
+17,Cultura hispana del suroeste de EE. UU.,45,28.9,33.3,37.8
+18,Plazos y tiempo de espera,56,30.4,41.1,28.6
+19,Música,52,44.2,30.8,25.0

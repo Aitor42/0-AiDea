@@ -1,0 +1,5 @@
+texto,clustering,n_topicos,NMI_idioma
+traducido (TEXT_COL),HDBSCAN mcs=30,20,0.026
+traducido (TEXT_COL),K-means k=20,20,0.021
+original (control),HDBSCAN mcs=30,32,0.065
+original (control),K-means k=20,20,0.048

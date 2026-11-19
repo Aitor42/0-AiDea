@@ -1,0 +1,3 @@
+configuracion,n_topicos,pct_outliers,tam_max,tam_mediana,tam_min,diversidad_top10,NMI_idioma,NMI_idioma_sin_outliers,segundos
+A · HDBSCAN mcs=30,20,30.9,1762,107.0,34,0.895,0.026,0.037,8.9
+B · K-means k=20,20,0.0,701,349.5,171,0.82,0.021,0.021,9.0

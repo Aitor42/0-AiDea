@@ -1,0 +1,3 @@
+configuracion,chi2,gl,p,V_Cramer,celdas_esperado<5
+A · HDBSCAN,40.0,40,0.46860705833676325,0.045,0
+B · K-means,30.3,38,0.8073876911780052,0.04,0

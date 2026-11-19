@@ -1,0 +1,21 @@
+topic,nombre,n,n_premisa_nueva,error_A,error_B_kmeans,diferencia_B_menos_A
+0,Gestión pública y agencias (informes),272,116,0.353,0.342,-0.011
+2,"Costes, correo postal e impuestos",203,94,0.389,0.414,0.025
+1,"Ficción histórica (Lord Julian, capitán Blood)",183,100,0.47,0.47,0.0
+4,Conversación: asentimientos,158,81,0.437,0.424,-0.013
+3,"Viajes: playas, islas y tiendas",136,54,0.39,0.419,0.029
+7,Negación: no sé / no creo,127,61,0.551,0.551,0.0
+8,"Monumentos: templos, iglesias, historia",125,45,0.408,0.408,0.0
+6,"Mezcla: ciencia, ordenadores y frases sueltas",118,64,0.39,0.39,0.0
+10,Conversación: clima y Texas,118,44,0.415,0.424,0.008
+5,Mezcla: frases cortas sin tema,114,49,0.421,0.421,0.0
+9,Servicios legales y universidades,112,78,0.518,0.482,-0.036
+13,"Prensa, libros y Clinton",108,53,0.444,0.463,0.019
+11,Texto sin traducir (suajili / hindi-urdu romanizado),97,60,0.526,0.505,-0.021
+12,Informe del 11-S,90,71,0.522,0.5,-0.022
+16,Hijos y escuela,90,48,0.422,0.433,0.011
+15,Ficción: personajes femeninos,89,44,0.438,0.472,0.034
+17,Lengua y palabras,81,55,0.432,0.395,-0.037
+14,Derechos y política,76,41,0.408,0.421,0.013
+18,"Arte, música y museos",74,44,0.405,0.419,0.014
+19,Aviación y combate,53,34,0.547,0.585,0.038

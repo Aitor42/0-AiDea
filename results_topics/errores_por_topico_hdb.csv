@@ -1,0 +1,22 @@
+topic,nombre,n,n_premisa_nueva,error_A,error_B_hdbscan,diferencia_B_menos_A
+-1,Outliers (sin tópico),840,434,0.436,0.439,0.004
+0,"Gobierno: servicios legales, programas y costes",645,317,0.389,0.386,-0.003
+1,"Viajes: ciudades, playas y monumentos",273,108,0.399,0.418,0.018
+2,"Ficción histórica (Lord Julian, capitán Blood)",75,47,0.453,0.493,0.04
+4,Conversación: clima y vida en Texas,73,27,0.397,0.438,0.041
+3,"Conversación: asentimientos (that's good, yes)",70,36,0.414,0.457,0.043
+5,"Informe del 11-S (KSM, CIA, FDNY)",70,58,0.529,0.514,-0.014
+7,Hijos y crianza,59,34,0.492,0.424,-0.068
+6,Ficción: personajes y diálogo,56,29,0.536,0.607,0.071
+9,Negación: no sé / no recuerdo,45,20,0.6,0.489,-0.111
+8,"Prensa y libros (Slate, NYT)",37,21,0.459,0.432,-0.027
+11,Lengua y palabras,29,23,0.483,0.483,0.0
+12,Texto sin traducir (suajili / hindi-urdu romanizado),27,24,0.667,0.556,-0.111
+16,Deportes,21,7,0.571,0.571,0.0
+15,Clinton y la Casa Blanca,21,5,0.476,0.476,0.0
+14,Ordenadores y tecnología,19,9,0.474,0.526,0.053
+13,Comida,18,8,0.278,0.167,-0.111
+10,Aviación y pilotos,17,11,0.529,0.529,0.0
+17,Cultura hispana del suroeste de EE. UU.,14,13,0.571,0.571,0.0
+19,Música,13,5,0.615,0.615,0.0
+18,Plazos y tiempo de espera,2,0,1.0,1.0,0.0
