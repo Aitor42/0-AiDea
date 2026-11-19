@@ -1,7 +1,6 @@
-# trainer.py
 from __future__ import annotations
 import time
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Dict, Optional
 import numpy as np
 import pandas as pd
 from scipy import sparse
@@ -21,7 +20,6 @@ DENSE_REQUIRED_MODELS = {
 
 
 def _adapt_matrix_for_model(X, model):
-    """Convierte a matriz densa solo si el estimador lo requiere."""
     model_name = type(model).__name__
     if model_name in DENSE_REQUIRED_MODELS and sparse.issparse(X):
         return X.toarray()
@@ -29,7 +27,6 @@ def _adapt_matrix_for_model(X, model):
 
 
 def _compute_step_metrics(model, X, y_true) -> Dict[str, float]:
-    """Calcula métricas de clasificación para train o validation."""
     y_pred = model.predict(X)
     metrics = {
         "accuracy": float(accuracy_score(y_true, y_pred)),
@@ -48,11 +45,6 @@ def _compute_step_metrics(model, X, y_true) -> Dict[str, float]:
 
 
 class GenericNLITrainer:
-    """
-    Loop de entrenamiento genérico con Cross-Validation + Grid Search
-    integrado directamente con NLIDatasetBuilder sin data leakage.
-    """
-
     def __init__(
         self,
         cv_splits: int = 5,
@@ -76,30 +68,7 @@ class GenericNLITrainer:
         balancer: Optional[Any] = None,
         balance_strategy: str = "joint_oversample"
     ) -> Dict[str, Any]:
-        """
-        Ejecuta Grid Search con StratifiedGroupKFold sobre `train_df`.
-
-        Args:
-            base_model: Estimador compatible con scikit-learn (e.g., LogisticRegression()).
-            param_grid: Diccionario de hiperparámetros para explorar.
-            train_df: DataFrame de entrenamiento ya filtrado (con columnas premise, hypothesis, label).
-            preprocessor_params: Configuración para NLITextPreprocesser.
-            vectorizer_params: Configuración para NLITextVectorizer.
-            input_mode: 'two_vectors' o 'one_vector'.
-            balancer: Instancia opcional de NLIClusterBalancer para aplicar dentro de cada train fold.
-            balance_strategy: Estrategia de balanceo si `balancer` está activo.
-
-        Returns:
-            Diccionario con:
-                - 'best_model': Modelo entrenado con los mejores hiperparámetros en todo train_df.
-                - 'best_builder': NLIDatasetBuilder ajustado en todo train_df (listo para test).
-                - 'best_params': Diccionario con los mejores hiperparámetros.
-                - 'best_cv_score': Mejor puntuación media en validación cruzada.
-                - 'cv_results': DataFrame con los resultados de todas las combinaciones del grid.
-                - 'train_metrics': Métricas del modelo final sobre train_df.
-        """
         prep_cfg = dict(preprocessor_params)
-        # Evitamos refiltrar idioma dentro de los folds si train_df ya viene preparado
         prep_cfg["language"] = None
 
         sgkf = StratifiedGroupKFold(
@@ -108,7 +77,6 @@ class GenericNLITrainer:
             random_state=self.random_state
         )
 
-        # Precomputar folds (y opcionalmente matrices si embeddings es stateless)
         is_stateless_embeddings = (vectorizer_params.get("method") == "embeddings")
         precomputed_folds = []
 
@@ -185,7 +153,6 @@ class GenericNLITrainer:
                 best_score = mean_val_score
                 best_params = params
 
-        # Reentrenamiento final con todo train_df
         final_train_df = train_df.copy()
         if balancer is not None:
             clusters, _ = balancer.fit_predict_clusters(final_train_df, prep_cfg)
