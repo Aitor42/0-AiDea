@@ -25,6 +25,7 @@ MODEL_SHA256 = {
     "tokenizer.json": "2c3387be76557bd40970cec13153b3bbf80407865484b209e655e5e4729076b8",
     "unigram.json": "71b44701d7efd054205115acfa6ef126c5d2f84bd3affe0c59e48163674d19a6"
 }
+SAFETENSORS_SHA256 = "eaa086f0ffee582aeb45b36e34cdd1fe2d6de2bef61f8a559a1bbc9bd955917b"
 ORIGINAL_TOKENIZER = "cac868512d555e9ac37a33c28300d36931ae4b5ddff43f1ca9bdacfe6fcd9dc8"
 FIXED_TOKENIZER = "5036ea374ffedd706e3bef33e2e0d6953cb868ef8a490e76e32ba0faa37a6b9b"
 
@@ -36,8 +37,20 @@ def verify_official_data(data_dir: Path) -> None:
             raise ValueError(f"{name} no coincide con los datos oficiales usados en la prueba.")
 
 
-def prepare_checkpoint(source: Path, destination: Path) -> None:
-    """Prepara una copia comprobada sin tocar el checkpoint de entrada."""
+def prepare_checkpoint(source: Path, destination: Path) -> str:
+    """Prepara el checkpoint verificado y devuelve el hash de los pesos usados."""
+    weights_name = "pytorch_model.bin"
+    hashes = MODEL_SHA256
+    if (source / "model.safetensors").is_file():
+        weights_name = "model.safetensors"
+        hashes = {name: digest for name, digest in MODEL_SHA256.items()
+                  if name not in {"pytorch_model.bin", "sentencepiece.bpe.model", "unigram.json"}}
+        hashes[weights_name] = SAFETENSORS_SHA256
+
+    missing = [name for name in (*hashes, "tokenizer_config.json") if not (source / name).is_file()]
+    if missing:
+        raise FileNotFoundError(f"Checkpoint MiniLM incompleto en {source}: faltan {', '.join(missing)}.")
+
     raw = (source / "tokenizer_config.json").read_bytes()
     if hashlib.sha256(raw).hexdigest() == ORIGINAL_TOKENIZER:
         end = raw.rstrip().rfind(b"}")
@@ -46,7 +59,7 @@ def prepare_checkpoint(source: Path, destination: Path) -> None:
     if hashlib.sha256(raw).hexdigest() != FIXED_TOKENIZER:
         raise ValueError("tokenizer_config.json no coincide con el parche validado.")
 
-    for name, expected in MODEL_SHA256.items():
+    for name, expected in hashes.items():
         original = source / name
         with original.open("rb") as stream:
             if hashlib.file_digest(stream, "sha256").hexdigest() != expected:
@@ -58,6 +71,7 @@ def prepare_checkpoint(source: Path, destination: Path) -> None:
         except OSError:
             copyfile(original, target)
     (destination / "tokenizer_config.json").write_bytes(raw)
+    return hashes[weights_name]
 
 
 def validate_submission(submission: Path, sample: Path) -> None:
