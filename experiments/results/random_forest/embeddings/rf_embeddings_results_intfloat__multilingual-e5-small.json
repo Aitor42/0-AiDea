@@ -1,0 +1,107 @@
+{
+  "model": "intfloat/multilingual-e5-small",
+  "prefix": "query: ",
+  "n_train": 9696,
+  "n_val": 2424,
+  "rows": [
+    {
+      "name": "baseline tfidf_pair_diff",
+      "n_features": 300,
+      "accuracy": 0.5206270627062707,
+      "f1_macro": 0.5192917377451053,
+      "accuracy_english": 0.5790251107828656,
+      "accuracy_non_english": 0.44672897196261685,
+      "n_english": 1354,
+      "n_non_english": 1070,
+      "fit_seconds": 2.1,
+      "feature_seconds": 3.3,
+      "selection": "chi2"
+    },
+    {
+      "name": "emb concat [p,h]",
+      "n_features": 768,
+      "accuracy": 0.45255775577557755,
+      "f1_macro": 0.44315648467469054,
+      "accuracy_english": 0.41654357459379615,
+      "accuracy_non_english": 0.4981308411214953,
+      "n_english": 1354,
+      "n_non_english": 1070,
+      "fit_seconds": 62.8,
+      "feature_seconds": 1478.4
+    },
+    {
+      "name": "emb full [p,h,|d|,p*h]",
+      "n_features": 1536,
+      "accuracy": 0.5602310231023102,
+      "f1_macro": 0.5589287137757942,
+      "accuracy_english": 0.5731166912850812,
+      "accuracy_non_english": 0.5439252336448598,
+      "n_english": 1354,
+      "n_non_english": 1070,
+      "fit_seconds": 49.7,
+      "feature_seconds": 1478.4
+    },
+    {
+      "name": "emb diff+product",
+      "n_features": 768,
+      "accuracy": 0.5503300330033003,
+      "f1_macro": 0.5456039356620809,
+      "accuracy_english": 0.5731166912850812,
+      "accuracy_non_english": 0.5214953271028038,
+      "n_english": 1354,
+      "n_non_english": 1070,
+      "fit_seconds": 26.2,
+      "feature_seconds": 1478.4
+    },
+    {
+      "name": "emb concat + cosine",
+      "n_features": 769,
+      "accuracy": 0.5202145214521452,
+      "f1_macro": 0.5163047482974451,
+      "accuracy_english": 0.5081240768094535,
+      "accuracy_non_english": 0.5355140186915888,
+      "n_english": 1354,
+      "n_non_english": 1070,
+      "fit_seconds": 25.3,
+      "feature_seconds": 1478.4
+    },
+    {
+      "name": "emb concat + PCA200",
+      "n_features": 200,
+      "accuracy": 0.4608085808580858,
+      "f1_macro": 0.4496051053647638,
+      "accuracy_english": 0.4276218611521418,
+      "accuracy_non_english": 0.502803738317757,
+      "n_english": 1354,
+      "n_non_english": 1070,
+      "fit_seconds": 15.1,
+      "feature_seconds": 1478.4
+    },
+    {
+      "name": "emb full + RF max_features=0.1",
+      "n_features": 1536,
+      "accuracy": 0.5647689768976898,
+      "f1_macro": 0.5641477998161704,
+      "accuracy_english": 0.5886262924667651,
+      "accuracy_non_english": 0.5345794392523364,
+      "n_english": 1354,
+      "n_non_english": 1070,
+      "fit_seconds": 172.6,
+      "feature_seconds": 1478.4
+    },
+    {
+      "name": "hibrido tfidf+emb f_classif400",
+      "n_features": 400,
+      "accuracy": 0.566006600660066,
+      "f1_macro": 0.5662342699619104,
+      "accuracy_english": 0.5753323485967504,
+      "accuracy_non_english": 0.5542056074766355,
+      "n_english": 1354,
+      "n_non_english": 1070,
+      "fit_seconds": 27.6,
+      "feature_seconds": 1478.4
+    }
+  ],
+  "encode_seconds": 1478.4,
+  "embedding_dim": 384
+}

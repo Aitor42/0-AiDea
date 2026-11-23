@@ -1,0 +1,8 @@
+{
+  "source_sha256": "41d35683badd699b3c6d3d947130c32a8cc97939b96d99bb3d9b1da871381c07",
+  "backend": "ollama",
+  "model": "gemma3:4b",
+  "status": "complete",
+  "rows": 12120,
+  "output_sha256": "d0d49a1431dce20a78cde434c3c0d1441ca26de05877a550d56b8d7daf9e19a0"
+}

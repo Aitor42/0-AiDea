@@ -1,0 +1,664 @@
+{
+  "experiments": [
+    {
+      "dataset": "baseline",
+      "representation": "pair_diff",
+      "vectorizer_params": {
+        "method": "pair_diff",
+        "min_df": 5,
+        "word_ngram_range": [
+          1,
+          1
+        ],
+        "use_pos": false
+      },
+      "classifier": "naive_bayes",
+      "classifier_params": {
+        "alpha": 1.0,
+        "fit_prior": false
+      },
+      "seed": 42,
+      "n_splits": 3,
+      "select_k": 300,
+      "experiment_id": "ab710a64c37927dc",
+      "dataset_path": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\parameter_variants\\preprocess_e4b76e090a4d_1372112a4d3b\\dataset.pkl",
+      "n_examples": 9696,
+      "summary": {
+        "n_splits": 3,
+        "accuracy_mean": 0.48504537953795385,
+        "accuracy_std": 0.009500772238388222,
+        "macro_f1_mean": 0.48275389187273743,
+        "macro_f1_std": 0.009606346689790511,
+        "fit_seconds_mean": 0.6333333333333333,
+        "predict_seconds_mean": 0.26666666666666666,
+        "fit_seconds_total": 1.9
+      },
+      "confusion_matrix": [
+        [
+          1899,
+          828,
+          614
+        ],
+        [
+          1076,
+          1409,
+          619
+        ],
+        [
+          1030,
+          826,
+          1395
+        ]
+      ],
+      "folds": [
+        {
+          "fold": 1,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.4938118811881188,
+          "macro_f1": 0.49194057012411135,
+          "fit_seconds": 0.6,
+          "predict_seconds": 0.2
+        },
+        {
+          "fold": 2,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.4718440594059406,
+          "macro_f1": 0.46949299529895855,
+          "fit_seconds": 0.7,
+          "predict_seconds": 0.4
+        },
+        {
+          "fold": 3,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.48948019801980197,
+          "macro_f1": 0.4868281101951424,
+          "fit_seconds": 0.6,
+          "predict_seconds": 0.2
+        }
+      ]
+    },
+    {
+      "dataset": "baseline",
+      "representation": "pair_diff",
+      "vectorizer_params": {
+        "method": "pair_diff",
+        "min_df": 5,
+        "word_ngram_range": [
+          1,
+          1
+        ],
+        "use_pos": false
+      },
+      "classifier": "catboost",
+      "classifier_params": {
+        "iterations": 300,
+        "learning_rate": 0.1,
+        "depth": 6,
+        "loss_function": "MultiClass",
+        "verbose": false,
+        "allow_writing_files": false,
+        "thread_count": -1
+      },
+      "seed": 42,
+      "n_splits": 3,
+      "select_k": 300,
+      "experiment_id": "d58b6af4342ec55d",
+      "dataset_path": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\parameter_variants\\preprocess_e4b76e090a4d_1372112a4d3b\\dataset.pkl",
+      "n_examples": 9696,
+      "summary": {
+        "n_splits": 3,
+        "accuracy_mean": 0.5218646864686468,
+        "accuracy_std": 0.0033641721184612316,
+        "macro_f1_mean": 0.5208197726113991,
+        "macro_f1_std": 0.002635009072851557,
+        "fit_seconds_mean": 2.6999999999999997,
+        "predict_seconds_mean": 0.20000000000000004,
+        "fit_seconds_total": 8.1
+      },
+      "confusion_matrix": [
+        [
+          1855,
+          818,
+          668
+        ],
+        [
+          747,
+          1666,
+          691
+        ],
+        [
+          835,
+          877,
+          1539
+        ]
+      ],
+      "folds": [
+        {
+          "fold": 1,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.5198019801980198,
+          "macro_f1": 0.5197765784197458,
+          "fit_seconds": 2.9,
+          "predict_seconds": 0.2
+        },
+        {
+          "fold": 2,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.5191831683168316,
+          "macro_f1": 0.5182431898173726,
+          "fit_seconds": 2.6,
+          "predict_seconds": 0.2
+        },
+        {
+          "fold": 3,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.5266089108910891,
+          "macro_f1": 0.524439549597079,
+          "fit_seconds": 2.6,
+          "predict_seconds": 0.2
+        }
+      ]
+    },
+    {
+      "dataset": "baseline",
+      "representation": "pair_separate",
+      "vectorizer_params": {
+        "method": "pair_separate",
+        "min_df": 5,
+        "word_ngram_range": [
+          1,
+          1
+        ],
+        "use_pos": false
+      },
+      "classifier": "naive_bayes",
+      "classifier_params": {
+        "alpha": 1.0,
+        "fit_prior": false
+      },
+      "seed": 42,
+      "n_splits": 3,
+      "select_k": 300,
+      "experiment_id": "e467c8b722c35e9e",
+      "dataset_path": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\parameter_variants\\preprocess_e4b76e090a4d_1372112a4d3b\\dataset.pkl",
+      "n_examples": 9696,
+      "summary": {
+        "n_splits": 3,
+        "accuracy_mean": 0.44245049504950495,
+        "accuracy_std": 0.008213353441445768,
+        "macro_f1_mean": 0.4423594019229749,
+        "macro_f1_std": 0.008437200482188918,
+        "fit_seconds_mean": 0.5,
+        "predict_seconds_mean": 0.20000000000000004,
+        "fit_seconds_total": 1.5
+      },
+      "confusion_matrix": [
+        [
+          1636,
+          1150,
+          555
+        ],
+        [
+          1183,
+          1402,
+          519
+        ],
+        [
+          1114,
+          885,
+          1252
+        ]
+      ],
+      "folds": [
+        {
+          "fold": 1,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.45389851485148514,
+          "macro_f1": 0.4539680428449149,
+          "fit_seconds": 0.5,
+          "predict_seconds": 0.2
+        },
+        {
+          "fold": 2,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.4350247524752475,
+          "macro_f1": 0.43416570499018864,
+          "fit_seconds": 0.5,
+          "predict_seconds": 0.2
+        },
+        {
+          "fold": 3,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.43842821782178215,
+          "macro_f1": 0.4389444579338213,
+          "fit_seconds": 0.5,
+          "predict_seconds": 0.2
+        }
+      ]
+    },
+    {
+      "dataset": "baseline",
+      "representation": "pair_separate",
+      "vectorizer_params": {
+        "method": "pair_separate",
+        "min_df": 5,
+        "word_ngram_range": [
+          1,
+          1
+        ],
+        "use_pos": false
+      },
+      "classifier": "catboost",
+      "classifier_params": {
+        "iterations": 300,
+        "learning_rate": 0.1,
+        "depth": 6,
+        "loss_function": "MultiClass",
+        "verbose": false,
+        "allow_writing_files": false,
+        "thread_count": -1
+      },
+      "seed": 42,
+      "n_splits": 3,
+      "select_k": 300,
+      "experiment_id": "92cf8520b8864723",
+      "dataset_path": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\parameter_variants\\preprocess_e4b76e090a4d_1372112a4d3b\\dataset.pkl",
+      "n_examples": 9696,
+      "summary": {
+        "n_splits": 3,
+        "accuracy_mean": 0.4765882838283828,
+        "accuracy_std": 0.0008120882708345474,
+        "macro_f1_mean": 0.47022993500383636,
+        "macro_f1_std": 0.0015004008034803446,
+        "fit_seconds_mean": 2.1333333333333333,
+        "predict_seconds_mean": 0.20000000000000004,
+        "fit_seconds_total": 6.4
+      },
+      "confusion_matrix": [
+        [
+          2105,
+          708,
+          528
+        ],
+        [
+          1399,
+          1168,
+          537
+        ],
+        [
+          1298,
+          605,
+          1348
+        ]
+      ],
+      "folds": [
+        {
+          "fold": 1,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.47617574257425743,
+          "macro_f1": 0.47228410341650756,
+          "fit_seconds": 2.1,
+          "predict_seconds": 0.2
+        },
+        {
+          "fold": 2,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.4777227722772277,
+          "macro_f1": 0.46874230985913085,
+          "fit_seconds": 2.2,
+          "predict_seconds": 0.2
+        },
+        {
+          "fold": 3,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.47586633663366334,
+          "macro_f1": 0.46966339173587074,
+          "fit_seconds": 2.1,
+          "predict_seconds": 0.2
+        }
+      ]
+    },
+    {
+      "dataset": "without_reduction",
+      "representation": "pair_diff",
+      "vectorizer_params": {
+        "method": "pair_diff",
+        "min_df": 5,
+        "word_ngram_range": [
+          1,
+          1
+        ],
+        "use_pos": false
+      },
+      "classifier": "naive_bayes",
+      "classifier_params": {
+        "alpha": 1.0,
+        "fit_prior": false
+      },
+      "seed": 42,
+      "n_splits": 3,
+      "select_k": 300,
+      "experiment_id": "500560586b02dbb0",
+      "dataset_path": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\parameter_variants\\preprocess_b68f745c2f19_1372112a4d3b\\dataset.pkl",
+      "n_examples": 9696,
+      "summary": {
+        "n_splits": 3,
+        "accuracy_mean": 0.48287953795379535,
+        "accuracy_std": 0.010231730053825027,
+        "macro_f1_mean": 0.4807282571719238,
+        "macro_f1_std": 0.010249438780840338,
+        "fit_seconds_mean": 0.5666666666666667,
+        "predict_seconds_mean": 0.20000000000000004,
+        "fit_seconds_total": 1.7
+      },
+      "confusion_matrix": [
+        [
+          1883,
+          844,
+          614
+        ],
+        [
+          1067,
+          1408,
+          629
+        ],
+        [
+          1020,
+          840,
+          1391
+        ]
+      ],
+      "folds": [
+        {
+          "fold": 1,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.4935024752475248,
+          "macro_f1": 0.49157311146342425,
+          "fit_seconds": 0.6,
+          "predict_seconds": 0.2
+        },
+        {
+          "fold": 2,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.46905940594059403,
+          "macro_f1": 0.46697706393926824,
+          "fit_seconds": 0.6,
+          "predict_seconds": 0.2
+        },
+        {
+          "fold": 3,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.48607673267326734,
+          "macro_f1": 0.4836345961130788,
+          "fit_seconds": 0.5,
+          "predict_seconds": 0.2
+        }
+      ]
+    },
+    {
+      "dataset": "without_reduction",
+      "representation": "pair_diff",
+      "vectorizer_params": {
+        "method": "pair_diff",
+        "min_df": 5,
+        "word_ngram_range": [
+          1,
+          1
+        ],
+        "use_pos": false
+      },
+      "classifier": "catboost",
+      "classifier_params": {
+        "iterations": 300,
+        "learning_rate": 0.1,
+        "depth": 6,
+        "loss_function": "MultiClass",
+        "verbose": false,
+        "allow_writing_files": false,
+        "thread_count": -1
+      },
+      "seed": 42,
+      "n_splits": 3,
+      "select_k": 300,
+      "experiment_id": "7f7dace444500b64",
+      "dataset_path": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\parameter_variants\\preprocess_b68f745c2f19_1372112a4d3b\\dataset.pkl",
+      "n_examples": 9696,
+      "summary": {
+        "n_splits": 3,
+        "accuracy_mean": 0.5181518151815182,
+        "accuracy_std": 0.005740478568513133,
+        "macro_f1_mean": 0.5171269958042722,
+        "macro_f1_std": 0.005423499832029712,
+        "fit_seconds_mean": 2.733333333333334,
+        "predict_seconds_mean": 0.20000000000000004,
+        "fit_seconds_total": 8.200000000000001
+      },
+      "confusion_matrix": [
+        [
+          1858,
+          810,
+          673
+        ],
+        [
+          773,
+          1657,
+          674
+        ],
+        [
+          868,
+          874,
+          1509
+        ]
+      ],
+      "folds": [
+        {
+          "fold": 1,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.5170173267326733,
+          "macro_f1": 0.5167612740966688,
+          "fit_seconds": 2.7,
+          "predict_seconds": 0.2
+        },
+        {
+          "fold": 2,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.5117574257425742,
+          "macro_f1": 0.510675008403104,
+          "fit_seconds": 2.6,
+          "predict_seconds": 0.2
+        },
+        {
+          "fold": 3,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.525680693069307,
+          "macro_f1": 0.5239447049130442,
+          "fit_seconds": 2.9,
+          "predict_seconds": 0.2
+        }
+      ]
+    },
+    {
+      "dataset": "without_reduction",
+      "representation": "pair_separate",
+      "vectorizer_params": {
+        "method": "pair_separate",
+        "min_df": 5,
+        "word_ngram_range": [
+          1,
+          1
+        ],
+        "use_pos": false
+      },
+      "classifier": "naive_bayes",
+      "classifier_params": {
+        "alpha": 1.0,
+        "fit_prior": false
+      },
+      "seed": 42,
+      "n_splits": 3,
+      "select_k": 300,
+      "experiment_id": "8da0f749a3ac1358",
+      "dataset_path": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\parameter_variants\\preprocess_b68f745c2f19_1372112a4d3b\\dataset.pkl",
+      "n_examples": 9696,
+      "summary": {
+        "n_splits": 3,
+        "accuracy_mean": 0.44255363036303635,
+        "accuracy_std": 0.00867931307754507,
+        "macro_f1_mean": 0.44264808152419377,
+        "macro_f1_std": 0.008829439023287027,
+        "fit_seconds_mean": 0.5,
+        "predict_seconds_mean": 0.20000000000000004,
+        "fit_seconds_total": 1.5
+      },
+      "confusion_matrix": [
+        [
+          1628,
+          1163,
+          550
+        ],
+        [
+          1181,
+          1401,
+          522
+        ],
+        [
+          1107,
+          882,
+          1262
+        ]
+      ],
+      "folds": [
+        {
+          "fold": 1,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.45482673267326734,
+          "macro_f1": 0.45510854617832147,
+          "fit_seconds": 0.5,
+          "predict_seconds": 0.2
+        },
+        {
+          "fold": 2,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.43657178217821785,
+          "macro_f1": 0.43571705989117504,
+          "fit_seconds": 0.5,
+          "predict_seconds": 0.2
+        },
+        {
+          "fold": 3,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.43626237623762376,
+          "macro_f1": 0.4371186385030847,
+          "fit_seconds": 0.5,
+          "predict_seconds": 0.2
+        }
+      ]
+    },
+    {
+      "dataset": "without_reduction",
+      "representation": "pair_separate",
+      "vectorizer_params": {
+        "method": "pair_separate",
+        "min_df": 5,
+        "word_ngram_range": [
+          1,
+          1
+        ],
+        "use_pos": false
+      },
+      "classifier": "catboost",
+      "classifier_params": {
+        "iterations": 300,
+        "learning_rate": 0.1,
+        "depth": 6,
+        "loss_function": "MultiClass",
+        "verbose": false,
+        "allow_writing_files": false,
+        "thread_count": -1
+      },
+      "seed": 42,
+      "n_splits": 3,
+      "select_k": 300,
+      "experiment_id": "eeef577003689d74",
+      "dataset_path": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\parameter_variants\\preprocess_b68f745c2f19_1372112a4d3b\\dataset.pkl",
+      "n_examples": 9696,
+      "summary": {
+        "n_splits": 3,
+        "accuracy_mean": 0.47266914191419146,
+        "accuracy_std": 0.0014585535915564113,
+        "macro_f1_mean": 0.4663911402790902,
+        "macro_f1_std": 0.0032939658356376917,
+        "fit_seconds_mean": 2.4,
+        "predict_seconds_mean": 0.20000000000000004,
+        "fit_seconds_total": 7.2
+      },
+      "confusion_matrix": [
+        [
+          2092,
+          726,
+          523
+        ],
+        [
+          1416,
+          1158,
+          530
+        ],
+        [
+          1316,
+          602,
+          1333
+        ]
+      ],
+      "folds": [
+        {
+          "fold": 1,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.47370049504950495,
+          "macro_f1": 0.46944082628186773,
+          "fit_seconds": 2.7,
+          "predict_seconds": 0.2
+        },
+        {
+          "fold": 2,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.47060643564356436,
+          "macro_f1": 0.4618167271681828,
+          "fit_seconds": 2.3,
+          "predict_seconds": 0.2
+        },
+        {
+          "fold": 3,
+          "n_train": 6464,
+          "n_test": 3232,
+          "accuracy": 0.47370049504950495,
+          "macro_f1": 0.4679158673872201,
+          "fit_seconds": 2.2,
+          "predict_seconds": 0.2
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "classifier": "catboost",
+  "classifier_params": {
+    "iterations": 300,
+    "learning_rate": 0.1,
+    "depth": 6,
+    "loss_function": "MultiClass",
+    "verbose": false,
+    "allow_writing_files": false,
+    "thread_count": -1
+  },
+  "vectorizer": {
+    "method": "pair_diff",
+    "columns": [
+      "premise_processed",
+      "hypothesis_processed"
+    ],
+    "min_df": 5,
+    "word_ngram_range": [
+      1,
+      1
+    ],
+    "use_pos": false
+  },
+  "seed": 42,
+  "select_k": 300,
+  "train_rows": 12120,
+  "test_rows": 5195,
+  "test_ids_sha256": "614de0045d9f7b65b138c7958fc6781eccd388c60731c943593f06c9af921e9d",
+  "translation_model": "gemma3:4b",
+  "preprocessor_params": {
+    "columns": [
+      "premise_translated",
+      "hypothesis_translated"
+    ],
+    "language": null,
+    "language_column": "lang_abv",
+    "lowercase": true,
+    "strip_accents": false,
+    "tokenizer": "spacy",
+    "stopword_method": "none",
+    "keep_negations": true,
+    "reduction": "spacy_lemma",
+    "use_pos": true,
+    "ngram_orders": [],
+    "top_n": 20
+  },
+  "fit_seconds": 6.03,
+  "submission_sha256": "f81ac70d82b1bacc75d9c5814f4544dc034b666591d8727236f484bfa71f064a",
+  "versions": {
+    "pandas": "3.1.1",
+    "scikit-learn": "1.9.1",
+    "catboost": "1.2.10"
+  }
+}

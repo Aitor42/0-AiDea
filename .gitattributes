@@ -1,0 +1,2 @@
+# Los manifiestos de traducción registran el SHA-256 del CSV con CRLF.
+/experiments/results/translation/corpus/*.csv text eol=crlf

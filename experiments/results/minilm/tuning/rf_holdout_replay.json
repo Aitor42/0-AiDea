@@ -1,0 +1,44 @@
+{
+  "encoder": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "features": [
+    "p",
+    "h",
+    "abs(p-h)",
+    "p*h"
+  ],
+  "classifier": "random_forest",
+  "params": {
+    "n_estimators": 1000,
+    "max_depth": 50,
+    "min_samples_leaf": 5,
+    "min_samples_split": 5,
+    "max_features": "sqrt",
+    "criterion": "gini"
+  },
+  "device": "cpu",
+  "seed": 42,
+  "comparison_scope": "Replay of the holdout previously used by the embedding experiment.",
+  "historical": {
+    "accuracy": 0.6051980198019802,
+    "f1_macro": 0.6061513956475683,
+    "accuracy_english": 0.6336779911373708,
+    "accuracy_non_english": 0.569158878504673
+  },
+  "measured": {
+    "accuracy": 0.6051980198019802,
+    "f1_macro": 0.6061513956475683,
+    "accuracy_english": 0.6336779911373708,
+    "accuracy_non_english": 0.569158878504673,
+    "n_english": 1354,
+    "n_non_english": 1070,
+    "n_train": 9696,
+    "n_val": 2424,
+    "fit_predict_seconds": 32.37
+  },
+  "delta": {
+    "accuracy": 0.0,
+    "f1_macro": 0.0,
+    "accuracy_english": 0.0,
+    "accuracy_non_english": 0.0
+  }
+}

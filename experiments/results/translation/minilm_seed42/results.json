@@ -1,0 +1,45 @@
+{
+  "encoder": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "seed": 42,
+  "folds": 5,
+  "models": {
+    "mlp_256_alpha0.0003": {
+      "alpha": 0.0003,
+      "batch_size": 256,
+      "early_stopping": true,
+      "hidden_layer_sizes": [
+        256
+      ],
+      "max_iter": 200,
+      "n_iter_no_change": 10,
+      "validation_fraction": 0.1
+    },
+    "xgb_d3_500": {
+      "colsample_bytree": 0.8,
+      "learning_rate": 0.05,
+      "max_depth": 3,
+      "n_estimators": 500,
+      "subsample": 0.8,
+      "tree_method": "hist",
+      "device": "cuda:0",
+      "n_jobs": 8
+    }
+  },
+  "groups": "original premise",
+  "embedding_device": "cpu",
+  "scores": {
+    "original": {
+      "accuracy": 0.6205651815181518,
+      "macro_f1": 0.6168690372235184,
+      "accuracy_en": 0.6330674401740392,
+      "accuracy_non_en": 0.604066985645933
+    },
+    "translated": {
+      "accuracy": 0.6172648514851485,
+      "macro_f1": 0.6144783537914207,
+      "accuracy_en": 0.6401377810007252,
+      "accuracy_non_en": 0.5870813397129186
+    }
+  },
+  "translations": "C:\\Users\\javiy\\Documents\\training\\0-AiDea\\artifacts\\translations\\train_gemma3_4b.csv"
+}

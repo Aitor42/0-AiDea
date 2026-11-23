@@ -1,0 +1,22 @@
+{
+  "source": "results_dense_confirmation",
+  "seeds": [
+    42,
+    7,
+    2024
+  ],
+  "ensemble_2": [
+    "mlp_256_alpha0.0003",
+    "xgb_d3_500"
+  ],
+  "ensemble_4": [
+    "mlp_256_alpha0.0003",
+    "xgb_d3_500",
+    "cat_d6_500",
+    "lightgbm"
+  ],
+  "rows_per_seed": 9696,
+  "identity_validation": "IDs, labels and languages match the training split; stratified fold membership verified for each seed.",
+  "training_performed": false,
+  "encoder": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+}

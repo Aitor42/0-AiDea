@@ -1,3 +1,28 @@
-.venv
-.assets
-__pycache__
+# Entornos, cachés y archivos generados por Python
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+/build/
+/dist/
+
+# Datos oficiales descargados y salidas regenerables
+/experiments/data/
+/experiments/.local/
+/.local/
+/.cache/
+/catboost_info/
+*.log
+*.err
+pid.txt
+*.checkpoint.json
+
+# Configuración privada
+.env
+.env.*
+!.env.example
+kaggle.json
