@@ -1,0 +1,189 @@
+ruta_en_pr14	destino_o_alternativa	clasificacion	en_diff_pr14
+.gitignore	.gitignore	configuración	sí
+FINAL/README.md	docs/reports/workflow_review.md	documentaci?n	sí
+FINAL/__init__.py	El espacio FINAL queda distribuido por responsabilidad.	compatibilidad	sí
+FINAL/compare_ollama.py	experiments/scripts/compare_ollama.py	ejecutor	sí
+FINAL/models.py	src/nli_project/models/classifiers.py	compatibilidad	sí
+FINAL/permutator.py	src/nli_project/preprocessing/parameter_variants.py	módulo reutilizable	sí
+FINAL/training.py	experiments/scripts/run_experiment_matrix.py	compatibilidad	sí
+FINAL/translator.py	src/nli_project/translation/ollama.py	módulo reutilizable	sí
+INVESTIGACION_MEJORAS_RF.md	docs/reports/random_forest_research.md	documentaci?n	sí
+JAVI_AITOR.md	docs/reports/team_experiments.md	documentaci?n	sí
+PARAMETER_VARIANTS.md	docs/reports/parameter_variants.md	documentaci?n	sí
+README.md	README.md	documentaci?n	sí
+artifacts/minilm_translation_run42/predictions.csv	experiments/results/translation/minilm_seed42/predictions.csv	evidencia experimental	sí
+artifacts/minilm_translation_run42/results.json	experiments/results/translation/minilm_seed42/results.json	evidencia experimental	sí
+artifacts/splits/split_summary.json	experiments/results/validation/historical_split/split_summary.json	evidencia experimental	sí
+artifacts/splits/train.csv	experiments/results/validation/historical_split/train.csv	evidencia experimental	sí
+artifacts/splits/val.csv	experiments/results/validation/historical_split/val.csv	evidencia experimental	sí
+artifacts/translations/run_20261118_212308.err	Consultar el commit de origen si se necesita el registro.	diagnóstico temporal	sí
+artifacts/translations/run_20261118_212308.log	Consultar el commit de origen si se necesita el registro.	diagnóstico temporal	sí
+artifacts/translations/test_gemma3_4b.csv	experiments/results/translation/corpus/test_gemma3_4b.csv	evidencia experimental	sí
+artifacts/translations/test_gemma3_4b.csv.manifest.json	experiments/results/translation/corpus/test_gemma3_4b.csv.manifest.json	evidencia experimental	sí
+artifacts/translations/train_gemma3_4b.csv	experiments/results/translation/corpus/train_gemma3_4b.csv	evidencia experimental	sí
+artifacts/translations/train_gemma3_4b.csv.manifest.json	experiments/results/translation/corpus/train_gemma3_4b.csv.manifest.json	evidencia experimental	sí
+artifacts/workflow_javi_aitor/minilm_tuning_seed42/folds.csv	experiments/results/validation/workflow_javi_aitor/minilm_tuning_seed42/folds.csv	evidencia experimental	sí
+artifacts/workflow_javi_aitor/minilm_tuning_seed42/summary.csv	experiments/results/validation/workflow_javi_aitor/minilm_tuning_seed42/summary.csv	evidencia experimental	sí
+artifacts/workflow_javi_aitor/minilm_whitespace_seed42/folds.csv	experiments/results/validation/workflow_javi_aitor/minilm_whitespace_seed42/folds.csv	evidencia experimental	sí
+artifacts/workflow_javi_aitor/minilm_whitespace_seed42/summary.csv	experiments/results/validation/workflow_javi_aitor/minilm_whitespace_seed42/summary.csv	evidencia experimental	sí
+artifacts/workflow_javi_aitor/tokenizers/full/f160a561fdbc141a/results.json	experiments/results/validation/workflow_javi_aitor/tokenizers/full/f160a561fdbc141a/results.json	evidencia experimental	sí
+bernoulli_nb_experiments.py	experiments/scripts/bernoulli_nb_experiments.py	ejecutor	sí
+bernoulli_nb_experiments_results.jsonl	experiments/results/classical_models/bernoulli_nb/experiments.jsonl	evidencia experimental	sí
+builder.py	src/nli_project/data/builder.py	módulo reutilizable	no
+builder_demo.ipynb	experiments/notebooks/archive/builder_demo.ipynb	cuaderno	no
+catboost_experiments.py	experiments/scripts/catboost_experiments.py	ejecutor	sí
+catboost_experiments_results.jsonl	experiments/results/classical_models/catboost/experiments.jsonl	evidencia experimental	sí
+classifiers.py	src/nli_project/models/classifiers.py	módulo reutilizable	sí
+comparacion_javi_aitor.ipynb	experiments/notebooks/archive/comparacion_javi_aitor.ipynb	cuaderno	sí
+compare_ollama.py	experiments/scripts/compare_ollama.py	compatibilidad	sí
+comparison_table.py	experiments/scripts/comparison_table.py	ejecutor	sí
+complement_nb_experiments.py	experiments/scripts/complement_nb_experiments.py	ejecutor	sí
+complement_nb_experiments_results.jsonl	experiments/results/classical_models/complement_nb/experiments.jsonl	evidencia experimental	sí
+data/sample_submission.csv	experiments/data/sample_submission.csv	dataset descargable	no
+data/test.csv	experiments/data/test.csv	dataset descargable	no
+data/train.csv	experiments/data/train.csv	dataset descargable	no
+decision_tree_experiments.py	experiments/scripts/decision_tree_experiments.py	ejecutor	sí
+decision_tree_experiments_results.jsonl	experiments/results/classical_models/decision_tree/experiments.jsonl	evidencia experimental	sí
+dense_oof_summary.py	src/nli_project/evaluation/dense_oof_summary.py	módulo reutilizable	sí
+dense_spacy_ablation.py	experiments/scripts/dense_spacy_ablation.py	ejecutor	sí
+dense_vote_comparison.py	experiments/scripts/dense_vote_comparison.py	ejecutor	sí
+eda.ipynb	experiments/notebooks/archive/eda.ipynb	cuaderno	no
+experiment_defaults.py	experiments/configs/experiment_defaults.py	configuración experimental	sí
+kaggle_minilm.ipynb	experiments/notebooks/kaggle_minilm.ipynb	cuaderno	sí
+kaggle_submission_final.ipynb	experiments/notebooks/archive/kaggle_submission_final.ipynb	cuaderno	sí
+knn_experiments.py	experiments/scripts/knn_experiments.py	ejecutor	sí
+knn_experiments_results.jsonl	experiments/results/classical_models/knn/experiments.jsonl	evidencia experimental	sí
+lightgbm_experiments.py	experiments/scripts/lightgbm_experiments.py	ejecutor	sí
+lightgbm_experiments_results.jsonl	experiments/results/classical_models/lightgbm/experiments.jsonl	evidencia experimental	sí
+minilm_submission.py	src/nli_project/submission/minilm_submission.py	módulo reutilizable	sí
+mlp_experiments.py	experiments/scripts/mlp_experiments.py	ejecutor	sí
+mlp_experiments_results.jsonl	experiments/results/classical_models/mlp/experiments.jsonl	evidencia experimental	sí
+model_comparison.csv	experiments/results/classical_models/model_comparison.csv	evidencia experimental	sí
+model_comparison_base.csv	experiments/results/classical_models/model_comparison_base.csv	evidencia experimental	sí
+model_experiments.py	experiments/scripts/model_experiments.py	ejecutor	sí
+naive_bayes_experiments.py	experiments/scripts/naive_bayes_experiments.py	ejecutor	sí
+naive_bayes_experiments_results.jsonl	experiments/results/classical_models/naive_bayes/experiments.jsonl	evidencia experimental	sí
+parameter_variants.py	src/nli_project/preprocessing/parameter_variants.py	compatibilidad	sí
+pos_features.py	src/nli_project/features/pos_features.py	módulo reutilizable	sí
+prepare_kaggle_delivery.py	experiments/scripts/prepare_kaggle_delivery.py	ejecutor	sí
+preprocesser.py	src/nli_project/preprocessing/preprocesser.py	módulo reutilizable	no
+preprocesser_demo.ipynb	experiments/notebooks/archive/preprocesser_demo.ipynb	cuaderno	no
+preprocessing.py	src/nli_project/preprocessing/preprocessing.py	módulo reutilizable	sí
+project.ipynb	experiments/notebooks/archive/project.ipynb	cuaderno	no
+pytest.ini	pytest.ini	configuración	sí
+random_forest_training.ipynb	experiments/notebooks/random_forest_training.ipynb	cuaderno	sí
+relation_features.py	src/nli_project/features/relation_features.py	módulo reutilizable	sí
+replay_dense_rf.py	experiments/scripts/replay_dense_rf.py	ejecutor	sí
+requirements.txt	requirements.txt	configuración	sí
+results_algorithms/algorithm_comparison.csv	experiments/results/classical_models/algorithm_comparison/algorithm_comparison.csv	evidencia experimental	sí
+results_algorithms/confusion_matrix.png	experiments/results/classical_models/algorithm_comparison/confusion_matrix.png	evidencia experimental	sí
+results_algorithms/final_config.json	experiments/results/classical_models/algorithm_comparison/final_config.json	evidencia experimental	sí
+results_algorithms/holdout_metrics.json	experiments/results/classical_models/algorithm_comparison/holdout_metrics.json	evidencia experimental	sí
+results_algorithms/per_language.csv	experiments/results/classical_models/algorithm_comparison/per_language.csv	evidencia experimental	sí
+results_algorithms/submission.csv	experiments/submissions/algorithm_comparison/submission.csv	entrega histórica	sí
+results_dense/folds.csv	experiments/results/minilm/comparison/folds.csv	evidencia experimental	sí
+results_dense/oof.csv.gz	experiments/results/minilm/comparison/oof.csv.gz	evidencia experimental	sí
+results_dense/pairwise.csv	experiments/results/minilm/comparison/pairwise.csv	evidencia experimental	sí
+results_dense/run.json	experiments/results/minilm/comparison/run.json	evidencia experimental	sí
+results_dense/summary.csv	experiments/results/minilm/comparison/summary.csv	evidencia experimental	sí
+results_dense_confirmation/cv.csv	experiments/results/minilm/confirmation/cv.csv	evidencia experimental	sí
+results_dense_confirmation/folds.csv	experiments/results/minilm/confirmation/folds.csv	evidencia experimental	sí
+results_dense_confirmation/holdout.csv	experiments/results/minilm/confirmation/holdout.csv	evidencia experimental	sí
+results_dense_confirmation/holdout_predictions.csv.gz	experiments/results/minilm/confirmation/holdout_predictions.csv.gz	evidencia experimental	sí
+results_dense_confirmation/oof_2024.csv.gz	experiments/results/minilm/confirmation/oof_2024.csv.gz	evidencia experimental	sí
+results_dense_confirmation/oof_42.csv.gz	experiments/results/minilm/confirmation/oof_42.csv.gz	evidencia experimental	sí
+results_dense_confirmation/oof_7.csv.gz	experiments/results/minilm/confirmation/oof_7.csv.gz	evidencia experimental	sí
+results_dense_confirmation/pid.txt	Consultar el commit de origen si se necesita el registro.	diagnóstico temporal	sí
+results_dense_confirmation/run.json	experiments/results/minilm/confirmation/run.json	evidencia experimental	sí
+results_dense_confirmation/seeds.csv	experiments/results/minilm/confirmation/seeds.csv	evidencia experimental	sí
+results_dense_generalization/dense_spacy_ablation/folds.csv	experiments/results/minilm/spacy_ablation/folds.csv	evidencia experimental	sí
+results_dense_generalization/dense_spacy_ablation/oof.csv.gz	experiments/results/minilm/spacy_ablation/oof.csv.gz	evidencia experimental	sí
+results_dense_generalization/dense_spacy_ablation/run.json	experiments/results/minilm/spacy_ablation/run.json	evidencia experimental	sí
+results_dense_generalization/dense_spacy_ablation/summary.csv	experiments/results/minilm/spacy_ablation/summary.csv	evidencia experimental	sí
+results_dense_generalization/grouped_folds.csv	experiments/results/validation/minilm_grouped/grouped_folds.csv	evidencia experimental	sí
+results_dense_generalization/grouped_oof_2024.csv.gz	experiments/results/validation/minilm_grouped/grouped_oof_2024.csv.gz	evidencia experimental	sí
+results_dense_generalization/grouped_oof_42.csv.gz	experiments/results/validation/minilm_grouped/grouped_oof_42.csv.gz	evidencia experimental	sí
+results_dense_generalization/grouped_oof_7.csv.gz	experiments/results/validation/minilm_grouped/grouped_oof_7.csv.gz	evidencia experimental	sí
+results_dense_generalization/grouped_seeds.csv	experiments/results/validation/minilm_grouped/grouped_seeds.csv	evidencia experimental	sí
+results_dense_generalization/grouped_summary.csv	experiments/results/validation/minilm_grouped/grouped_summary.csv	evidencia experimental	sí
+results_dense_generalization/pid.txt	Consultar el commit de origen si se necesita el registro.	diagnóstico temporal	sí
+results_dense_generalization/protocol.json	experiments/results/validation/minilm_grouped/protocol.json	evidencia experimental	sí
+results_dense_generalization/split_audit.csv	experiments/results/validation/minilm_grouped/split_audit.csv	evidencia experimental	sí
+results_dense_tuning/cat_d6_1000.csv.gz	experiments/results/minilm/tuning/cat_d6_1000.csv.gz	evidencia experimental	sí
+results_dense_tuning/cat_d6_500.csv.gz	experiments/results/minilm/tuning/cat_d6_500.csv.gz	evidencia experimental	sí
+results_dense_tuning/catboost_gpu_control.csv.gz	experiments/results/minilm/tuning/catboost_gpu_control.csv.gz	evidencia experimental	sí
+results_dense_tuning/folds.csv	experiments/results/minilm/tuning/folds.csv	evidencia experimental	sí
+results_dense_tuning/mlp_256_alpha0.0003.csv.gz	experiments/results/minilm/tuning/mlp_256_alpha0.0003.csv.gz	evidencia experimental	sí
+results_dense_tuning/mlp_256_alpha1e-05.csv.gz	experiments/results/minilm/tuning/mlp_256_alpha1e-05.csv.gz	evidencia experimental	sí
+results_dense_tuning/mlp_512_alpha0.0003.csv.gz	experiments/results/minilm/tuning/mlp_512_alpha0.0003.csv.gz	evidencia experimental	sí
+results_dense_tuning/mlp_512_alpha1e-05.csv.gz	experiments/results/minilm/tuning/mlp_512_alpha1e-05.csv.gz	evidencia experimental	sí
+results_dense_tuning/pid.txt	Consultar el commit de origen si se necesita el registro.	diagnóstico temporal	sí
+results_dense_tuning/rf_holdout_replay.json	experiments/results/minilm/tuning/rf_holdout_replay.json	evidencia experimental	sí
+results_dense_tuning/rf_leaf10.csv.gz	experiments/results/minilm/tuning/rf_leaf10.csv.gz	evidencia experimental	sí
+results_dense_tuning/rf_leaf2.csv.gz	experiments/results/minilm/tuning/rf_leaf2.csv.gz	evidencia experimental	sí
+results_dense_tuning/run.json	experiments/results/minilm/tuning/run.json	evidencia experimental	sí
+results_dense_tuning/summary.csv	experiments/results/minilm/tuning/summary.csv	evidencia experimental	sí
+results_dense_tuning/xgb_d3_500.csv.gz	experiments/results/minilm/tuning/xgb_d3_500.csv.gz	evidencia experimental	sí
+results_dense_tuning/xgb_d4_500.csv.gz	experiments/results/minilm/tuning/xgb_d4_500.csv.gz	evidencia experimental	sí
+results_dense_tuning/xgboost_gpu_control.csv.gz	experiments/results/minilm/tuning/xgboost_gpu_control.csv.gz	evidencia experimental	sí
+results_dense_votes/changed_errors.csv	experiments/results/ensembles/minilm_votes/changed_errors.csv	evidencia experimental	sí
+results_dense_votes/manifest.json	experiments/results/ensembles/minilm_votes/manifest.json	evidencia experimental	sí
+results_dense_votes/metrics_by_seed.csv	experiments/results/ensembles/minilm_votes/metrics_by_seed.csv	evidencia experimental	sí
+results_dense_votes/metrics_summary.csv	experiments/results/ensembles/minilm_votes/metrics_summary.csv	evidencia experimental	sí
+results_dense_votes/paired_vs_mlp_by_seed.csv	experiments/results/ensembles/minilm_votes/paired_vs_mlp_by_seed.csv	evidencia experimental	sí
+results_javi_aitor_cv/manifest.json	experiments/results/validation/javi_aitor/manifest.json	evidencia experimental	sí
+results_javi_aitor_cv/results.json	experiments/results/validation/javi_aitor/results.json	evidencia experimental	sí
+results_kaggle_translated/run_manifest.json	experiments/results/translation/kaggle_catboost/run_manifest.json	evidencia experimental	sí
+results_kaggle_translated/submission.csv	experiments/submissions/catboost_translated/submission.csv	entrega histórica	sí
+results_ollama_catboost/metrics.json	experiments/results/translation/catboost_holdout/metrics.json	evidencia experimental	sí
+results_ollama_catboost/predictions.csv	experiments/results/translation/catboost_holdout/predictions.csv	evidencia experimental	sí
+results_random_forest/confusion_matrix.png	experiments/results/random_forest/tfidf/confusion_matrix.png	evidencia experimental	sí
+results_random_forest/cv_results.csv	experiments/results/random_forest/tfidf/cv_results.csv	evidencia experimental	sí
+results_random_forest/final_config.json	experiments/results/random_forest/tfidf/final_config.json	evidencia experimental	sí
+results_random_forest/grouped_cv.json	experiments/results/random_forest/tfidf/grouped_cv.json	evidencia experimental	sí
+results_random_forest/holdout_metrics.json	experiments/results/random_forest/tfidf/holdout_metrics.json	evidencia experimental	sí
+results_random_forest/per_language.csv	experiments/results/random_forest/tfidf/per_language.csv	evidencia experimental	sí
+results_random_forest/submission.csv	experiments/submissions/random_forest/submission.csv	entrega histórica	sí
+results_translation_cv/catboost_holdout.json	experiments/results/translation/grouped_cv/catboost_holdout.json	evidencia experimental	sí
+results_translation_cv/holdout_predictions_6d5218c9d4bc0d45.csv	experiments/results/translation/grouped_cv/holdout_predictions_6d5218c9d4bc0d45.csv	evidencia experimental	sí
+results_translation_cv/holdout_predictions_c5ac061a5b6155e3.csv	experiments/results/translation/grouped_cv/holdout_predictions_c5ac061a5b6155e3.csv	evidencia experimental	sí
+results_translation_cv/manifest.json	experiments/results/translation/grouped_cv/manifest.json	evidencia experimental	sí
+results_translation_cv/results.json	experiments/results/translation/grouped_cv/results.json	evidencia experimental	sí
+rf_confirm.json	experiments/results/random_forest/rf_confirm.json	evidencia experimental	sí
+rf_confirm.py	experiments/scripts/rf_confirm.py	ejecutor	sí
+rf_embeddings.py	experiments/scripts/rf_embeddings.py	ejecutor	sí
+rf_embeddings_results_intfloat__multilingual-e5-small.json	experiments/results/random_forest/embeddings/rf_embeddings_results_intfloat__multilingual-e5-small.json	evidencia experimental	sí
+rf_embeddings_results_sentence-transformers__paraphrase-multilingual-MiniLM-L12-v2.json	experiments/results/random_forest/embeddings/rf_embeddings_results_sentence-transformers__paraphrase-multilingual-MiniLM-L12-v2.json	evidencia experimental	sí
+rf_experiments.py	experiments/scripts/rf_experiments.py	ejecutor	sí
+rf_experiments_results.jsonl	experiments/results/random_forest/experiments.jsonl	evidencia experimental	sí
+rf_summary.py	experiments/scripts/rf_summary.py	ejecutor	sí
+rf_table.csv	experiments/results/random_forest/rf_table.csv	evidencia experimental	sí
+run_algorithm_comparison.py	experiments/scripts/run_algorithm_comparison.py	ejecutor	sí
+run_all_experiments.py	experiments/scripts/run_all_experiments.py	ejecutor	sí
+run_dense_comparison.py	experiments/scripts/run_dense_comparison.py	ejecutor	sí
+run_dense_confirmation.py	experiments/scripts/run_dense_confirmation.py	ejecutor	sí
+run_dense_generalization.py	experiments/scripts/run_dense_generalization.py	ejecutor	sí
+run_dense_tuning.py	experiments/scripts/run_dense_tuning.py	ejecutor	sí
+run_experiment_matrix.py	experiments/scripts/run_experiment_matrix.py	ejecutor	sí
+run_minilm_translation.py	experiments/scripts/run_minilm_translation.py	ejecutor	sí
+tests/conftest.py	src/tests/conftest.py	prueba	sí
+tests/test_algorithm_comparison.py	src/tests/test_algorithm_comparison.py	prueba	sí
+tests/test_classifiers.py	src/tests/test_classifiers.py	prueba	sí
+tests/test_end_to_end.py	src/tests/test_end_to_end.py	prueba	sí
+tests/test_evaluation.py	src/tests/test_evaluation.py	prueba	sí
+tests/test_experiment_matrix.py	src/tests/test_experiment_matrix.py	prueba	sí
+tests/test_parameter_variants.py	src/tests/test_parameter_variants.py	prueba	sí
+tests/test_pipeline.py	src/tests/test_pipeline.py	prueba	sí
+tests/test_pos_features.py	src/tests/test_pos_features.py	prueba	sí
+tests/test_relation_features.py	src/tests/test_relation_features.py	prueba	sí
+tests/test_splits.py	src/tests/test_splits.py	prueba	sí
+tests/test_submission.py	src/tests/test_submission.py	prueba	sí
+tests/test_translation.py	src/tests/test_translation.py	prueba	sí
+training.py	src/nli_project/training/training.py	módulo reutilizable	sí
+translation.py	src/nli_project/translation/ollama.py	compatibilidad	sí
+tune_minilm.py	experiments/scripts/tune_minilm.py	ejecutor	sí
+vectorizer.py	src/nli_project/features/vectorizer.py	módulo reutilizable	no
+vectorizer_demo.ipynb	experiments/notebooks/archive/vectorizer_demo.ipynb	cuaderno	no
+workflow_javi_aitor.ipynb	experiments/notebooks/workflow_javi_aitor.ipynb	cuaderno	sí
+xgboost_experiments.py	experiments/scripts/xgboost_experiments.py	ejecutor	sí
+xgboost_experiments_results.jsonl	experiments/results/classical_models/xgboost/experiments.jsonl	evidencia experimental	sí

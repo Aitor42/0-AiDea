@@ -1,4 +1,0 @@
-C:\Users\javiy\Documents\training\0-AiDea\compare_ollama.py:27: Pandas4Warning: The 'verify_integrity' keyword in DataFrame.set_index is deprecated and will be removed in a future version. Directly check the result.index.is_unique instead.
-  english = pd.read_csv(translated_path, **options).set_index("id", verify_integrity=True)
-C:\Users\javiy\Documents\training\0-AiDea\compare_ollama.py:29: Pandas4Warning: The 'verify_integrity' keyword in DataFrame.set_index is deprecated and will be removed in a future version. Directly check the result.index.is_unique instead.
-  source = pd.concat(splits).set_index("id", verify_integrity=True).sort_index()

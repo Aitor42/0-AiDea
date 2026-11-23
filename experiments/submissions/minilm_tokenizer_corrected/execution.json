@@ -1,0 +1,78 @@
+{
+  "seed": 42,
+  "train_rows": 12120,
+  "test_rows": 5195,
+  "encoding_device": "cpu",
+  "classifiers_devices": {
+    "mlp_256_alpha0.0003": "cpu",
+    "xgb_d3_500": "cpu"
+  },
+  "model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "tokenizer": {
+    "class": "TokenizersBackend",
+    "backend": "Unigram",
+    "max_seq_length": 128,
+    "pooling": {
+      "embedding_dimension": 384,
+      "pooling_mode": "mean",
+      "include_prompt": true
+    }
+  },
+  "weights_sha256": "16cc9e54df6e083272378abec2d75dc34d7a48b5276db3ccc050d18de672ac59",
+  "tokenizer_config_sha256": "5036ea374ffedd706e3bef33e2e0d6953cb868ef8a490e76e32ba0faa37a6b9b",
+  "features": [
+    "p",
+    "h",
+    "abs(p-h)",
+    "p*h"
+  ],
+  "configs": {
+    "mlp_256_alpha0.0003": {
+      "alpha": 0.0003,
+      "batch_size": 256,
+      "early_stopping": true,
+      "hidden_layer_sizes": [
+        256
+      ],
+      "max_iter": 200,
+      "n_iter_no_change": 10,
+      "validation_fraction": 0.1
+    },
+    "xgb_d3_500": {
+      "colsample_bytree": 0.8,
+      "learning_rate": 0.05,
+      "max_depth": 3,
+      "n_estimators": 500,
+      "subsample": 0.8,
+      "tree_method": "hist",
+      "device": "cpu",
+      "n_jobs": 8
+    }
+  },
+  "probability_dtypes": {
+    "mlp_256_alpha0.0003": "float32",
+    "xgb_d3_500": "float32"
+  },
+  "versions": {
+    "torch": "2.11.0+cpu",
+    "transformers": "5.20.2",
+    "tokenizers": "0.23.3",
+    "sentence-transformers": "5.7.0",
+    "numpy": "2.1.3",
+    "pandas": "2.3.3",
+    "scipy": "1.16.3",
+    "scikit-learn": "1.6.1",
+    "xgboost": "3.4.1"
+  },
+  "inputs_sha256_lf": {
+    "train.csv": "3f1222fb390532a5ac1703f40bbf59cc65e2eb1a3a19bafd5d5a844c548e6182",
+    "test.csv": "4bab157073c61c875cc8ff3a78608ab13731a55a0236de8d6ad0c4a39a8121a5",
+    "sample_submission.csv": "1320cfc2e8348495c34436f99a46034f9bc4e9121142945ed62349eb315e4cd8"
+  },
+  "outputs_sha256": {
+    "submission.csv": "07b568d78217a5620a09c0d8d10b418b8b1079a997df33781c4be0422f30bfe9",
+    "probabilities.csv.gz": "ce28c5b1164c5c6d213cd624c4eb644e0fcf01807d10f58009d0dec23821e8c9",
+    "embeddings_sample_128.npz": "b4578d190a80c6b6aabe2cc70077467c612c0b20d572ad023196a5531b0bd069"
+  },
+  "submission_sha256_lf": "07b568d78217a5620a09c0d8d10b418b8b1079a997df33781c4be0422f30bfe9"
+}

@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nli-project"
+version = "0.1.0"
+description = "Multilingual natural language inference experiments for Contradictory, My Dear Watson"
+requires-python = ">=3.12"
+dynamic = ["dependencies"]
+
+[tool.setuptools.package-dir]
+nli_project = "src/nli_project"
+experiments = "experiments"
+
+[tool.setuptools]
+packages = [
+  "nli_project", "nli_project.data", "nli_project.preprocessing", "nli_project.features",
+  "nli_project.models", "nli_project.training", "nli_project.evaluation",
+  "nli_project.translation", "nli_project.submission",
+  "experiments", "experiments.scripts", "experiments.configs",
+]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}

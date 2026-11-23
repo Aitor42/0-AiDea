@@ -1,29 +1,28 @@
-# Entornos virtuales
+# Entornos, cachés y archivos generados por Python
 .venv/
 venv/
 env/
-
-# Cachés de Python
 __pycache__/
 *.py[cod]
+*.egg-info/
 .pytest_cache/
 .ipynb_checkpoints/
+/build/
+/dist/
 
-# Backup temporal del .git embebido de 0-AiDea
-.git-backup/
+# Datos oficiales descargados y salidas regenerables
+/experiments/data/
+/experiments/.local/
+/.local/
+/.cache/
+/catboost_info/
+*.log
+*.err
+pid.txt
+*.checkpoint.json
 
-# Logs y salidas del barrido de experimentos
-logs/
-# Artefactos regenerables y salidas locales
-.local/
-/minilm-source.zip
-/artifacts/embeddings/
-/artifacts/preprocessed/
-/artifacts/parameter_variants/
-/artifacts/kaggle_delivery/
-/artifacts/workflow_javi_aitor/preprocessed/
-/artifacts/workflow_javi_aitor/variants/
-/artifacts/workflow_javi_aitor/smoke/
-/artifacts/translations/*.checkpoint.json
-/results*/**/*.log
-/results*/**/pid.txt
+# Configuración privada
+.env
+.env.*
+!.env.example
+kaggle.json
