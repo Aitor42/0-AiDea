@@ -1,89 +1,123 @@
-# Experimentos de Javi y Aitor · Bloque 1
+# Experimentos de preprocesado y traducción
 
-> Informe histórico de la PR #14. Las rutas se han actualizado. Los estados de tareas, el vocabulario de «final» y las conclusiones corresponden a la fecha del informe. La guía describe el flujo vigente.
+[Mapa del repositorio](../../README.md) · [Guía del proyecto](../PROJECT_GUIDE.md) · [Guía de reproducción](../reproducibility.md)
 
-[Guía del proyecto](../PROJECT_GUIDE.md)
+Comparamos cómo el preprocesado y la traducción al inglés afectan a la clasificación de pares multilingües. El informe recoge ejecuciones archivadas de la PR #14 y un contraste con MiniLM. Cada comparación mantiene los pares identificados por `id` y la lengua de origen para evaluar los cambios por idioma.
 
-La [guía de reproducción](../reproducibility.md) recoge los comandos y requisitos del flujo. Los resultados de este informe proceden de las ejecuciones guardadas. Los experimentos nuevos usan el [cuaderno de trabajo](../../experiments/notebooks/workflow_javi_aitor.ipynb), con una receta neutral y una validación reservada agrupada por premisa.
+## Índice
 
-La pregunta experimental es si traducir los dos textos al inglés o cambiar su preprocesamiento ayuda a reconocer implicación, neutralidad y contradicción. La unidad de evaluación es el par original, identificado por `id`. El enunciado académico (pp. 2 y 4–5) pide comparar algoritmos en los mismos ejemplos, ajustar las transformaciones aprendidas solo en entrenamiento y justificar las decisiones en la defensa.
+- [Diseño de las comparaciones](#diseño-de-las-comparaciones)
+- [Referencias experimentales anteriores](#referencias-experimentales-anteriores)
+- [Comparación de variantes de preprocesado](#comparación-de-variantes-de-preprocesado)
+- [Comparación histórica con traducción](#comparación-histórica-con-traducción)
+- [Comparación agrupada con y sin traducción](#comparación-agrupada-con-y-sin-traducción)
+- [Traducción con MiniLM](#traducción-con-minilm)
+- [Reproducción de la comparación agrupada](#reproducción-de-la-comparación-agrupada)
 
-## Auditoría y reparto propuesto
+## Diseño de las comparaciones
 
-Los issues pertenecen al repositorio del equipo. El directorio local incluye además resultados y herramientas de entrenamiento que ya estaban en `Aitor42/training`. El 18 de noviembre los cuatro issues seguían abiertos. La rama principal del equipo incluía el preprocesador y el wrapper, y los issues del bucle genérico y el evaluador seguían abiertos. Las funciones equivalentes disponibles en esta copia están en `training.py`.
-
-| Issue | Responsable propuesto | Entrega y dependencia |
-|---|---|---|
-| [#7 · Permutador](https://github.com/Aitor42/0-AiDea/issues/7) | Javi | Generar variantes identificables con el preprocesador de Alba. Las variantes conservan el par y pueden alimentar distintas representaciones de Félix. |
-| [#11 · Traducción](https://github.com/Aitor42/0-AiDea/issues/11) | Javi | Traducir y guardar una copia antes del wrapper. Conservar originales para auditar cambios de sentido y agrupar por la premisa de origen. |
-| [#12 · Modelos](https://github.com/Aitor42/0-AiDea/issues/12) | Javi y Aitor | Javi se encarga de CatBoost. Propongo que Aitor mantenga el clasificador de referencia y compruebe que ambos reciben la misma representación. La fábrica local ya contiene los algoritmos. |
-| [#13 · Entrenamiento](https://github.com/Aitor42/0-AiDea/issues/13) | Javi y Aitor | Javi ejecuta las variantes y documenta CatBoost. Propongo que Aitor revise los errores y reproduzca la comparación desde el cuaderno. La elección para Kaggle queda para el equipo. |
-
-El orden de ejecución es fijar los IDs de entrenamiento y validación, preparar el original y su traducción, materializar el preprocesado y ajustar cada modelo en los mismos folds. La tokenización fila a fila se puede guardar. Aprender vocabulario, IDF o seleccionar palabras con chi-cuadrado requiere ajustar de nuevo dentro de cada fold. La evaluación por lengua debe utilizar la lengua de origen incluso cuando el modelo recibe inglés.
-
-Alba conserva el EDA y el preprocesamiento. Félix conserva vectorizador, POS y wrapper. El balanceo corresponde a Dario y se mantiene la distribución observada en esta comparación. Para integrar futuras versiones de Akil, el punto de unión son los datasets preprocesados con IDs y los estimadores de la fábrica, junto con la partición guardada. [#8](https://github.com/Aitor42/0-AiDea/issues/8) · [#9](https://github.com/Aitor42/0-AiDea/issues/9) · [#10](https://github.com/Aitor42/0-AiDea/issues/10)
-
-## Qué explica cada comparación
-
-- **Representación.** En `pair_diff`, las palabras de la premisa y de la hipótesis ocupan bloques distintos. La diferencia absoluta y las medidas de solapamiento aportan señales sobre lo que cambia entre ambas. Los ratios POS resumen la composición gramatical. La etiqueta de clase sigue siendo nominal. El etiquetador inglés aplicado al texto multilingüe original es una limitación para interpretar los resultados por lengua.
-- **CatBoost.** Se parte de puntuaciones para las tres clases y se añaden árboles sucesivamente para reducir la pérdida multiclase. La profundidad regula las interacciones que puede aprender cada árbol. La tasa de aprendizaje escala su contribución y el número de iteraciones fija cuántos árboles se añaden. Aquí recibe características numéricas calculadas por el pipeline. Una palabra compartida, una negación y un cambio de longitud pueden interactuar en un mismo árbol. [Algoritmo de CatBoost](https://catboost.ai/docs/en/concepts/algorithm-main-stages)
-- **Traducción.** Un vocabulario común puede compartir evidencia entre idiomas y permite aplicar el etiquetador inglés. También puede cambiar una negación, un cuantificador, una entidad o una referencia de género. En NLI basta uno de esos cambios para alterar la relación entre las frases. Conviene leer los originales y sus traducciones en ejemplos donde cambie el acierto.
-- **Métricas.** Accuracy es la fracción de pares correctamente clasificados. Macro-F1 promedia los F1 de las tres clases con igual peso. Para interpretar una diferencia entre ambos hay que mirar precisión, exhaustividad y soporte por clase. Una diferencia en un idioma con pocos ejemplos puede depender de muy pocos aciertos.
+- **Particiones**. Fijamos los IDs antes de preparar las variantes y comparamos ambos brazos sobre los mismos folds. Conservamos la distribución de clases observada.
+- **Representación**. Comparamos bloques TF-IDF separados con `pair_diff`, que añade diferencia absoluta y solapamiento. El POS inglés aplicado a textos de otros idiomas limita su interpretación. [Representaciones y clasificadores](../PROJECT_GUIDE.md#representaciones-y-clasificadores)
+- **Ajuste**. Podemos guardar el preprocesado fila a fila. Ajustamos vocabulario, IDF, chi-cuadrado y modelo dentro de cada fold, tal como pide el enunciado (pp. 2 y 4–5). [Variantes de preprocesado](parameter_variants.md) · [Validación y métricas](../PROJECT_GUIDE.md#entrenamiento-validación-y-métricas)
 
 ## Referencias experimentales anteriores
 
-El train oficial tiene 12 120 pares y 15 lenguas. De ellos, 5250 pares requieren traducción al inglés. Al contar por lengua y texto exacto hay 10 225 frases no inglesas distintas entre premisas e hipótesis. El split histórico conserva 9696 pares para desarrollo y 2424 para validación. Comparte 1092 premisas distintas entre ambos lados, por lo que la métrica histórica incluye premisas vistas. La validación agrupada por la premisa original permite estudiar la generalización a premisas nuevas. [Partición guardada](../../experiments/results/validation/historical_split/split_summary.json)
+De los 12.120 pares del train oficial, 5.250 requieren traducción al inglés. Hay 10.225 frases no inglesas distintas al contar por lengua y texto exacto entre premisas e hipótesis. El holdout histórico incluye premisas vistas en desarrollo. [Datos y partición histórica](../PROJECT_GUIDE.md#problema-y-datos)
 
 | Ejecución histórica de CatBoost | Accuracy | Macro-F1 | Interpretación |
 |---|---:|---:|---|
 | TF-IDF `pair_diff`, POS y relación, CV de 5 folds | 0,5264 | 0,5250 | Selección en entrenamiento. 300 características, profundidad 6 y 300 árboles. |
-| Misma configuración, validación histórica | 0,5206 | 0,5195 | 2424 pares. Detectó 380 de 813 contradicciones y confundió 237 con neutralidad. |
+| Misma configuración, validación histórica | 0,5206 | 0,5195 | 2.424 pares. Detectó 380 de 813 contradicciones y confundió 237 con neutralidad. |
 | MiniLM multilingüe, validación histórica | 0,6188 | 0,6183 | Profundidad 6 y 500 árboles. También cambian la representación y los hiperparámetros. |
 
-Estos resultados preceden a las nuevas pruebas. El experimento MiniLM por sí solo no cubre el requisito de usar n-gramas y POS o NER como características predictivas. Ninguno de estos valores es una puntuación del leaderboard ni mide el efecto de traducir. [Configuración TF-IDF](../../experiments/results/classical_models/algorithm_comparison/final_config.json) · [Matriz histórica](../../experiments/results/classical_models/algorithm_comparison/holdout_metrics.json) · [Validación MiniLM](../../experiments/results/minilm/confirmation/holdout.csv)
+Las cifras son referencias locales previas a las comparaciones de traducción. Los experimentos léxicos cubren el requisito académico de usar n-gramas y POS o NER como características predictivas. [Configuración TF-IDF](../../experiments/results/classical_models/algorithm_comparison/final_config.json) · [Matriz histórica](../../experiments/results/classical_models/algorithm_comparison/holdout_metrics.json) · [Validación MiniLM](../../experiments/results/minilm/confirmation/holdout.csv)
 
 ## Comparación de variantes de preprocesado
 
-El [cuaderno ejecutado](../../experiments/notebooks/archive/comparacion_javi_aitor.ipynb) reproduce la comparación y conserva sus tablas por clase e idioma. Desde `0-AiDea`, ábrelo con el intérprete de `.venv`. La matriz de desarrollo cruza dos decisiones de preprocesamiento (lematizar o conservar los tokens), dos representaciones (bloques TF-IDF separados, con o sin diferencias y solapamiento) y dos clasificadores. Los tres folds agrupan por premisa original, con semilla 42. Se seleccionó la mayor accuracy media por algoritmo antes de evaluar el holdout.
+El [cuaderno ejecutado](../../experiments/notebooks/archive/comparacion_javi_aitor.ipynb) reproduce la comparación y conserva sus tablas por clase e idioma. Ábrelo desde la raíz con el [kernel del entorno local](../reproducibility.md#preparación-de-los-datos). La matriz cruza lematización frente a tokens conservados, TF-IDF con bloques separados frente a `pair_diff`, y Naive Bayes multinomial frente a CatBoost. Los tres folds agrupan por premisa original, con semilla 42. Seleccionamos la configuración con mayor accuracy media por algoritmo antes de evaluar el holdout.
 
 | Finalista con lematización, POS y `pair_diff` | Accuracy CV | Macro-F1 CV | Accuracy validación | Macro-F1 validación |
 |---|---:|---:|---:|---:|
 | Naive Bayes multinomial | 0,4850 | 0,4828 | 0,4847 | 0,4828 |
 | CatBoost | 0,5219 | 0,5208 | 0,5206 | 0,5195 |
 
-Con CatBoost y lematización, añadir diferencias y solapamiento mejora la accuracy de desarrollo en 4,53 puntos porcentuales. Manteniendo `pair_diff`, lematizar aporta 0,37 puntos. Este último margen es pequeño y corresponde a esta partición. Naive Bayes suma la evidencia de las palabras bajo una hipótesis de independencia condicional que simplifica el entrenamiento. CatBoost aprovecha interacciones entre variables, aunque también comete errores de sentido. Por ejemplo, predijo implicación para «Per week?» / «Every day.», etiquetado como contradicción. Los dos textos expresan periodicidad, pero la frecuencia es distinta. [Ocho configuraciones, matrices, métricas y tiempos por fold](../../experiments/results/validation/javi_aitor/results.json)
+Con CatBoost y lematización, añadir diferencias y solapamiento mejora la accuracy de desarrollo en 4,53 puntos porcentuales. Manteniendo `pair_diff`, lematizar aporta 0,37 puntos. Este último margen es pequeño y corresponde a esta partición. En un error de sentido, CatBoost predijo implicación para «Per week?» / «Every day.», etiquetado como contradicción. Los dos textos expresan periodicidad, pero la frecuencia es distinta. [Ocho configuraciones, matrices, métricas y tiempos por fold](../../experiments/results/validation/javi_aitor/results.json)
+
+### Espacios frente a spaCy
+
+El cuaderno de trabajo archivó otra comparación sobre 9.694 filas de desarrollo, con cinco folds agrupados y semilla 42. Ambas variantes usan texto original, unigramas con `min_df=2`, `pair_diff` y chi-cuadrado con 300 rasgos. Se desactivaron la lematización, el POS y los rasgos de relación para comparar los tokenizadores. [Configuraciones, tiempos y métricas por fold](../../experiments/results/validation/workflow_javi_aitor/tokenizers/full/f160a561fdbc141a/results.json)
+
+| Modelo | Accuracy espacios | Accuracy spaCy | Macro-F1 espacios | Macro-F1 spaCy |
+| --- | ---: | ---: | ---: | ---: |
+| Naive Bayes multinomial | 0,4403 | 0,4425 | 0,4080 | 0,4110 |
+| CatBoost | 0,4958 | 0,4994 | 0,4935 | 0,4961 |
 
 ## Comparación histórica con traducción
 
-**Resultado del experimento completado.** Gemma 3 tradujo los 5250 pares no ingleses.
-Sobre los mismos 2424 IDs de validación, CatBoost pasó de 1262 a 1371 aciertos
-(accuracy de 0,5206 a 0,5656 y macro-F1 de 0,5195 a 0,5655). El modelo entrenado
-con traducción acertó 313 ejemplos que antes fallaba y falló 204 que antes acertaba.
-En los 1070 pares de origen no inglés hubo 77 aciertos netos adicionales
-(483 frente a 560). En los 1354 ingleses hubo 32 (779 frente a 811):
-sus textos siguieron iguales, pero cambió el corpus de entrenamiento.
-Esta comparación mide el efecto sobre el clasificador en el holdout histórico.
-La fidelidad lingüística de cada traducción requiere revisión por separado.
-[Resultados por clase e idioma](../../experiments/results/translation/catboost_holdout/metrics.json) · [Predicciones emparejadas](../../experiments/results/translation/catboost_holdout/predictions.csv)
+CatBoost pasó de 1.262 a 1.371 aciertos sobre los mismos 2.424 IDs. La accuracy subió de 0,5206 a 0,5656 y el macro-F1 de 0,5195 a 0,5655. La traducción recuperó 313 aciertos y perdió 204.
 
-El 18 de noviembre se verificó el servidor local con `gemma3:4b` (Q4_K_M,
-digest `68ceab7e468a31c988b44d5a4984a0e21f58c4f7158c6ce29c1804babac38df7`).
-El piloto incluyó dos pares españoles con negación. En el ID `2a1d1ecdb0`,
-«Vale, ¿puedes oírme?» y «Sé que no puedes oírme» se tradujeron como
-«Okay, can you hear me?» y «I know you cannot hear me.». Este control solo
-comprueba esos ejemplos. Se usa JSON estructurado para vincular los textos
-de cada lote a su ID. [API de Ollama](https://docs.ollama.com/capabilities/structured-outputs)
+| Lengua de origen | Pares | Aciertos con original | Aciertos con traducción | Cambio neto |
+| --- | ---: | ---: | ---: | ---: |
+| Inglés | 1.354 | 779 | 811 | +32 |
+| Resto | 1.070 | 483 | 560 | +77 |
+| Total | 2.424 | 1.262 | 1.371 | +109 |
 
-La ejecución histórica sobre el corpus usó una versión anterior de [compare_ollama.py](../../experiments/scripts/compare_ollama.py), con lematización, POS y relación ingleses en ambos brazos. El comando actual usa la receta neutral en ambos brazos y publica en un directorio nuevo.
-Primero guarda todos los pares en `artifacts/translations/train_gemma3_4b.csv`.
-Después entrena el CatBoost ya seleccionado con texto original y con texto
-traducido, manteniendo los mismos IDs, semilla, características e hiperparámetros.
-Al terminar publica `results_ollama_catboost/metrics.json` y `predictions.csv`.
-Para regenerar la traducción desde el [cuaderno de trabajo](../../experiments/notebooks/workflow_javi_aitor.ipynb), selecciona `MODE = "full"` y activa `GENERATE_FULL_TRANSLATIONS`. La celda usa el CSV guardado si está disponible.
+Los textos en inglés se mantuvieron. Su mejora coincide con el cambio del corpus de entrenamiento. Las métricas miden el efecto en el clasificador. La fidelidad de cada traducción requiere revisar los textos. [Métricas por clase e idioma](../../experiments/results/translation/catboost_holdout/metrics.json) · [Predicciones emparejadas](../../experiments/results/translation/catboost_holdout/predictions.csv)
 
-El traductor escribe el CSV al terminar todos los lotes. Si se interrumpe, vuelve a ejecutar la traducción desde el principio. El script de comparación reutiliza el CSV ya generado para el modelo tras comprobar que conserva las filas originales.
+<details>
+<summary>CatBoost por lengua de origen en el holdout</summary>
 
-Para reproducir los resultados agrupados desde una copia limpia, se recupera cada partición por los IDs guardados en el orden original. En esta copia el directorio de resultados ya existe. Usa otro nombre de salida si quieres conservar la ejecución anterior.
+| Lengua | Pares | Accuracy original | Accuracy traducida | Macro-F1 original | Macro-F1 traducido |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Inglés | 1.354 | 0,5753 | 0,5990 | 0,5715 | 0,5975 |
+| Chino | 103 | 0,3301 | 0,4563 | 0,2769 | 0,4507 |
+| Ruso | 94 | 0,4787 | 0,4362 | 0,4760 | 0,4349 |
+| Hindi | 86 | 0,4535 | 0,5233 | 0,4472 | 0,5207 |
+| Español | 83 | 0,5542 | 0,4940 | 0,5488 | 0,4614 |
+| Árabe | 79 | 0,3418 | 0,5316 | 0,3348 | 0,5257 |
+| Griego | 77 | 0,4675 | 0,6234 | 0,4614 | 0,6135 |
+| Tailandés | 77 | 0,3766 | 0,5844 | 0,3704 | 0,5685 |
+| Suajili | 72 | 0,4167 | 0,5000 | 0,4173 | 0,4911 |
+| Búlgaro | 71 | 0,5634 | 0,6901 | 0,5630 | 0,6907 |
+| Urdu | 70 | 0,5571 | 0,4571 | 0,5493 | 0,4471 |
+| Alemán | 67 | 0,3731 | 0,4776 | 0,3505 | 0,4666 |
+| Vietnamita | 67 | 0,5970 | 0,5821 | 0,5857 | 0,5779 |
+| Turco | 65 | 0,3846 | 0,5077 | 0,3799 | 0,5040 |
+| Francés | 59 | 0,4746 | 0,5085 | 0,4686 | 0,5093 |
+
+</details>
+
+El piloto con Gemma 3 incluyó dos pares españoles con negación. En `2a1d1ecdb0`, «Vale, ¿puedes oírme?» y «Sé que no puedes oírme» se tradujeron como «Okay, can you hear me?» y «I know you cannot hear me.». El corpus completo cubrió los 5.250 pares no ingleses. [Modelo, manifiestos y regeneración](../reproducibility.md#traducción) · [JSON estructurado de Ollama](https://docs.ollama.com/capabilities/structured-outputs)
+
+Esta ejecución usó una versión anterior de [compare_ollama.py](../../experiments/scripts/compare_ollama.py), con lematización, POS y rasgos de relación en ambos brazos. El ejecutor actual aplica la receta neutral sin POS ni relación, valida el CSV reutilizado y guarda `metrics.json` y `predictions.csv` en una carpeta nueva de `experiments/.local/ollama_comparisons/` por defecto.
+
+## Comparación agrupada con y sin traducción
+
+Se amplió el experimento a CatBoost y Naive Bayes con idéntico preprocesamiento, representación `pair_diff`, selección chi-cuadrado de 300 características, semilla 42 y tres folds agrupados por la premisa original. Cada par conserva su ID, etiqueta, idioma y premisa originales en ambas condiciones. La traducción cambia las columnas que consume el preprocesador, y el agrupamiento usa la premisa de origen.
+
+| Modelo | Accuracy CV original | Accuracy CV traducido | Diferencia | Macro-F1 CV original | Macro-F1 CV traducido | Accuracy holdout original | Accuracy holdout traducido |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| CatBoost | 0,5219 | 0,5482 | +2,63 pp | 0,5208 | 0,5482 | 0,5206 | 0,5656 |
+| Naive Bayes | 0,4850 | 0,5026 | +1,75 pp | 0,4828 | 0,4989 | 0,4847 | 0,4930 |
+
+CatBoost mejora en cada uno de los tres folds agrupados. Sus accuracies pasan de 0,5198, 0,5192 y 0,5266 a 0,5424, 0,5523 y 0,5498. Naive Bayes también sube en los tres folds. En el holdout, el macro-F1 de CatBoost cambia de 0,5195 a 0,5655 y el de Naive Bayes de 0,4828 a 0,4900.
+
+El holdout ya se había consultado previamente y sirve como referencia común. La revisión de folds confirma que los dos brazos contienen los mismos 9.696 IDs de desarrollo y 2.424 IDs de holdout, en el mismo orden, y que cada par mantiene etiqueta y lengua original. Cada fold contiene 6.464 ejemplos de ajuste y 3.232 de evaluación, con cero premisas compartidas. El split de holdout se mantiene como el artefacto histórico y tiene solapamiento de premisas con desarrollo. El cuaderno reproduce la auditoría agrupada y las comparaciones desde los artefactos guardados. [Resultados agrupados](../../experiments/results/translation/grouped_cv/results.json) · [Métricas de CatBoost en holdout](../../experiments/results/translation/catboost_holdout/metrics.json)
+
+Los pares `3931fbe82a` (francés) y `b962358e67` (vietnamita) se incluyeron como ejemplos de efectos opuestos. En el primero, con el texto traducido el modelo cambia su predicción de `contradiction` a `entailment` y acierta. En el segundo, el texto traducido mantiene la afirmación de que el hablante está contento usando la expresión citada, pero CatBoost cambia una predicción correcta de `entailment` a `contradiction`. [Predicciones por ID](../../experiments/results/translation/catboost_holdout/predictions.csv) · [Cuaderno ejecutado](../../experiments/notebooks/archive/comparacion_javi_aitor.ipynb)
+
+## Traducción con MiniLM
+
+El voto de MLP y XGBoost se probó con cinco folds agrupados por la premisa original y semilla 42. La accuracy global con traducción bajó 0,33 puntos porcentuales. La caída se concentró en los pares de origen no inglés. [Configuración y métricas](../../experiments/results/translation/minilm_seed42/results.json) · [Predicciones](../../experiments/results/translation/minilm_seed42/predictions.csv)
+
+| Entrada | Accuracy | Macro-F1 | Accuracy en inglés | Accuracy en el resto |
+| --- | ---: | ---: | ---: | ---: |
+| Original | 0,6206 | 0,6169 | 0,6331 | 0,6041 |
+| Traducida | 0,6173 | 0,6145 | 0,6401 | 0,5871 |
+
+## Reproducción de la comparación agrupada
+
+Ejecuta la celda desde la raíz, con las [dependencias instaladas](../reproducibility.md#instalación-y-dependencias). Usa los CSV archivados para recuperar cada partición en el orden original. Elige una salida nueva si ya existe una ejecución.
 
 ```python
 from pathlib import Path
@@ -112,19 +146,4 @@ run_matrix(datasets["train"], {"pair_diff": DEFAULT_REPRESENTATIONS["pair_diff"]
            holdout_datasets=datasets["val"], holdout_classifiers=["naive_bayes"])
 ```
 
-La evaluación final empareja del mismo modo los IDs de `artifacts/splits/val.csv`. Conviene examinar por separado las filas originalmente inglesas y las traducidas, junto con los cambios en negaciones y cantidades. El holdout histórico ya se había consultado en el proyecto y se utiliza como referencia compartida.
-
-## Comparación agrupada con y sin traducción
-
-Se amplió el experimento a CatBoost y Naive Bayes con idéntico preprocesamiento, representación `pair_diff`, selección chi-cuadrado de 300 características, semilla 42 y tres folds agrupados por la premisa original. Cada par conserva su ID, etiqueta, idioma y premisa originales en ambas condiciones. La traducción cambia las columnas que consume el preprocesador, y el agrupamiento usa la premisa de origen.
-
-| Modelo | Accuracy CV original | Accuracy CV traducido | Diferencia | Macro-F1 CV original | Macro-F1 CV traducido | Accuracy holdout original | Accuracy holdout traducido |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| CatBoost | 0,5219 | 0,5482 | +2,63 pp | 0,5208 | 0,5482 | 0,5206 | 0,5656 |
-| Naive Bayes | 0,4850 | 0,5026 | +1,75 pp | 0,4828 | 0,4989 | 0,4847 | 0,4930 |
-
-CatBoost mejora en cada uno de los tres folds agrupados. Sus accuracies pasan de 0,5198, 0,5192 y 0,5266 a 0,5424, 0,5523 y 0,5498. Naive Bayes también sube en los tres folds. En el holdout, el macro-F1 de CatBoost cambia de 0,5195 a 0,5655 y el de Naive Bayes de 0,4828 a 0,4900.
-
-La revisión de folds confirma que los dos brazos contienen los mismos 9696 IDs de desarrollo y 2424 IDs de holdout, en el mismo orden, y que cada par mantiene etiqueta y lengua original. Los tres folds contienen 6464 ejemplos de ajuste y 3232 de evaluación. No comparten ninguna premisa entre ambos lados de cada fold. El split de holdout se mantiene como el artefacto histórico y tiene solapamiento de premisas con desarrollo. El cuaderno reproduce la auditoría agrupada y las comparaciones desde los artefactos guardados. [Resultados agrupados](../../experiments/results/translation/grouped_cv/results.json) · [Métricas de CatBoost en holdout](../../experiments/results/translation/catboost_holdout/metrics.json)
-
-Los pares `3931fbe82a` (francés) y `b962358e67` (vietnamita) se incluyeron como ejemplos de efectos opuestos. En el primero la traducción coincide con la etiqueta real y cambia la predicción de contradiction a entailment. En el segundo, el texto traducido mantiene la afirmación de que el hablante está contento usando la expresión citada, pero CatBoost cambia una predicción correcta de entailment a contradiction. Son ejemplos inspeccionables, no explicación causal del modelo. [Predicciones por ID](../../experiments/results/translation/catboost_holdout/predictions.csv) · [Cuaderno ejecutado](../../experiments/notebooks/archive/comparacion_javi_aitor.ipynb)
+La celda repite la CV de ambos modelos y el holdout de Naive Bayes. El holdout de CatBoost procede de la [comparación histórica](#comparación-histórica-con-traducción). El [cuaderno de comparación histórica](../../experiments/notebooks/archive/comparacion_javi_aitor.ipynb) permite consultar las tablas por clase e idioma. Para nuevas comparaciones con la receta neutral, usa el [cuaderno de trabajo](../../experiments/notebooks/workflow_javi_aitor.ipynb).

@@ -1,58 +1,45 @@
-# Investigación de mejoras — Random Forest (NLI)
+# Investigación de Random Forest para NLI
 
-> Informe histórico de la PR #14. Las rutas se han actualizado. Los estados de tareas, el vocabulario de «final» y las conclusiones corresponden a la fecha del informe. La guía describe el flujo vigente.
+[Mapa del repositorio](../../README.md) · [Guía del proyecto](../PROJECT_GUIDE.md) · [Entorno y ejecución](../reproducibility.md)
 
-[Guía del proyecto](../PROJECT_GUIDE.md)
+Estudio histórico de *Contradictory, My Dear Watson* para Machine Learning 2026/27 (ESI-UCLM). El [cuaderno de Random Forest](../../experiments/notebooks/random_forest_training.ipynb) conserva el entrenamiento de la configuración léxica.
 
-**Proyecto:** *Contradictory, My Dear Watson* (Kaggle) — Machine Learning 2026/27, ESI-UCLM.
+## Resumen de resultados
 
-Este documento recoge la investigación experimental sobre el pipeline de Random Forest
-que ya está en `0-AiDea/training.py`. Todo lo que sigue está medido con el código del
-repositorio y es reproducible con `rf_experiments.py`, `rf_confirm.py` y `rf_summary.py`.
-
----
-
-## 1. Resumen ejecutivo
-
-| Configuración | CV 5-fold (3 semillas) | Holdout reservado (accuracy / macro-F1) |
+| Configuración | Accuracy CV (3 semillas × 5 folds) | Holdout reservado (accuracy / macro-F1) |
 |---|---:|---:|
-| Base actual | 0,4527 | 0,4814 / 0,4806 |
-| **Propuesta** | **0,5146** | **0,5206 / 0,5193** |
-| Diferencia | **+6,19 pts** | **+3,92 / +3,87 pts** |
+| Baseline histórico | 0,4527 | 0,4814 / 0,4806 |
+| **TF-IDF ajustado** | **0,5146** | **0,5206 / 0,5193** |
+| Diferencia | **+6,19 pp** | **+3,92 / +3,87 pp** |
 
-La mejora se apoya en cuatro cambios, todos compatibles con «solo Random Forest»:
+La mejora léxica combina tokenización de spaCy, selección chi-cuadrado de 300 características, unigramas con `min_df=5` y rasgos de relación. Se mantuvieron los hiperparámetros del bosque.
 
-1. **Tokenización real de spaCy** en lugar de partir por espacios (mayor efecto).
-2. **Selección de características chi²** dentro del pipeline, con `k = 300` (fit por fold).
-3. **Unigramas** y `min_df = 5` en la representación `pair_diff`.
-4. **Features de relación** calculadas fila a fila: negaciones, longitudes y números.
+Con el mismo bosque y el mismo holdout, MiniLM `full` llegó a 0,6052 de accuracy y 0,6062 de macro-F1. El mejor resultado del control E5 fue 0,5660 / 0,5662 con el híbrido. El cuaderno de Random Forest conserva la configuración léxica. La entrega MiniLM de la guía usa un voto de otros clasificadores. [Comparación de embeddings](#embeddings-multilingües) · [Entrega seleccionada](../PROJECT_GUIDE.md#configuración-seleccionada-para-kaggle)
 
-El bosque no se toca: los hiperparámetros actuales (`n_estimators=1000`,
-`max_depth=50`, `min_samples_leaf=5`, `min_samples_split=5`, `max_features="sqrt"`,
-`criterion="gini"`) siguen siendo la mejor zona encontrada.
+## Índice
 
----
+- [Resumen de resultados](#resumen-de-resultados)
+- [Protocolo](#protocolo)
+- [Ablaciones léxicas](#ablaciones-léxicas)
+- [Configuración léxica seleccionada](#configuración-léxica-seleccionada)
+- [Confirmación de TF-IDF](#confirmación-de-tf-idf)
+- [Embeddings multilingües](#embeddings-multilingües)
+- [Limitaciones y decisiones finales](#limitaciones-y-decisiones-finales)
+- [Reproducción](#reproducción)
 
-## 2. Protocolo
+## Protocolo
 
-- **Selección:** solo el split de entrenamiento (9.696 pares), CV estratificada de 5 folds.
-- **Holdout:** los 2.424 pares reservados no se usan para elegir nada; solo confirman.
-- **Sin fugas:** `SelectKBest` vive dentro del `Pipeline`, así que se ajusta en cada fold
-  con el bloque de entrenamiento y nunca ve el fold de test. El preprocesado es fila a
-  fila (no aprende del corpus) y el vectorizador se ajusta por fold con `clone()`.
-  Es exactamente lo que exige el enunciado para selección de características y vocabulario.
-- **Comparaciones pareadas:** mismas particiones para todas las configuraciones; se
-  reportan los 5 folds y un t-test pareado, además de repetir la CV con 3 semillas.
-- **Holdout:** 2.424 ejemplos implican un error estándar de ≈1,0 punto porcentual; solo
-  diferencias mayores que ~2 puntos son concluyentes por sí solas.
+- **Selección.** CV estratificada de cinco folds sobre los 9.696 pares de desarrollo. Las comparaciones emparejadas usan los mismos folds. La confirmación repite la CV con tres semillas y reporta un t-test pareado.
+- **Holdout histórico.** Los 2.424 pares reservados se usaron para evaluar las configuraciones seleccionadas. Hay solapamiento de premisas entre ese holdout y desarrollo. Con ese tamaño, el informe estimó un error estándar de alrededor de 1 pp para accuracy y tomó diferencias de unos 2 pp como referencia aproximada.
+- **Ajuste por fold.** El preprocesado se guarda fila a fila. El vectorizador y `SelectKBest` se ajustan en el bloque de entrenamiento de cada fold. [Partición histórica y validación](../PROJECT_GUIDE.md#entrenamiento-validación-y-métricas)
 
----
+## Ablaciones léxicas
 
-## 3. Descomposición de la mejora
+### Cambios acumulados
 
-Cada fila añade **un** cambio sobre la anterior (CV 5-fold, semilla 42):
+Cada paso parte del anterior. CV de 5 folds con semilla 42.
 
-| Paso | Configuración | CV accuracy | Δ vs base |
+| Paso | Configuración | CV accuracy | Δ frente al baseline (pp) |
 |---|---|---:|---:|
 | 0 | Base: whitespace, (1,2), `min_df=50` | 0,4525 | — |
 | 1 | + chi² `k=500` | 0,4652 | +1,28 |
@@ -64,9 +51,9 @@ Cada fila añade **un** cambio sobre la anterior (CV 5-fold, semilla 42):
 | 7 | + `min_df=5` | 0,5068 | +5,44 |
 | 8 | + tokens sin sufijo `_POS` | **0,5133** | **+6,09** |
 
-Atribución de los bloques de features de relación (sobre el paso 3):
+Los bloques de relación se compararon sobre el paso 3.
 
-| Bloque | CV accuracy | Δ sobre paso 3 |
+| Bloque | CV accuracy | Δ sobre el paso 3 (pp) |
 |---|---:|---:|
 | Negaciones | 0,4893 | +0,25 |
 | Números | 0,4896 | +0,28 |
@@ -74,22 +61,17 @@ Atribución de los bloques de features de relación (sobre el paso 3):
 | Relación completa (14 features) | 0,5028 | +1,60 |
 
 Con la configuración final (`min_df=5` y tokens sin `_POS`) el pipeline genera
-**19.107 features** y chi² elige 300: 287 de texto, **1** de ratios POS y 12 de
-relación. Los ratios POS aportan +0,12 pts (dentro del ruido); se mantienen
-porque son baratos y porque el enunciado pide POS tagging, que además se aplica
-en el preprocesado.
+**19.107 características**. Chi-cuadrado selecciona 300, repartidas en 287 de texto, 1 de ratios POS y 12 de relación. Los ratios POS aportaron 0,12 pp, dentro de la variación entre folds. Se conservaron por su bajo coste y para cubrir el requisito de POS del enunciado.
 
----
+### Alternativas probadas
 
-## 4. Qué **no** funciona (o no aporta)
-
-| Cambio | CV accuracy | Δ vs base | Lectura |
+| Cambio | CV accuracy | Δ frente a su control (pp) | Lectura |
 |---|---:|---:|---|
 | `tfidf_svd` (LSA, 300 componentes) | 0,3719 | −8,05 | pierde la señal léxica exacta |
 | `word_char` (palabra + carácter) | 0,4068 | −4,57 | mucho ruido y 16 s por fit |
-| `pair_separate` (sin `|Xp−Xh|` ni solape) | 0,4141 | −3,84 | las features de diferencia son clave |
+| `pair_separate` (sin `\|Xp−Xh\|` ni solape) | 0,4141 | −3,84 | las features de diferencia son clave |
 | Quitar stopwords | 0,4341 | −1,84 | destruye palabras función y negaciones |
-| Bigramas/trigramas | 0,4558–0,4566 | +0,3 | sin mejora real |
+| Variantes de n-gramas | 0,4558–0,4566 | +0,33 a +0,41 | Probar (1,3) o solo unigramas dio cambios pequeños. |
 | `class_weight="balanced"` | 0,4635 | −0,17 | las clases ya están casi balanceadas |
 | `f_classif` en vez de chi² | 0,4645 | −0,22 | chi² encaja mejor con TF-IDF no negativo |
 | One-hot de idioma | 0,4660 | −0,08 | el idioma no aporta tras el texto |
@@ -97,44 +79,24 @@ en el preprocesado.
 | `min_samples_leaf` 1 / 10, `max_depth=None`, `entropy` | 0,4628–0,4648 | ≤0 | la poda actual ya es adecuada |
 | `max_features=0.33` | 0,4596 | −0,56 | 18 s por fit, peor |
 
-Conclusión: el techo no estaba en el bosque ni en reducir dimensionalidad, sino en
-**cómo se tokeniza y qué señales lógicas se le dan al modelo**.
+Los deltas de esta tabla usan el control de cada variante del banco de pruebas. [Tabla completa de ablaciones](../../experiments/results/random_forest/rf_table.csv)
 
----
+### Conclusiones de las ablaciones
 
-## 5. Por qué funciona (teoría y práctica del curso)
+- **Tokenización y reducción.** spaCy separó puntuación y contracciones. El paso de tokenización añadió 2,00 pp sobre la configuración anterior, que ya incluía unigramas y chi-cuadrado. La mejora acumulada fue de 3,43 pp frente al baseline. Porter, Snowball, WordNet y spaCy quedaron a ±0,4 pp. Se mantuvo `spacy_lemma` por su coste y porque ya estaba integrado.
+- **Stopwords y POS.** Quitar stopwords costó entre 1,8 y 2,0 pp. El sufijo `_POS` en el token de TF-IDF costó 0,65 pp. El preprocesado conserva el etiquetado POS para calcular los ratios.
+- **Selección.** En un diagnóstico con 2.041 características, 311 tenían importancia casi nula y las 200 primeras concentraban el 76 %. Chi-cuadrado con unas 300 características ganó 1,3 pp y redujo el ajuste de 5,1 a 2,6 s por fold.
+- **Relación.** Cuando solo la hipótesis lleva negación, el 71 % de los pares son contradicción, frente al 29 % de referencia. Las longitudes ayudan a separar neutralidad y los números aportan una señal de contradicción. Los tres bloques se calculan fila a fila.
+- **Bosque.** Las variaciones de tamaño y poda se quedaron cerca de la configuración de referencia. Las mayores mejoras vinieron de la representación.
 
-- **Tokenización (L02-1).** Partir por espacios deja la puntuación pegada a las palabras
-  (`movie.`, `don't`) y crea un vocabulario ruidoso. El tokenizador de spaCy separa
-  puntuación y contracciones, lo que mejora todos los n-gramas posteriores. Es el mayor
-  salto individual (+3,4 pts).
-- **Stopwords (L02-1) y negaciones.** El enunciado avisa de no eliminar negaciones
-  mecánicamente. Empíricamente, quitarlas cuesta 1,8–2,0 pts: en NLI las palabras función
-  codifican la relación lógica, no solo el tema.
-- **Stemming vs lematización (L02-2).** Porter, Snowball, WordNet y spaCy quedan a ±0,4 pts;
-  no es un eje relevante aquí. Se mantiene `spacy_lemma` porque es el más rápido y ya está.
-- **POS tagging (L03).** Etiquetar los tokens como `palabra_POS` fragmenta el vocabulario y
-  cuesta 0,65 pts; los ratios POS como bloque apenas aportan tras las features de relación.
-  Se conserva el POS tagging en el preprocesado (requisito y documentación), pero sin
-  contaminar los tokens del TF-IDF.
-- **Selección de características (Plan de trabajo).** Con 2.041 features, 311 tienen
-  importancia casi nula y las 200 primeras concentran el 76 %. chi² con `k≈300` actúa como
-  filtro de ruido: sube 1,3 pts y reduce el fit de 5,1 s a 2,6 s por fold.
-- **Ensembles y poda (S05/S06).** `n_estimators`, `max_depth`, `min_samples_leaf` y
-  `max_features` se probaron uno a uno: la configuración actual está en la meseta. Más
-  regularización no ayuda porque el bosque ya está limitado por profundidad y hoja mínima.
-- **Ingeniería de features.** La señal de negación es fuerte y verificable: cuando solo la
-  hipótesis lleva negación, el 71 % de los pares son contradicción (frente al 29 % base).
-  Las longitudes separan neutral de entailment/contradiction; los números añaden una pista
-  de contradicción. Todo se calcula fila a fila, sin aprender del corpus, así que no hay fuga.
+## Configuración léxica seleccionada
 
----
+El bosque conserva `n_estimators=1000`, `max_depth=50`, `min_samples_leaf=5`, `min_samples_split=5`, `max_features="sqrt"` y `criterion="gini"`.
 
-## 6. Configuración propuesta
+Parámetros que distinguen la receta. Las opciones restantes están en el [preprocesado](../../src/nli_project/preprocessing/preprocessing.py) y en la [configuración archivada](../../experiments/results/random_forest/tfidf/final_config.json).
 
 ```python
 PREPROCESSING_PARAMS = {
-    ...,
     "tokenizer": "spacy",          # antes: "whitespace"
     "reduction": "spacy_lemma",    # sin cambios
     "stopword_method": "none",     # sin cambios
@@ -153,15 +115,13 @@ VECTORIZER_PARAMS = {
 # features = FeatureUnion([NLITextVectorizer, POSRatioFeatures, RelationFeatures])
 ```
 
-`RelationFeatures` (14 columnas, no negativas para ser compatible con chi²):
+`RelationFeatures` genera 14 columnas no negativas compatibles con chi-cuadrado.
 
-- negaciones en premisa, en hipótesis, diferencia absoluta y XOR;
-- longitudes de premisa e hipótesis, diferencia absoluta, ratio y qué frase es más larga;
-- números en cada frase, diferencia y Jaccard de números compartidos.
+- Negaciones en premisa e hipótesis, diferencia absoluta y XOR.
+- Longitudes de premisa e hipótesis, diferencia absoluta, ratio y qué frase es más larga.
+- Números en cada frase, diferencia y Jaccard de números compartidos.
 
----
-
-## 7. Confirmación
+## Confirmación de TF-IDF
 
 ### CV repetida (3 semillas × 5 folds)
 
@@ -171,10 +131,9 @@ VECTORIZER_PARAMS = {
 | Unigramas + spaCy + relación + `min_df=5` | 0,5071 | 0,0002 |
 | **+ tokens sin `_POS`** | **0,5146** | 0,0016 |
 
-Comparación pareada de los 15 folds (3 semillas × 5): **+6,19 pts, 15/15 folds ganados,
-p ≈ 1,2·10⁻¹¹**.
+La comparación pareada dio **+6,19 pp**, con mejora en los **15 folds** y **p ≈ 1,2·10⁻¹¹**.
 
-### Holdout (2.424 pares, nunca usado para elegir)
+### Holdout histórico de 2.424 pares
 
 | Clase | Precisión | Recall | F1 | Soporte |
 |---|---:|---:|---:|---:|
@@ -183,13 +142,12 @@ p ≈ 1,2·10⁻¹¹**.
 | contradiction | 0,5248 | 0,4686 | 0,4951 | 813 |
 
 - Accuracy **0,5206** (base 0,4814), macro-F1 **0,5193** (base 0,4806).
-- 1.262 aciertos frente a 1.167: +95 pares, sobre todo en `entailment` y `neutral`.
-- La matriz de confusión sigue repartida en las seis direcciones; ya no hay una clase
-  colapsada.
+- 1.262 aciertos frente a 1.167, con una ganancia de 95 pares sobre todo en `entailment` y `neutral`.
+- La matriz de confusión registra errores en las seis direcciones y predicciones para las tres clases.
 
-### Por lengua (holdout)
+### Accuracy por lengua en holdout
 
-| Lengua | n | Base | Propuesta | Δ |
+| Lengua | n | Base | TF-IDF ajustado | Δ (pp) |
 |---|---:|---:|---:|---:|
 | English | 1.354 | 0,513 | 0,579 | +6,6 |
 | Russian | 94 | 0,394 | 0,468 | +7,4 |
@@ -200,79 +158,22 @@ p ≈ 1,2·10⁻¹¹**.
 | Bulgarian | 71 | 0,465 | 0,549 | +8,5 |
 | French | 59 | 0,407 | 0,458 | +5,1 |
 
-La mejora está concentrada en inglés (57 % del corpus); en el resto las muestras son de
-60–100 pares (error estándar ≈5–6 pts), así que las diferencias individuales no son
-concluyentes. Es coherente con usar herramientas de inglés sobre 15 idiomas: sigue siendo
-la limitación principal.
+El inglés concentra la mayor parte de la mejora y supone alrededor del 57 % del corpus. Las muestras de otros idiomas rondan los 60–100 pares y tienen un error estándar aproximado de 5–6 pp. Las variaciones por idioma deben leerse con ese soporte y con la limitación de usar análisis lingüístico inglés. [Métricas por idioma](../../experiments/results/random_forest/tfidf/per_language.csv) · [Confirmación completa](../../experiments/results/random_forest/rf_confirm.json)
 
----
+## Embeddings multilingües
 
-## 8. Limitaciones y riesgos
+Se probó si un encoder multilingüe reducía la brecha de 13,2 pp entre el inglés (0,579) y el resto (0,447) en TF-IDF. Se conservaron el split (9.696 / 2.424) y los hiperparámetros del bosque. El encoder recibe los textos originales con puntuación y sin lematizar. Los vectores se normalizan en L2.
 
-- **Selección sobre CV.** Se han probado ~45 configuraciones sobre el mismo CV; el máximo
-  puede estar inflado ~0,3 pts. La CV repetida y, sobre todo, el holdout independiente
-  (+3,9 pts) reducen ese riesgo, pero no lo eliminan.
-- **Features de longitud.** Parte de la ganancia viene de longitudes, un patrón del dataset
-  más que comprensión semántica. Train y test comparten distribución (mismas lenguas y
-  proporciones), así que debería transferir a Kaggle, pero conviene declararlo.
-- **Inglés sobre 15 idiomas.** Sin traducción previa ni modelos multilingües, el techo de los
-  idiomas no ingleses sigue bajo.
-- **chi² y escalas.** chi² favorece features de mayor magnitud (las de relación) frente al
-  TF-IDF; con `k=300` el efecto es limitado, pero conviene tenerlo presente.
-- **Coste.** El pipeline nuevo es más barato: 300 features, ~2,6 s por fit (antes 5,1 s).
+| Representación | Composición | Dimensiones |
+| --- | --- | ---: |
+| `concat` | Premisa e hipótesis concatenadas. | 768 |
+| `full` | Concatenación, diferencia absoluta y producto por componentes. | 1.536 |
+| `diff+product` | Diferencia absoluta y producto por componentes. | 768 |
+| `concat + cosine` | Concatenación y similitud coseno. | 769 |
 
----
+También se probaron PCA a 200 dimensiones, `max_features=0.1` y un híbrido de TF-IDF, POS, relación y embeddings. El híbrido usa `f_classif` porque los embeddings admiten valores negativos.
 
-## 9. Reproducibilidad
-
-Ficheros (en la raíz del proyecto, fuera del repositorio `0-AiDea`):
-
-| Fichero | Contenido |
-|---|---|
-| `rf_experiments.py` | banco de configuraciones; `--list` para verlas |
-| `rf_confirm.py` | CV repetida + holdout de las finalistas |
-| `rf_summary.py` | tabla resumen y comparaciones pareadas |
-| `rf_experiments_results.jsonl` | resultados por fold de cada ejecución |
-| `rf_table.csv` | tabla consolidada |
-| `rf_confirm.json` | confirmación de las configuraciones finales |
-
-```bash
-# Una configuración concreta
-0-AiDea/.venv/bin/python -m experiments.scripts.rf_experiments sel300_uni_spacy_rel_mindf5_noposvec
-
-# Confirmación (3 semillas + holdout)
-0-AiDea/.venv/bin/python -m experiments.scripts.rf_confirm base sel300_uni_spacy_rel_mindf5_noposvec
-
-# Tabla resumen
-0-AiDea/.venv/bin/python -m experiments.scripts.rf_summary
-```
-
-La caché de preprocesado vive en `0-AiDea/artifacts/preprocessed` y se reutiliza por hash
-de configuración y datos.
-
----
-
-## 10. Embeddings: experimento controlado
-
-**Pregunta.** La brecha por lengua (inglés 0,579 frente a no inglés 0,447, 13,2 pts)
-apunta a que el TF-IDF con `min_df=5` sobre 15 idiomas se queda sin vocabulario fuera
-del inglés. ¿Un encoder multilingüe recupera parte de esa brecha sin dejar de usar
-Random Forest?
-
-**Protocolo.** Mismo split holdout (9.696 / 2.424), mismo Random Forest y mismos
-hiperparámetros. Se codifican `premise` y `hypothesis` **en crudo** (sin lematizar ni
-quitar puntuación), normalizados en L2, y se prueban cuatro representaciones:
-
-- `concat`: `[ep, eh]` (768 dims).
-- `full`: `[ep, eh, |ep−eh|, ep·eh]` (1.536 dims).
-- `diff+product`: solo los dos bloques de interacción (768 dims).
-- `concat + cosine`: concat más la similitud coseno como columna (769 dims).
-
-Además: PCA a 200 dims, un diagnóstico con `max_features=0.1` y un híbrido
-TF-IDF + POS + relación + embeddings con selección `f_classif` (chi² no admite
-valores negativos). Todo se mide global y por lengua.
-
-### Modelo por defecto: `paraphrase-multilingual-MiniLM-L12-v2`
+### MiniLM
 
 | Variante | Dims | Acc | F1 | Inglés | No inglés | Fit |
 |---|---:|---:|---:|---:|---:|---:|
@@ -285,18 +186,11 @@ valores negativos). Todo se mide global y por lengua.
 | PCA 200 | 200 | 0,5268 | 0,5186 | 0,5140 | 0,5430 | 13 s |
 | Híbrido TF-IDF + embeddings | 400 | 0,5771 | 0,5780 | 0,5975 | 0,5514 | 28 s |
 
-Dos observaciones importantes:
-
-1. **La interacción es lo que aporta.** Concatenar los dos vectores sin más es *peor*
-   que el TF-IDF (0,477): el bosque no puede calcular la relación entre ambas mitades.
-   Al añadir `|ep−eh|` y `ep·eh` sube 12,8 pts. Es el mismo principio que `pair_diff`
-   en el vectorizador léxico: NLI es una tarea de relación, no de bolsas de palabras.
-2. **PCA destruye la señal.** Con 200 dims se queda en 0,527: las direcciones de mayor
-   varianza no son las que separan relación lógica.
+Con `paraphrase-multilingual-MiniLM-L12-v2`, añadir diferencia y producto a `concat` mejoró 12,8 pp. PCA a 200 dimensiones quedó en 0,527 y el híbrido en 0,577 con un presupuesto de 400 características. [Resultados completos de MiniLM](../../experiments/results/random_forest/embeddings/rf_embeddings_results_sentence-transformers__paraphrase-multilingual-MiniLM-L12-v2.json)
 
 ### Por lengua (MiniLM `full` frente a TF-IDF)
 
-| Lengua | n | TF-IDF | Embeddings | Δ pts |
+| Lengua | n | TF-IDF | Embeddings | Δ (pp) |
 |---|---:|---:|---:|---:|
 | English | 1.354 | 0,579 | 0,634 | +5,5 |
 | Chinese | 103 | 0,340 | 0,670 | **+33,0** |
@@ -314,16 +208,11 @@ Dos observaciones importantes:
 | Turkish | 65 | 0,354 | 0,569 | +21,5 |
 | French | 59 | 0,458 | 0,593 | +13,6 |
 
-Mejoran 13 de 15 lenguas; la media ponderada por `n` es +8,5 pts. La brecha
-inglés/no inglés se reduce de 13,2 a 6,5 pts.
+Mejoran 13 de 15 lenguas. La media ponderada por el número de pares sube 8,5 pp y la brecha entre inglés y el resto se reduce de 13,2 a 6,5 pp.
 
-### Control de contaminación
+### Control con E5
 
-`paraphrase-multilingual-MiniLM-L12-v2` pertenece a una familia entrenada con datos de
-paráfrasis y NLI; como este dataset es XNLI (traducción de MNLI), parte de las frases
-puede haber pasado por su entrenamiento. Para separar «mejor representación» de
-«memorización» se repite el experimento con un encoder **sin entrenamiento NLI**,
-`intfloat/multilingual-e5-small` (prefijo `query: ` en ambos lados):
+El estudio consideró que MiniLM podía estar familiarizado con frases de XNLI por su entrenamiento con datos de paráfrasis y NLI. Repitió la prueba con `intfloat/multilingual-e5-small` como control más conservador, usando el prefijo `query: ` en ambos textos.
 
 | Variante | Dims | Acc | F1 | Inglés | No inglés |
 |---|---:|---:|---:|---:|---:|
@@ -332,80 +221,61 @@ puede haber pasado por su entrenamiento. Para separar «mejor representación» 
 | E5 `diff+product` | 768 | 0,5503 | 0,5456 | 0,5731 | 0,5215 |
 | E5 híbrido | 400 | 0,5660 | 0,5662 | 0,5753 | 0,5542 |
 
-El control limpio sigue mejorando el global (+4,0 pts) y sobre todo el no inglés
-(+9,7 pts), mientras que en inglés se queda igual (0,573 frente a 0,579). Es el patrón
-esperado de una mejora de transferencia cross-lingual, no de memorización. Que MiniLM
-gane 5,5 pts en inglés y E5 ninguno sugiere que **parte** del extra de MiniLM sí puede
-venir de familiaridad con NLI; el uso de MiniLM en la entrega habría que declararlo y,
-si es posible, confirmarlo con la leaderboard de Kaggle (el test es otro corte de XNLI).
+E5 `full` mejoró 4,0 pp en el total y 9,7 pp en los pares de origen no inglés. En inglés obtuvo 0,573 frente a 0,579 con TF-IDF. El patrón es compatible con transferencia entre lenguas. La ventaja adicional de MiniLM en inglés motiva revisar la posible familiaridad con NLI. El estudio planteó declarar el encoder y contrastar la decisión en Kaggle. [Resultados completos de E5](../../experiments/results/random_forest/embeddings/rf_embeddings_results_intfloat__multilingual-e5-small.json)
 
 ### Robustez y coste
 
-- **CV agrupada por premisa** (5 folds, sin premisas compartidas): 0,5997 ± 0,0082
-  frente a 0,5151 del TF-IDF. La ganancia no depende de ver la misma premisa en train.
-- **Coste**: codificar 24.240 frases tarda ~8 min en CPU (una vez, cacheado en
-  `artifacts/embeddings`); el fit pasa de 2 s a 32 s y el modelo ocupa 1.536 dims.
-- **Híbrido**: añadir TF-IDF a los embeddings y seleccionar 400 features con
-  `f_classif` empeora frente a embeddings solos (0,577 frente a 0,605). Con este
-  presupuesto de features, la señal densa y la léxica se estorban.
+- **CV agrupada por premisa.** En cinco folds con cero premisas compartidas, el informe histórico registró 0,5997 ± 0,0082 para MiniLM frente a 0,5151 para TF-IDF. Los archivos de embeddings enlazados contienen las métricas del holdout. [Referencia agrupada de TF-IDF](../../experiments/results/random_forest/tfidf/grouped_cv.json)
+- **Coste.** Codificar las 24.240 entradas de texto llevó unos 8 min en CPU. Los vectores se reutilizan desde caché. El ajuste pasó de 2 s a 32 s con 1.536 dimensiones.
+- **Híbrido.** TF-IDF más embeddings con 400 características seleccionadas mediante `f_classif` obtuvo 0,577 frente a 0,605 con MiniLM `full`.
 
-### Conclusión
+### Conclusión de embeddings
 
-Los embeddings **sí mejoran** el modelo, y lo hacen donde el TF-IDF falla: las lenguas
-no inglesas. La mejora es grande (+8,5 pts de holdout con MiniLM, +4,0 con el control
-limpio) y sobrevive a la CV agrupada. Antes de adoptarla hay que decidir dos cosas:
-qué encoder se declara (MiniLM es mejor pero tiene riesgo de familiaridad con NLI; E5
-es el control conservador) y si se acepta el coste de dependencia y de tiempo. No se ha
-cambiado el modelo final: esta sección documenta el experimento, no una sustitución.
+MiniLM `full` ganó 8,5 pp en holdout y redujo la brecha entre inglés y el resto de 13,2 a 6,5 pp. E5 `full` aportó 4,0 pp sobre el TF-IDF. El contraste agrupado conservó la ventaja de MiniLM. La elección del encoder quedaba condicionada al coste adicional y a la posible familiaridad con NLI.
 
-Reproducibilidad (requiere `sentence-transformers` instalado; ver versiones al final):
+## Limitaciones y decisiones finales
 
-```bash
-# MiniLM (por defecto)
-0-AiDea/.venv/bin/python 0-AiDea/rf_embeddings.py
+- **Selección.** El estudio probó unas 45 configuraciones sobre el mismo CV. El informe estimó un posible sesgo de unos 0,3 pp. La CV repetida y la mejora de 3,9 pp en el holdout aportan evidencia adicional, con el solapamiento de premisas propio de ese split.
+- **Señales superficiales y lengua.** Parte de la mejora se asocia a las longitudes. Train y test conservan idiomas y proporciones similares, pero la transferencia de esa señal a Kaggle quedó por evaluar. Las herramientas inglesas limitan la representación de los demás idiomas.
+- **Escalas.** Chi-cuadrado puede favorecer los rasgos de relación de mayor magnitud frente a TF-IDF. La receta selecciona 300 características y ajusta en unos 2,6 s por fold frente a 5,1 s del baseline.
+- **Decisión del estudio.** Se conservó TF-IDF ajustado en el cuaderno de Random Forest. MiniLM y E5 quedaron como alternativas experimentales con distinto coste y riesgo de familiaridad con NLI. La comparación con un segundo clasificador quedó fuera del estudio de RF y se aborda en el [informe de experimentos](team_experiments.md). El enunciado pide dos algoritmos supervisados sobre los mismos ejemplos. El criterio de comparación y ajuste justificados aporta 8 de 30 puntos.
 
-# Control sin NLI
-EMB_PREFIX="query: " 0-AiDea/.venv/bin/python 0-AiDea/rf_embeddings.py intfloat/multilingual-e5-small
+## Reproducción
+
+### Reproducción de TF-IDF
+
+Ejecuta los módulos desde la raíz con el [entorno del proyecto](../reproducibility.md#instalación-y-dependencias) activo y los [CSV oficiales preparados](../reproducibility.md#preparación-de-los-datos).
+
+```sh
+python -m experiments.scripts.rf_experiments --list
+python -m experiments.scripts.rf_experiments sel300_uni_spacy_rel_mindf5_noposvec
+python -m experiments.scripts.rf_confirm base sel300_uni_spacy_rel_mindf5_noposvec
+python -m experiments.scripts.rf_summary
 ```
 
-Los resultados quedan en `0-AiDea/rf_embeddings_results_<modelo>.json`. El script cachea
-los embeddings por modelo en `0-AiDea/artifacts/embeddings` y lee las particiones
-preprocesadas de `0-AiDea/artifacts/preprocessed`; no necesita spaCy. Entorno usado:
-Python 3.14, `sentence-transformers` 6.3.0, `transformers` 5.15.0, `tokenizers` 0.22.2,
-`huggingface-hub` 1.28.0, `torch` 2.15.0 (CPU).
+| Artefacto archivado | Contenido |
+| --- | --- |
+| [`experiments.jsonl`](../../experiments/results/random_forest/experiments.jsonl) | Resultados por fold de cada configuración. |
+| [`rf_table.csv`](../../experiments/results/random_forest/rf_table.csv) | Tabla consolidada. |
+| [`rf_confirm.json`](../../experiments/results/random_forest/rf_confirm.json) | CV repetida y holdout de las configuraciones finalistas. |
 
----
+Los módulos escriben los resultados nuevos en `experiments/.local/random_forest/` y reutilizan `experiments/.local/preprocessed/` por hash de datos y configuración.
 
-## 11. Nota sobre la rúbrica
+### Reproducción de embeddings
 
-El enunciado del trabajo pide **comparar al menos dos algoritmos supervisados** distintos
-en los mismos ejemplos de validación. Esta rama entrena solo Random Forest por decisión
-explícita, así que esa parte de la rúbrica («justified classifier comparison and tuning»,
-8 puntos de 30) quedaría sin cubrir si esta es la entrega final. Las mejoras de este
-documento son independientes de ese punto y se pueden trasladar a la comparación con los
-demás algoritmos.
+Ejecuta primero las celdas de preprocesado del [cuaderno de Random Forest](../../experiments/notebooks/random_forest_training.ipynb). El banco completo lee esas particiones de `experiments/.local/preprocessed/`. El ejecutor puede usar pesos locales para MiniLM y guarda su caché y resultados en `experiments/.local/embeddings/` y `experiments/.local/random_forest/embeddings/`, respectivamente.
 
----
+```sh
+python -m experiments.scripts.rf_embeddings --checkpoint RUTA_AL_CHECKPOINT
+```
 
-## 12. Implementación (completada)
+Para el control E5, ejecuta `python -m experiments.scripts.rf_embeddings intfloat/multilingual-e5-small` con la variable de entorno `EMB_PREFIX` ajustada a `query: ` (incluido el espacio final). [Configuración archivada de E5](../../experiments/results/random_forest/embeddings/rf_embeddings_results_intfloat__multilingual-e5-small.json)
 
-1. `relation_features.py`: `RelationFeatures` con `get_feature_names_out`, validación de
-   columnas y tests unitarios (13 casos: negaciones, longitudes, números, cadenas planas,
-   huecos, no negatividad, clonado, ausencia de ajuste y entrada de una sola columna).
-2. `training.py`: `PREPROCESSING_PARAMS` con `tokenizer="spacy"`; `VECTORIZER_PARAMS` con
-   `min_df=5`, unigramas y `use_pos=False`; nueva constante `SELECT_K_FEATURES = 300`;
-   `build_pipeline` añade `SelectKBest(chi2)` y `RelationFeatures`, con
-   `select_k=None`/`use_relation_features=False` para ablaciones.
-3. Tests: 66 en verde, incluidos los nuevos de selección ajustada solo con train,
-   reproducibilidad con selección y contrato del transformador de relación.
-4. `random_forest_training.ipynb`: re-ejecutado con la nueva configuración; añade la
-   atribución de la selección por bloque y actualiza conclusiones.
-5. `TRAINING.md` y `README.md`: métricas nuevas (CV 0,5133; holdout 0,5206/0,5193;
-   agrupada 0,5151), distribución de la submission y limitaciones revisadas.
-6. Verificación: CV y holdout reproducen exactamente el banco de experimentos
-   (0,513303 y 0,520627), `pytest` en verde y submission con 5.195 filas válidas.
+El entorno histórico usó Python 3.14, `sentence-transformers` 6.3.0, `transformers` 5.15.0, `tokenizers` 0.22.2, `huggingface-hub` 1.28.0 y `torch` 2.15.0 en CPU.
 
-Pendiente y fuera de esta rama: comparar con un segundo algoritmo supervisado (la
-rúbrica lo pide), decidir si se adopta la representación con embeddings de la sección 10
-y actualizar la submission de Kaggle con la configuración elegida.
+### Implementación y verificación histórica
 
+- [`RelationFeatures`](../../src/nli_project/features/relation_features.py) añadió nombres de salida y validación de columnas. Su batería histórica cubrió 13 casos, incluidos negaciones, longitudes, números, huecos, valores no negativos, clonado y entrada de una sola columna.
+- El [pipeline](../../src/nli_project/training/training.py) incorporó chi-cuadrado con `SELECT_K_FEATURES = 300` y el bloque de relación. Las ablaciones usan `select_k=None` o `use_relation_features=False`.
+- La verificación histórica registró 66 pruebas en verde. Incluyó ajuste de la selección solo con train, reproducibilidad y contrato del transformador de relación.
+- El cuaderno reejecutado registró 0,513303 en CV por fila, 0,5151 en CV agrupada y 0,520627 en accuracy de holdout (macro-F1 de 0,5193). La entrega de Random Forest tenía 5.195 filas válidas. [Métricas TF-IDF](../../experiments/results/random_forest/tfidf) · [CSV de Random Forest](../../experiments/submissions/random_forest/submission.csv)

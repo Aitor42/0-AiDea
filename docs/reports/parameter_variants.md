@@ -1,12 +1,25 @@
 # Variantes de preprocesado
 
-> Informe histórico de la PR #14. Las rutas se han actualizado. Los estados de tareas, el vocabulario de «final» y las conclusiones corresponden a la fecha del informe. La guía describe el flujo vigente.
+[Mapa del repositorio](../../README.md) · [Guía del proyecto](../PROJECT_GUIDE.md#preprocesamiento-y-traducción) · [Comparación experimental](team_experiments.md#comparación-de-variantes-de-preprocesado)
 
-[Guía del proyecto](../PROJECT_GUIDE.md)
+## Índice
 
-El [cuaderno de trabajo](../../experiments/notebooks/workflow_javi_aitor.ipynb) muestra dos recetas explícitas de `preprocessing.py`. `MULTILINGUAL_PREPROCESSING_PARAMS` conserva todas las filas y usa tokenización por espacios, sin lematización, stopwords ni POS ingleses. `ENGLISH_PREPROCESSING_PARAMS` filtra filas inglesas y usa el modelo de spaCy para lemas y POS. `language=None` solo conserva filas. El preprocesador de Alba requiere el modelo local de spaCy incluso con la receta neutral.
+[Recetas del cuaderno](#recetas-del-cuaderno) · [Catálogo de variantes](#catálogo-de-variantes) · [Materialización y caché](#materialización-y-caché)
 
-`parameter_variants.py` genera un baseline y cinco comparaciones pequeñas a
+## Recetas del cuaderno
+
+El [cuaderno de trabajo](../../experiments/notebooks/workflow_javi_aitor.ipynb) usa dos recetas de [preprocessing.py](../../src/nli_project/preprocessing/preprocessing.py).
+
+| Receta | Filas | Tokenización y rasgos |
+| --- | --- | --- |
+| `MULTILINGUAL_PREPROCESSING_PARAMS` | Todos los idiomas | Espacios, sin reducción, filtrado de stopwords ni POS. |
+| `ENGLISH_PREPROCESSING_PARAMS` | Solo inglés | spaCy para tokenización, lemas y POS. |
+
+`language=None` conserva las filas de todos los idiomas. La selección de reglas lingüísticas se configura por separado. El preprocesador requiere el modelo local de spaCy incluso con la receta neutral. [Instalación de recursos lingüísticos](../reproducibility.md#instalación-y-dependencias)
+
+## Catálogo de variantes
+
+[parameter_variants.py](../../src/nli_project/preprocessing/parameter_variants.py) genera un baseline y cinco comparaciones pequeñas a
 partir de las opciones reales de `NLITextPreprocesser`. Cada variante tiene un
 ID determinista derivado de la configuración de preprocesado. Las variantes
 equivalentes para las columnas del modelo se guardan una
@@ -27,22 +40,11 @@ oficial.
 | `whitespace_no_reduction` | Tokenización whitespace sin reducción |
 | `strip_accents` | Elimina marcas diacríticas |
 
-La tokenización whitespace se combina con reducción desactivada porque aplicar
-lematización spaCy a tokens ya agrupados por espacios produciría una
-comparación difícil de interpretar. `top_n` se omite porque solo controla
-tablas descriptivas y no interviene en `preprocess_dataset`. `ngram_orders`
-genera columnas auxiliares que el vectorizador actual no consume. Tampoco se
-barre una secuencia de valores continuos. Las diferencias en limpieza y
-reducción son decisiones categóricas y los parámetros de `NLITextVectorizer`
-se exploran por separado.
+La variante por espacios desactiva la reducción para evitar aplicar lematización de spaCy a tokens ya segmentados. `top_n` solo afecta las tablas descriptivas. `ngram_orders` genera columnas auxiliares que el vectorizador actual no consume. La rejilla cubre opciones categóricas de limpieza y reducción. Los parámetros del [vectorizador](../../src/nli_project/features/vectorizer.py) se estudian por separado.
 
-Cada dataset se publica de forma atómica como pickle y `manifest.json` en su
-propia carpeta bajo `artifacts/parameter_variants/`. La caché de cómputo sigue en
-`artifacts/preprocessed/`, usando `preprocessing.preprocess_partition`, que
-llama al preprocesador de Alba y se usa también desde el banco de Aitor. Así pueden
-reutilizarse los resultados entre ejecuciones sin ajustar vocabulario ni IDF
-fuera de cada fold. El clasificador debe recibir el DataFrame procesado y
-ajustar su vectorizador dentro de la validación cruzada.
+## Materialización y caché
+
+Cada variante se guarda de forma atómica como `dataset.pkl` y `manifest.json` en su propia carpeta bajo `experiments/.local/parameter_variants/`. `preprocessing.preprocess_partition` comparte la caché `experiments/.local/preprocessed/` con el banco de experimentos. El clasificador recibe el DataFrame procesado y ajusta vocabulario, IDF y selección dentro de cada fold.
 
 ```python
 from nli_project.preprocessing.parameter_variants import grid_variants, materialize_variants, load_variant_dataset
