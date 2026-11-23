@@ -54,4 +54,4 @@ El CSV se escribe con columnas `id,prediction` y se valida desde disco contra la
 
 ## Instalación, ejecución y localización
 
-La [guía de reproducción](reproducibility.md) explica instalación, recursos, comandos, ejecución de los cuadernos y generación y validación de la entrega. El [informe de reorganización](refactor_report.md) da el árbol completo por responsabilidad y el [inventario](refactor_inventory.tsv) permite localizar cada archivo de la PR por su ruta original.
+La [guía de reproducción](reproducibility.md) explica instalación, recursos, comandos, ejecución de los cuadernos y generación y validación de la entrega. El [mapa del repositorio](../README.md) enlaza el código, los experimentos y la documentación.

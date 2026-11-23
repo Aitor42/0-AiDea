@@ -4,7 +4,7 @@
 
 [Guía del proyecto](../PROJECT_GUIDE.md)
 
-La [guía de revisión](workflow_review.md) recoge los comandos y los puntos de conexión con el proyecto compartido. Los resultados de este informe proceden de las ejecuciones guardadas. Los experimentos nuevos usan el [cuaderno de trabajo](../../experiments/notebooks/workflow_javi_aitor.ipynb), con una receta neutral y una validación reservada agrupada por premisa.
+La [guía de reproducción](../reproducibility.md) recoge los comandos y requisitos del flujo. Los resultados de este informe proceden de las ejecuciones guardadas. Los experimentos nuevos usan el [cuaderno de trabajo](../../experiments/notebooks/workflow_javi_aitor.ipynb), con una receta neutral y una validación reservada agrupada por premisa.
 
 La pregunta experimental es si traducir los dos textos al inglés o cambiar su preprocesamiento ayuda a reconocer implicación, neutralidad y contradicción. La unidad de evaluación es el par original, identificado por `id`. El enunciado académico (pp. 2 y 4–5) pide comparar algoritmos en los mismos ejemplos, ajustar las transformaciones aprendidas solo en entrenamiento y justificar las decisiones en la defensa.
 
