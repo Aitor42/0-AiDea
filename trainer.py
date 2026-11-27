@@ -24,14 +24,15 @@ Dataset = tuple[Any, Any]
 METRICS = ("accuracy", "f1_macro", "f1_weighted", "log_loss")
 
 
-def _compute_step_metrics(model, X, y_true) -> dict[str, float]:
+def _compute_step_metrics(model, X, y_true, *, y_pred=None) -> dict[str, float]:
     """Mide el rendimiento de un modelo ajustado sobre un dataset.
 
     F1 macro da el mismo peso a cada clase. F1 ponderado usa su número de
     muestras. Log loss queda en NaN cuando faltan probabilidades o el modelo
     carece de la información de clases necesaria para calcularla.
     """
-    y_pred = model.predict(X)
+    if y_pred is None:
+        y_pred = model.predict(X)
     metrics = {
         "accuracy": float(accuracy_score(y_true, y_pred)),
         "f1_macro": float(f1_score(y_true, y_pred, average="macro", zero_division=0)),
@@ -89,6 +90,8 @@ class GenericNLITrainer:
         param_grid: dict[str, list] | None,
         train_dataset: Dataset,
         cv_folds: Iterable[tuple[Dataset, Dataset]],
+        *,
+        return_fold_predictions: bool = False,
     ) -> dict[str, Any]:
         """Evalúa un grid de scikit-learn y reajusta el ganador con todo el train.
 
@@ -111,6 +114,8 @@ class GenericNLITrainer:
         grid en ``best_params`` y la media de validación ganadora en ``best_cv_score``.
         ``cv_results`` contiene una fila por combinación y ``train_metrics``
         mide el rendimiento del modelo final sobre ``train_dataset``.
+        Con ``return_fold_predictions=True`` también devuelve las predicciones
+        de validación de la configuración ganadora, en el orden de los folds.
         """
         if self.scoring not in METRICS:
             raise ValueError(f"La métrica {self.scoring!r} debe ser una de {METRICS}.")
@@ -132,11 +137,13 @@ class GenericNLITrainer:
         grid = ParameterGrid(param_grid or {})
         minimize_score = self.scoring == "log_loss"
         results_rows = []
+        predictions_by_candidate = []
 
         for idx, params in enumerate(grid, start=1):
             start = time.perf_counter()
             fold_train_scores = []
             fold_val_scores = []
+            fold_predictions = []
 
             for (X_train, y_train), (X_val, y_val) in folds:
                 # El modelo aprende del train del fold. Medir también en ese
@@ -144,7 +151,13 @@ class GenericNLITrainer:
                 model = self._new_model(base_model, params)
                 model.fit(X_train, y_train)
                 fold_train_scores.append(_compute_step_metrics(model, X_train, y_train))
-                fold_val_scores.append(_compute_step_metrics(model, X_val, y_val))
+                y_pred = model.predict(X_val)
+                fold_val_scores.append(_compute_step_metrics(model, X_val, y_val, y_pred=y_pred))
+                if return_fold_predictions:
+                    fold_predictions.append(y_pred)
+
+            if return_fold_predictions:
+                predictions_by_candidate.append(fold_predictions)
 
             # El tiempo de cada configuración incluye sus ajustes y métricas.
             # Las medias dan el mismo peso a cada fold.
@@ -184,7 +197,7 @@ class GenericNLITrainer:
         # el orden estable conserva la primera combinación del grid.
         score_column = f"mean_val_{self.scoring}"
         cv_results = pd.DataFrame(results_rows).sort_values(
-            by=score_column, ascending=minimize_score, kind="stable", ignore_index=True
+            by=score_column, ascending=minimize_score, kind="stable"
         )
         best_row = cv_results.iloc[0]
         best_score = float(best_row[score_column])
@@ -198,10 +211,13 @@ class GenericNLITrainer:
         best_model = self._new_model(base_model, best_params)
         best_model.fit(*train_dataset)
 
-        return {
+        result = {
             "best_model": best_model,
             "best_params": best_params,
             "best_cv_score": best_score,
-            "cv_results": cv_results,
+            "cv_results": cv_results.reset_index(drop=True),
             "train_metrics": _compute_step_metrics(best_model, *train_dataset),
         }
+        if return_fold_predictions:
+            result["fold_predictions"] = predictions_by_candidate[cv_results.index[0]]
+        return result
